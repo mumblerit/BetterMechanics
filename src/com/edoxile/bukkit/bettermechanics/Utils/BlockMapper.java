@@ -1,10 +1,13 @@
 package com.edoxile.bukkit.bettermechanics.Utils;
 
+import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.Exceptions.InvalidDirectionException;
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 
 import java.util.HashSet;
 
@@ -101,8 +104,20 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.WEST));
-                        blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        switch (orientation) {
+                            case NORTH:
+                            case SOUTH: {
+                                blockSet.add(tempBlock.getRelative(BlockFace.WEST));
+                                blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                            }
+                            break;
+                            case EAST:
+                            case WEST: {
+                                blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
+                                blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                            }
+                            break;
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
@@ -117,8 +132,20 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.WEST));
-                        blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        switch (orientation) {
+                            case NORTH:
+                            case SOUTH: {
+                                blockSet.add(tempBlock.getRelative(BlockFace.WEST));
+                                blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                            }
+                            break;
+                            case EAST:
+                            case WEST: {
+                                blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
+                                blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                            }
+                            break;
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
@@ -182,18 +209,22 @@ public class BlockMapper {
         }
     }
 
-    public static HashSet<Block> getRecursiveSet(){
+    public static HashSet<Block> getRecursiveSet() {
         return recursiveSet;
     }
 
-    /**
-     * TODO implement this!
-     * @param start
-     * @param direction
-     * @param maxBlockDistance
-     * @return
-     */
-    public static Block findBlock(Block start, BlockFace direction, int maxBlockDistance){
-        return null;
+    public static Sign findMechanicsSign(Block block, BlockFace direction, MechanicsType type, int maxBlockDistance) throws BlockNotFoundException {
+        for (int d = 0; d < maxBlockDistance; d++) {
+            block = block.getRelative(direction);
+            if (SignUtil.isSign(block)) {
+                Sign s = SignUtil.getSign(block);
+                if (s != null) {
+                    if (SignUtil.getMechanicsType(s) == type) {
+                        return s;
+                    }
+                }
+            }
+        }
+        throw new BlockNotFoundException();
     }
 }

@@ -11,11 +11,11 @@ import org.bukkit.block.Sign;
  * User: Edoxile
  */
 public class SignUtil {
-    private static boolean isSign(Block b){
+    public static boolean isSign(Block b){
         return (b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN);
     }
 
-    private static Sign getSign(Block b){
+    public static Sign getSign(Block b){
         if(!isSign(b))
             return null;
         BlockState s = b.getState();
@@ -34,6 +34,8 @@ public class SignUtil {
             return MechanicsType.LIFT;
         else if(str.equals("[Gate]") || str.equals("[Dgate]"))
             return MechanicsType.GATE;
+        else if(str.equals("[Bridge]") || str.equals("[Bridge End]"))
+            return MechanicsType.BRIDGE;
         else if(str.equals("[Door]") || str.equals("[Door Down]") || str.equals("[Door Up]"))
             return MechanicsType.DOOR;
         else if(str.equals("[X]"))
