@@ -45,4 +45,25 @@ public class SignUtil {
         else
             return null;
     }
+
+    public static MechanicsType getActiveMechanicsType(Sign s){
+        String str = s.getLine(1);
+        if(s.equals("") || s == null)
+            return null;
+
+        if(str.equals("[Lift Up]") || str.equals("[Lift Down]"))
+            return MechanicsType.LIFT;
+        else if(str.equals("[Gate]") || str.equals("[Dgate]"))
+            return MechanicsType.GATE;
+        else if(str.equals("[Bridge]"))
+            return MechanicsType.BRIDGE;
+        else if(str.equals("[Door Down]") || str.equals("[Door Up]"))
+            return MechanicsType.DOOR;
+        else if(str.equals("[X]"))
+            return MechanicsType.HIDDEN_SWITCH;
+        else if(str.equals("[I]"))
+            return MechanicsType.LIGHT_SWITCH;
+        else
+            return null;
+    }
 }

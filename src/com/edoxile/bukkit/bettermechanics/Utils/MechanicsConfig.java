@@ -1,7 +1,6 @@
 package com.edoxile.bukkit.bettermechanics.Utils;
 
 import com.edoxile.bukkit.bettermechanics.BetterMechanics;
-import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigLoadException;
 import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
 import org.bukkit.Material;
 import org.bukkit.util.config.Configuration;
@@ -48,7 +47,7 @@ public class MechanicsConfig {
 
     }
 
-    public static class BridgeConfig {
+    public class BridgeConfig {
         public final boolean enabled;
         public final Set<Material> materials;
         public final int maxLength;
