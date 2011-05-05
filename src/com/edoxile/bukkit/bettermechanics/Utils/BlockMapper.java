@@ -2,6 +2,7 @@ package com.edoxile.bukkit.bettermechanics.Utils;
 
 import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.Exceptions.InvalidDirectionException;
+import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfBoundsException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -204,35 +205,62 @@ public class BlockMapper {
         return block;
     }
 
-    public static void mapRecursive(Block start, Material m, boolean first) {
-        Block tempBlock;
-        if (first) {
-            log.info("Clearing set");
-            recursiveSet.clear();
+    public static HashSet<Block> mapFlatRegion(Block start, Material m, int w, int l) throws OutOfBoundsException {
+        Block tempBlock = start;
+        int west = 0, east = 0, south = 0, north = 0, width, length;
+        while (checkInColumn(tempBlock.getRelative(BlockFace.WEST), m, 1) != null) {
+            tempBlock = tempBlock.getRelative(BlockFace.WEST);
+            west++;
         }
-        for (int dz = -1; dz <= 1; dz++) {
-            for (int dy = 1; dy >= -1; dy--) {
-                tempBlock = start.getRelative(0, dy, dz);
-                if ((!recursiveSet.contains(tempBlock)) && (tempBlock.getType() == m)) {
-                    recursiveSet.add(tempBlock);
-                    mapRecursive(tempBlock, m, false);
-                    break;
+        tempBlock = start;
+        while (checkInColumn(tempBlock.getRelative(BlockFace.EAST), m, 1) != null) {
+            tempBlock = tempBlock.getRelative(BlockFace.EAST);
+            east++;
+        }
+        tempBlock = start;
+        while (checkInColumn(tempBlock.getRelative(BlockFace.NORTH), m, 1) != null) {
+            tempBlock = tempBlock.getRelative(BlockFace.NORTH);
+            north++;
+        }
+        tempBlock = start;
+        while (checkInColumn(tempBlock.getRelative(BlockFace.SOUTH), m, 1) != null) {
+            tempBlock = tempBlock.getRelative(BlockFace.SOUTH);
+            south++;
+        }
+        if ((north + south) > (east + west)) {
+            width = (east + west);
+            length = (north + south);
+        } else {
+            length = (east + west);
+            width = (north + south);
+        }
+        if (width > w || length > l) {
+            throw new OutOfBoundsException();
+        }
+        start = start.getRelative((~north + 1), 0, (~east + 1));
+        HashSet<Block> blockSet = new HashSet<Block>();
+        for (int dx = 0; dx <= (north + south); dx++) {
+            for (int dz = 0; dz <= (east + west); dz++) {
+                tempBlock = checkInColumn(start.getRelative(dx, 0, dz), m, 1);
+                if (tempBlock != null) {
+                    blockSet.add(getUpperBlock(tempBlock));
                 }
             }
         }
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = 1; dy >= -1; dy--) {
-                tempBlock = start.getRelative(dx, dy, 0);
-                if ((!recursiveSet.contains(tempBlock)) && (tempBlock.getType() == m)) {
-                    recursiveSet.add(tempBlock);
-                    mapRecursive(tempBlock, m, false);
-                    break;
-                }
-            }
-        }
+        return blockSet;
     }
 
-    public static HashSet<Block> getRecursiveSet(){
+    private static Block checkInColumn(Block start, Material m, int h) {
+        int nh = ~h + 1;
+        for (int dy = nh; dy <= h; dy++) {
+            if (start.getRelative(0, dy, 0).getType() == m) {
+                return start.getRelative(0, dy, 0);
+            }
+        }
+        return null;
+    }
+
+    public static HashSet<Block> getRecursiveSet() {
         return recursiveSet;
     }
 

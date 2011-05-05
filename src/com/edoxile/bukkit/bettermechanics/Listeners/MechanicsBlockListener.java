@@ -1,6 +1,11 @@
 package com.edoxile.bukkit.bettermechanics.Listeners;
 
+import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.Exceptions.ChestNotFoundException;
+import com.edoxile.bukkit.bettermechanics.Exceptions.NonCardinalDirectionException;
+import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfBoundsException;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Bridge;
+import com.edoxile.bukkit.bettermechanics.Mechanics.Gate;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
 import com.edoxile.bukkit.bettermechanics.Utils.SignUtil;
@@ -91,6 +96,21 @@ public class MechanicsBlockListener extends BlockListener {
                 }
             }
             break;
+            case GATE: {
+                Gate gate = new Gate(config, sign, null);
+                try {
+                    if (!gate.map())
+                        return;
+                    if (gate.isClosed()) {
+                        gate.toggleOpen();
+                    } else {
+                        gate.toggleClosed();
+                    }
+                } catch (Exception e) {
+                }
+            }
+            break;
+
             /*case DOOR: {
                 Door door = new Door(config, sign, null);
                 try {
@@ -99,20 +119,6 @@ public class MechanicsBlockListener extends BlockListener {
                         door.toggleClosed();
                     } else {
                         door.toggleOpen();
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-            break;
-            case GATE: {
-                Gate gate = new Gate(config, sign, null);
-                try {
-                    gate.map();
-                    if (event.getNewCurrent() > 0) {
-                        gate.toggleClosed();
-                    } else {
-                        gate.toggleOpen();
                     }
                 } catch (Exception e) {
 

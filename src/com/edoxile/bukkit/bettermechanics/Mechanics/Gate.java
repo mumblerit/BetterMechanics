@@ -34,7 +34,7 @@ public class Gate {
         config = c.getGateConfig();
     }
 
-    public boolean map() throws NonCardinalDirectionException, ChestNotFoundException {
+    public boolean map() throws NonCardinalDirectionException, ChestNotFoundException, OutOfBoundsException, BlockNotFoundException {
         Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 1, Material.CHEST);
         if (chestBlock == null) {
             throw new ChestNotFoundException();
@@ -48,12 +48,15 @@ public class Gate {
         int sw = (smallGate ? 1 : (3 + 1));
         Block tempBlock = sign.getBlock().getRelative(SignUtil.getBackBlockFace(sign));
         tempBlock = BlockMapper.mapColumn(tempBlock, sw, 32, Material.FENCE);
-        BlockMapper.mapRecursive(tempBlock, Material.FENCE, true);
-        blockSet = BlockMapper.getRecursiveSet();
+        if (tempBlock == null) {
+            throw new BlockNotFoundException();
+        }
+        blockSet = BlockMapper.mapFlatRegion(tempBlock, Material.FENCE, config.maxWidth, config.maxLength);
+        //blockSet = BlockMapper.getRecursiveSet();
         if (blockSet.isEmpty()) {
+            log.info("blockset empty?");
             return false;
         } else {
-            log.info("Blockset size: " + Integer.toString(blockSet.size()));
             return true;
         }
     }
@@ -64,9 +67,10 @@ public class Gate {
         Block tempBlock;
         try {
             for (Block b : blockSet) {
-                tempBlock = b;
-                while (tempBlock.getRelative(BlockFace.DOWN).getType() == Material.FENCE) {
+                tempBlock = b.getRelative(BlockFace.DOWN);
+                while (tempBlock.getType() == Material.FENCE) {
                     tempBlock.setType(Material.AIR);
+                    tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount++;
                 }
             }
@@ -76,9 +80,10 @@ public class Gate {
             }
         } catch (OutOfSpaceException ex) {
             for (Block b : blockSet) {
-                tempBlock = b;
-                while (tempBlock.getRelative(BlockFace.DOWN).getType() == Material.AIR && amount > 0) {
+                tempBlock = b.getRelative(BlockFace.DOWN);
+                while (tempBlock.getType() == Material.AIR && amount > 0) {
                     tempBlock.setType(Material.FENCE);
+                    tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount--;
                 }
                 if (amount == 0) {
@@ -97,9 +102,10 @@ public class Gate {
         Block tempBlock;
         try {
             for (Block b : blockSet) {
-                tempBlock = b;
-                while (canPassThrough(tempBlock.getRelative(BlockFace.DOWN).getType())) {
+                tempBlock = b.getRelative(BlockFace.DOWN);
+                while (canPassThrough(tempBlock.getType())) {
                     tempBlock.setType(Material.FENCE);
+                    tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount++;
                 }
             }
@@ -109,9 +115,10 @@ public class Gate {
             }
         } catch (OutOfMaterialException ex) {
             for (Block b : blockSet) {
-                tempBlock = b;
-                while (tempBlock.getRelative(BlockFace.DOWN).getType() == Material.AIR && amount > 0) {
+                tempBlock = b.getRelative(BlockFace.DOWN);
+                while (tempBlock.getType() == Material.AIR && amount > 0) {
                     tempBlock.setType(Material.FENCE);
+                    tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount--;
                 }
                 if (amount == 0) {

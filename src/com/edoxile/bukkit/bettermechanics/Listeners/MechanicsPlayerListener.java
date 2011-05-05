@@ -1,9 +1,6 @@
 package com.edoxile.bukkit.bettermechanics.Listeners;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.ChestNotFoundException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.InvalidMaterialException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.NonCardinalDirectionException;
+import com.edoxile.bukkit.bettermechanics.Exceptions.*;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Bridge;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Gate;
 import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
@@ -72,6 +69,10 @@ public class MechanicsPlayerListener extends PlayerListener {
                                     event.getPlayer().sendMessage(ChatColor.RED + "No chest found near signs!");
                                 } catch (NonCardinalDirectionException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Sign is not in a cardinal direction!");
+                                } catch (OutOfBoundsException e){
+                                    event.getPlayer().sendMessage(ChatColor.RED + "Gate too long or too wide!");
+                                } catch (BlockNotFoundException e){
+                                    event.getPlayer().sendMessage(ChatColor.RED + "No fences were found close to bridge!");
                                 }
                             }
                             break;
