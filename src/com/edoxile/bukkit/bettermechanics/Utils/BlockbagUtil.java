@@ -2,12 +2,16 @@ package com.edoxile.bukkit.bettermechanics.Utils;
 
 import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfMaterialException;
 import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfSpaceException;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -19,24 +23,24 @@ public class BlockbagUtil {
 
     public static boolean safeRemoveItems(Chest chest, ItemStack itemStack) throws OutOfMaterialException {
         if (itemStack.getData() != null) {
-            List<ItemStack> stacks = Arrays.asList(chest.getInventory().getContents());
+            ItemStack[] stacks = chest.getInventory().getContents();
             ItemStack tempStack;
-            for (int i = 0; i < stacks.size(); i++) {
-                tempStack = stacks.get(i);
+            for (int i = 0; i < stacks.length; i++) {
+                tempStack = stacks[i];
                 if (tempStack == null)
                     continue;
                 if (tempStack.getType() == itemStack.getType() && tempStack.getData().getData() == itemStack.getData().getData()) {
                     if (tempStack.getAmount() > itemStack.getAmount()) {
                         tempStack.setAmount(tempStack.getAmount() - itemStack.getAmount());
                         itemStack.setAmount(0);
-                        stacks.set(i, tempStack);
+                        stacks[i] = tempStack;
                         break;
                     } else if (tempStack.getAmount() < itemStack.getAmount()) {
-                        stacks.remove(i);
+                        stacks[i] = null;
                         itemStack.setAmount(itemStack.getAmount() - tempStack.getAmount());
                         continue;
                     } else {
-                        stacks.remove(i);
+                        stacks[i] = null;
                         itemStack.setAmount(0);
                         break;
                     }
@@ -45,7 +49,7 @@ public class BlockbagUtil {
             if (itemStack.getAmount() > 0) {
                 throw new OutOfMaterialException(itemStack.getAmount());
             } else {
-                chest.getInventory().setContents((ItemStack[]) stacks.toArray());
+                chest.getInventory().setContents(stacks);
                 return true;
             }
         } else {
@@ -82,5 +86,25 @@ public class BlockbagUtil {
         } else {
             return true;
         }
+    }
+
+    public static boolean safeRemoveItems(Chest chest, MaterialData materialData, int amount) throws OutOfMaterialException {
+        ItemStack itemStack = materialData.toItemStack(amount);
+        return safeRemoveItems(chest, itemStack);
+    }
+
+    public static boolean addRemoveItems(Chest chest, MaterialData materialData, int amount) throws OutOfSpaceException {
+        ItemStack itemStack = materialData.toItemStack(amount);
+        return safeAddItems(chest, itemStack);
+    }
+
+    public static Chest getChest(Block block) {
+        if (block.getType() == Material.CHEST) {
+            BlockState s = block.getState();
+            if (s instanceof Chest) {
+                return (Chest) s;
+            }
+        }
+        return null;
     }
 }

@@ -47,15 +47,15 @@ public class MechanicsConfig {
 
     }
 
-    public class BridgeConfig {
+    public static class BridgeConfig {
         public final boolean enabled;
         public final Set<Material> materials;
         public final int maxLength;
 
         public BridgeConfig() {
-            enabled = config.getBoolean("door.enabled", true);
-            maxLength = config.getInt("door.max-length", 32);
-            List<Integer> list = config.getIntList("door.allowed-materials", Arrays.asList(3, 4, 5, 22, 35, 41, 42, 45, 47, 57, 87, 88, 89, 91));
+            enabled = config.getBoolean("bridge.enabled", true);
+            maxLength = config.getInt("bridge.max-length", 32);
+            List<Integer> list = config.getIntList("bridge.allowed-materials", Arrays.asList(3, 4, 5, 22, 35, 41, 42, 45, 47, 57, 87, 88, 89, 91));
             Set<Material> hashSet = new HashSet<Material>();
             for (int m : list)
                 hashSet.add(Material.getMaterial(m));
@@ -133,6 +133,14 @@ public class MechanicsConfig {
         public AmmeterConfig() {
             enabled = config.getBoolean("ammeter.enabled", true);
         }
+    }
+
+    public BridgeConfig getBridgeConfig(){
+        return this.bridgeConfig;
+    }
+
+    public GateConfig getGateConfig(){
+        return this.gateConfig;
     }
 
     private void createConfig() throws ConfigWriteException {
