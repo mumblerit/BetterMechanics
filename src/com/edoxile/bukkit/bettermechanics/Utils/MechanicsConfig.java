@@ -25,7 +25,6 @@ public class MechanicsConfig {
     public final DoorConfig doorConfig;
     public final LiftConfig liftConfig;
     public final HiddenSwitchConfig hiddenSwitchConfig;
-    public final LightSwitchConfig lightSwitchConfig;
     public final AmmeterConfig ammeterConfig;
 
     public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
@@ -42,7 +41,6 @@ public class MechanicsConfig {
         doorConfig = new DoorConfig();
         liftConfig = new LiftConfig();
         hiddenSwitchConfig = new HiddenSwitchConfig();
-        lightSwitchConfig = new LightSwitchConfig();
         ammeterConfig = new AmmeterConfig();
 
     }
@@ -111,14 +109,6 @@ public class MechanicsConfig {
         }
     }
 
-    public class LightSwitchConfig {
-        public final boolean enabled;
-
-        public LightSwitchConfig() {
-            enabled = config.getBoolean("light-switch.enabled", true);
-        }
-    }
-
     public class HiddenSwitchConfig {
         public final boolean enabled;
 
@@ -141,6 +131,22 @@ public class MechanicsConfig {
 
     public GateConfig getGateConfig(){
         return this.gateConfig;
+    }
+
+    public DoorConfig getDoorConfig(){
+        return this.doorConfig;
+    }
+
+    public HiddenSwitchConfig getHiddenSwitchConfig(){
+        return this.hiddenSwitchConfig;
+    }
+
+    public LiftConfig getLiftConfig(){
+        return this.liftConfig;
+    }
+
+    public AmmeterConfig getAmmeterConfig(){
+        return this.ammeterConfig;
     }
 
     private void createConfig() throws ConfigWriteException {

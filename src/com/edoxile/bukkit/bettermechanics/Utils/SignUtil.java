@@ -40,8 +40,6 @@ public class SignUtil {
             return MechanicsType.DOOR;
         else if (str.equals("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
-        else if (str.equals("[I]"))
-            return MechanicsType.LIGHT_SWITCH;
         else
             return null;
     }
@@ -63,8 +61,6 @@ public class SignUtil {
             return MechanicsType.DOOR;
         else if (str.equals("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
-        else if (str.equals("[I]"))
-            return MechanicsType.LIGHT_SWITCH;
         else
             return null;
     }
@@ -86,8 +82,6 @@ public class SignUtil {
             return MechanicsType.DOOR;
         else if (str.equals("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
-        else if (str.equals("[I]"))
-            return MechanicsType.LIGHT_SWITCH;
         else
             return null;
     }
@@ -115,6 +109,39 @@ public class SignUtil {
                 case 0x4:
                     return BlockFace.SOUTH;
                 case 0x2:
+                    return BlockFace.WEST;
+                default:
+                    throw new NonCardinalDirectionException();
+            }
+        } else {
+            //This should never happen...
+            return null;
+        }
+    }
+
+    public static BlockFace getBlockFace(Sign s) throws NonCardinalDirectionException {
+        if (s.getType() == Material.SIGN_POST) {
+            switch (s.getData().getData()) {
+                case 0x4:
+                    return BlockFace.NORTH;
+                case 0x8:
+                    return BlockFace.EAST;
+                case 0xC:
+                    return BlockFace.SOUTH;
+                case 0x0:
+                    return BlockFace.WEST;
+                default:
+                    throw new NonCardinalDirectionException();
+            }
+        } else if (s.getType() == Material.WALL_SIGN) {
+            switch (s.getData().getData()) {
+                case 0x4:
+                    return BlockFace.NORTH;
+                case 0x2:
+                    return BlockFace.EAST;
+                case 0x5:
+                    return BlockFace.SOUTH;
+                case 0x3:
                     return BlockFace.WEST;
                 default:
                     throw new NonCardinalDirectionException();

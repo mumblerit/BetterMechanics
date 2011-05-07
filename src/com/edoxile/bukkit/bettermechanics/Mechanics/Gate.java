@@ -62,7 +62,6 @@ public class Gate {
     }
 
     public void toggleOpen() {
-        log.info("Opening gate.");
         int amount = 0;
         Block tempBlock;
         try {
@@ -81,23 +80,18 @@ public class Gate {
         } catch (OutOfSpaceException ex) {
             for (Block b : blockSet) {
                 tempBlock = b.getRelative(BlockFace.DOWN);
-                while (tempBlock.getType() == Material.AIR && amount > 0) {
+                while (tempBlock.getType() == Material.AIR) {
                     tempBlock.setType(Material.FENCE);
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
-                    amount--;
                 }
-                if (amount == 0) {
-                    if (player != null) {
-                        player.sendMessage(ChatColor.RED + "Not enough space in chest!");
-                    }
-                    break;
-                }
+            }
+            if (player != null) {
+                player.sendMessage(ChatColor.RED + "Not enough space in chest!");
             }
         }
     }
 
     public void toggleClosed() {
-        log.info("Closing gate.");
         int amount = 0;
         Block tempBlock;
         try {
@@ -116,17 +110,13 @@ public class Gate {
         } catch (OutOfMaterialException ex) {
             for (Block b : blockSet) {
                 tempBlock = b.getRelative(BlockFace.DOWN);
-                while (tempBlock.getType() == Material.AIR && amount > 0) {
-                    tempBlock.setType(Material.FENCE);
+                while (tempBlock.getType() == Material.FENCE && amount > 0) {
+                    tempBlock.setType(Material.AIR);
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
-                    amount--;
                 }
-                if (amount == 0) {
-                    if (player != null) {
-                        player.sendMessage(ChatColor.RED + "Not enough items in chest! Still need: " + Integer.toString(ex.getAmount()) + " of type: fence");
-                    }
-                    break;
-                }
+            }
+            if (player != null) {
+                player.sendMessage(ChatColor.RED + "Not enough items in chest! Still need: " + Integer.toString(ex.getAmount()) + " of type: fence");
             }
         }
     }

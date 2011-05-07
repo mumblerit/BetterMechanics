@@ -79,23 +79,12 @@ public class BlockbagUtil {
                     i.setAmount(itemStack.getAmount() - i.getAmount());
                     safeRemoveItems(chest, i);
                 } catch (OutOfMaterialException ex) {
-                    log.warning("[BetterMechanics] Our chests are acting weird! This isn't supposed to happen!");
                 }
             }
             throw new OutOfSpaceException();
         } else {
             return true;
         }
-    }
-
-    public static boolean safeRemoveItems(Chest chest, MaterialData materialData, int amount) throws OutOfMaterialException {
-        ItemStack itemStack = materialData.toItemStack(amount);
-        return safeRemoveItems(chest, itemStack);
-    }
-
-    public static boolean addRemoveItems(Chest chest, MaterialData materialData, int amount) throws OutOfSpaceException {
-        ItemStack itemStack = materialData.toItemStack(amount);
-        return safeAddItems(chest, itemStack);
     }
 
     public static Chest getChest(Block block) {

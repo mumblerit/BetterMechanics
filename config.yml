@@ -5,3 +5,14 @@ bridge:
 gate:
     enabled: true
     max-length: 32
+door:
+    enabled: true
+    max-height: 32
+    allowed-materials: [4, 5, 22, 24, 35, 41, 42, 44, 45, 48, 49, 57, 80, 87, 88, 89, 91]
+hidden-switch:
+    enabled: true
+lift:
+    enabled: true
+    max-search-height: 32
+ammeter:
+    enabled: true

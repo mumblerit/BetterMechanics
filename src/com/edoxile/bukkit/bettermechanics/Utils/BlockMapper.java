@@ -101,7 +101,7 @@ public class BlockMapper {
             case UP: {
                 Location startLoc = start.getLocation();
                 Location endLoc = end.getLocation();
-                if (startLoc.getBlockX() != endLoc.getBlockX() || startLoc.getBlockZ() != endLoc.getBlockZ() || endLoc.getBlockY() > startLoc.getBlockY()) {
+                if (startLoc.getBlockX() != endLoc.getBlockX() || startLoc.getBlockZ() != endLoc.getBlockZ() || endLoc.getBlockY() < startLoc.getBlockY()) {
                     throw new InvalidDirectionException();
                 } else {
                     Block tempBlock = start;
@@ -198,6 +198,23 @@ public class BlockMapper {
         return null;
     }
 
+    public static HashSet<Block> mapAllInCuboidRegion(Block start, int sw, Material m) {
+        Block tempBlock;
+        HashSet<Block> blockSet = new HashSet<Block>();
+        int nsw = ~sw + 1;
+        for (int dx = nsw; dx <= sw; dx++) {
+            for (int dy = nsw; dy <= sw; dy++) {
+                for (int dz = nsw; dz <= sw; dz++) {
+                    tempBlock = start.getRelative(dx, dy, dz);
+                    if (tempBlock.getType() == m) {
+                        blockSet.add(tempBlock);
+                    }
+                }
+            }
+        }
+        return blockSet;
+    }
+
     private static Block getUpperBlock(Block block) {
         while (block.getRelative(BlockFace.UP).getType() == block.getType()) {
             block = block.getRelative(BlockFace.UP);
@@ -258,10 +275,6 @@ public class BlockMapper {
             }
         }
         return null;
-    }
-
-    public static HashSet<Block> getRecursiveSet() {
-        return recursiveSet;
     }
 
     public static Sign findMechanicsSign(Block block, BlockFace direction, MechanicsType type, int maxBlockDistance) throws BlockNotFoundException {

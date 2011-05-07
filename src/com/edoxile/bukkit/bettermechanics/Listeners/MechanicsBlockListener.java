@@ -110,7 +110,6 @@ public class MechanicsBlockListener extends BlockListener {
                 }
             }
             break;
-
             /*case DOOR: {
                 Door door = new Door(config, sign, null);
                 try {
@@ -119,20 +118,6 @@ public class MechanicsBlockListener extends BlockListener {
                         door.toggleClosed();
                     } else {
                         door.toggleOpen();
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-            break;
-            case LIGHT_SWITCH: {
-                LightSwitch lightSwitch = new LightSwitch(config, sign, null);
-                try {
-                    lightSwitch.map();
-                    if (event.getNewCurrent() > 0) {
-                        lightSwitch.toggleOn();
-                    } else {
-                        lightSwitch.toggleOff();
                     }
                 } catch (Exception e) {
 
