@@ -13,15 +13,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import java.util.logging.Logger;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Edoxile
  */
 
 public class MechanicsPlayerListener extends PlayerListener {
-    private static Logger log = Logger.getLogger("Minecraft");
     private MechanicsConfig config;
 
     public MechanicsPlayerListener(MechanicsConfig c) {
@@ -100,24 +97,33 @@ public class MechanicsPlayerListener extends PlayerListener {
                             }
                             break;
                             case LIFT: {
-                                Lift lift = new Lift(config,sign,event.getPlayer());
-                                try{
-                                    if(!lift.map()){
+                                Lift lift = new Lift(config, sign, event.getPlayer());
+                                try {
+                                    if (!lift.map()) {
                                         return;
                                     }
                                     lift.movePlayer();
-                                } catch(BlockNotFoundException e){
+                                } catch (BlockNotFoundException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Lift is too high or signs are not aligned!");
                                 }
                             }
                         }
                     }
                 }
-            } else if(event.getClickedBlock().getType() == Material.REDSTONE_WIRE && event.getPlayer().getItemInHand().getType() == Material.COAL){
+            } else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE && event.getPlayer().getItemInHand().getType() == Material.COAL) {
                 Ammeter ammeter = new Ammeter(config, event.getClickedBlock(), event.getPlayer());
                 ammeter.measure();
             } else {
-                if(isRedstoneBlock(event.getClickedBlock().getTypeId()))
+                //First check cauldron, then hidden switch;
+                if (!event.getPlayer().getItemInHand().getType().isBlock() || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+                    Cauldron cauldron = Cauldron.preCauldron(event.getClickedBlock(), config, event.getPlayer());
+                    if (cauldron != null) {
+                        cauldron.performCauldron();
+                        return;
+                    }
+                }
+
+                if (isRedstoneBlock(event.getClickedBlock().getTypeId()))
                     return;
 
                 BlockFace[] toCheck = {BlockFace.WEST, BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.DOWN, BlockFace.UP};
@@ -126,7 +132,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                         Sign sign = SignUtil.getSign(event.getClickedBlock().getRelative(b));
                         if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
                             HiddenSwitch hiddenSwitch = new HiddenSwitch(config, sign, event.getPlayer());
-                            if(hiddenSwitch.map())
+                            if (hiddenSwitch.map())
                                 hiddenSwitch.toggleLevers();
                         }
                     }

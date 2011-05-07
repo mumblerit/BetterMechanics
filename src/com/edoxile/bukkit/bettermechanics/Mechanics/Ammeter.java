@@ -4,7 +4,6 @@ import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 /**
@@ -23,6 +22,8 @@ public class Ammeter {
     }
 
     public void measure(){
+        if(!config.enabled)
+            return;
         if(wire.getType() == Material.REDSTONE_WIRE){
             player.sendMessage(ChatColor.GOLD + "Power in redstone wire: " + Byte.toString(wire.getData()) + "/15.");
         }

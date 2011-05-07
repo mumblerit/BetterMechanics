@@ -26,6 +26,8 @@ public class HiddenSwitch {
     }
 
     public boolean map(){
+        if(!config.enabled)
+            return false;
         levers = BlockMapper.mapAllInCuboidRegion(sign.getBlock(),1, Material.LEVER);
         return (!levers.isEmpty());
     }

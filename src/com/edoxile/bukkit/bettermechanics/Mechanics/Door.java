@@ -38,6 +38,8 @@ public class Door {
     }
 
     public boolean map() throws InvalidMaterialException, BlockNotFoundException, NonCardinalDirectionException, ChestNotFoundException {
+        if(!config.enabled)
+            return false;
         BlockFace direction;
         BlockFace orientation = SignUtil.getBlockFace(sign);
         if (sign.getLine(1).equals("[Door Down]")) {

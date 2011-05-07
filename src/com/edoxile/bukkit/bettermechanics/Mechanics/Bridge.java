@@ -38,6 +38,8 @@ public class Bridge {
     }
 
     public boolean map() throws NonCardinalDirectionException, BlockNotFoundException, InvalidMaterialException, ChestNotFoundException {
+        if(!config.enabled)
+            return false;
         BlockFace bf;
         if (config.canUseBlock(sign.getBlock().getRelative(BlockFace.UP).getType())) {
             bf = BlockFace.UP;

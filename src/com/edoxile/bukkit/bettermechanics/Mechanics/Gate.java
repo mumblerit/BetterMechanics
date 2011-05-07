@@ -35,6 +35,8 @@ public class Gate {
     }
 
     public boolean map() throws NonCardinalDirectionException, ChestNotFoundException, OutOfBoundsException, BlockNotFoundException {
+        if(!config.enabled)
+            return false;
         Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 1, Material.CHEST);
         if (chestBlock == null) {
             throw new ChestNotFoundException();

@@ -4,7 +4,6 @@ import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import com.edoxile.bukkit.bettermechanics.Utils.BlockMapper;
 import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.Utils.SignUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,7 +14,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,6 +33,8 @@ public class Lift {
     }
 
     public boolean map() throws BlockNotFoundException {
+        if(!config.enabled)
+            return false;
         Sign endSign;
         BlockFace direction;
         if (sign.getLine(1).equals("[Lift Down]")) {

@@ -26,6 +26,7 @@ public class MechanicsConfig {
     public final LiftConfig liftConfig;
     public final HiddenSwitchConfig hiddenSwitchConfig;
     public final AmmeterConfig ammeterConfig;
+    public final CauldronConfig cauldronConfig;
 
     public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
         plugin = p;
@@ -42,6 +43,7 @@ public class MechanicsConfig {
         liftConfig = new LiftConfig();
         hiddenSwitchConfig = new HiddenSwitchConfig();
         ammeterConfig = new AmmeterConfig();
+        cauldronConfig = new CauldronConfig();
 
     }
 
@@ -117,6 +119,16 @@ public class MechanicsConfig {
         }
     }
 
+    public class CauldronConfig {
+        public final boolean enabled;
+        public final CauldronCookbook cauldronCookbook;
+
+        public CauldronConfig() {
+            enabled = config.getBoolean("cauldron.enabled", true);
+            cauldronCookbook = new CauldronCookbook();
+        }
+    }
+
     public class AmmeterConfig {
         public final boolean enabled;
 
@@ -147,6 +159,10 @@ public class MechanicsConfig {
 
     public AmmeterConfig getAmmeterConfig(){
         return this.ammeterConfig;
+    }
+
+    public CauldronConfig getCauldronConfig(){
+        return this.cauldronConfig;
     }
 
     private void createConfig() throws ConfigWriteException {
