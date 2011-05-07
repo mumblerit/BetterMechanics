@@ -19,9 +19,9 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Edoxile
- */
+* Created by IntelliJ IDEA.
+* User: Edoxile
+*/
 public class Door {
     private static final Logger log = Logger.getLogger("Minecraft");
     private Sign sign;

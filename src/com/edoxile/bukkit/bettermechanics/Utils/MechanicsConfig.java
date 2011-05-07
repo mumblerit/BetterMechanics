@@ -2,7 +2,13 @@ package com.edoxile.bukkit.bettermechanics.Utils;
 
 import com.edoxile.bukkit.bettermechanics.BetterMechanics;
 import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
@@ -11,12 +17,14 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Edoxile
  */
 public class MechanicsConfig {
+    private static final Logger log = Logger.getLogger("Minecraft");
     private static BetterMechanics plugin;
     private static Configuration config;
 
@@ -27,6 +35,7 @@ public class MechanicsConfig {
     public final HiddenSwitchConfig hiddenSwitchConfig;
     public final AmmeterConfig ammeterConfig;
     public final CauldronConfig cauldronConfig;
+    public final PermissionConfig permissionConfig;
 
     public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
         plugin = p;
@@ -44,7 +53,7 @@ public class MechanicsConfig {
         hiddenSwitchConfig = new HiddenSwitchConfig();
         ammeterConfig = new AmmeterConfig();
         cauldronConfig = new CauldronConfig();
-
+        permissionConfig = new PermissionConfig();
     }
 
     public static class BridgeConfig {
@@ -137,31 +146,98 @@ public class MechanicsConfig {
         }
     }
 
-    public BridgeConfig getBridgeConfig(){
+    public class PermissionConfig {
+        public final boolean usePermissions;
+        public final boolean useWorldGuard;
+        private WorldGuardPlugin worldGuard;
+        private PermissionHandler permissionHandler;
+
+        public PermissionConfig() {
+            usePermissions = config.getBoolean("use-permissions", true);
+            useWorldGuard = config.getBoolean("use-worldguard", true);
+            if (usePermissions)
+                this.setupPermissions();
+            if (useWorldGuard)
+                this.setupWorldGuard();
+        }
+
+        private void setupWorldGuard() {
+            Plugin wg = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+            if (worldGuard == null) {
+                if (plugin != null) {
+                    worldGuard = (WorldGuardPlugin) wg;
+                }
+            }
+        }
+
+        private void setupPermissions() {
+            Plugin permissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
+
+            if (this.permissionHandler == null) {
+                if (permissionsPlugin != null) {
+                    this.permissionHandler = ((Permissions) permissionsPlugin).getHandler();
+                } else {
+                    log.info("[BetterMechanics] Permission system not detected, defaulting to OP");
+                }
+            }
+        }
+
+        public boolean checkPermissions(Player player, String permission) {
+            if (permissionHandler == null) {
+                return true;
+            } else {
+                return player.isOp() || permissionHandler.permission(player, "bettermechanics." + permission);
+            }
+        }
+
+        public boolean checkWorldGuard(Player player, Block clickedBlock) {
+            if (worldGuard == null) {
+                return true;
+            } else {
+                return player.isOp() || worldGuard.canBuild(player, clickedBlock);
+            }
+        }
+
+        public boolean check(Player player, String type, Block clickedBlock) {
+            boolean allowed = false;
+            if (checkPermissions(player, type)) {
+                if (checkWorldGuard(player, clickedBlock)) {
+                    allowed = true;
+                }
+            }
+            return allowed;
+        }
+    }
+
+    public PermissionConfig getPermissionConfig() {
+        return this.permissionConfig;
+    }
+
+    public BridgeConfig getBridgeConfig() {
         return this.bridgeConfig;
     }
 
-    public GateConfig getGateConfig(){
+    public GateConfig getGateConfig() {
         return this.gateConfig;
     }
 
-    public DoorConfig getDoorConfig(){
+    public DoorConfig getDoorConfig() {
         return this.doorConfig;
     }
 
-    public HiddenSwitchConfig getHiddenSwitchConfig(){
+    public HiddenSwitchConfig getHiddenSwitchConfig() {
         return this.hiddenSwitchConfig;
     }
 
-    public LiftConfig getLiftConfig(){
+    public LiftConfig getLiftConfig() {
         return this.liftConfig;
     }
 
-    public AmmeterConfig getAmmeterConfig(){
+    public AmmeterConfig getAmmeterConfig() {
         return this.ammeterConfig;
     }
 
-    public CauldronConfig getCauldronConfig(){
+    public CauldronConfig getCauldronConfig() {
         return this.cauldronConfig;
     }
 
