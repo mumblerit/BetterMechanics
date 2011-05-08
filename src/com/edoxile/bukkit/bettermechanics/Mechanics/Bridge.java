@@ -156,7 +156,9 @@ public class Bridge {
 
     public boolean isClosed() {
         for (Block b : blockSet) {
-            return (!canPassThrough(b.getType()));
+            if(b.getType() == bridgeMaterial.getItemType() || canPassThrough(b.getType())){
+                return (!canPassThrough(b.getType()));
+            }
         }
         return false;
     }
