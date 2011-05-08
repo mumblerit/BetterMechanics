@@ -54,7 +54,7 @@ public class Lift {
         Block dest3 = dest1.getRelative(BlockFace.DOWN);
         floorName = endSign.getLine(0);
         if (canPassThrough(dest1.getType()) && canPassThrough(dest2.getType())) {
-            if (canPassThrough(dest3.getType())) {
+            if (canPassThrough(dest3.getType()) && canPassThrough(dest3.getRelative(BlockFace.DOWN).getType())) {
                 player.sendMessage(ChatColor.RED + "You have no place to stand on!");
                 return false;
             }
@@ -62,7 +62,7 @@ public class Lift {
             destination.setY(((double) dest1.getY()));
             return true;
         } else if (canPassThrough(dest1.getType()) && canPassThrough(dest3.getType())) {
-            if (canPassThrough(dest3.getRelative(BlockFace.DOWN).getType())) {
+            if (canPassThrough(dest3.getRelative(BlockFace.DOWN).getType()) && canPassThrough(dest3.getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN).getType())) {
                 player.sendMessage(ChatColor.RED + "You have no place to stand on!");
                 return false;
             }
