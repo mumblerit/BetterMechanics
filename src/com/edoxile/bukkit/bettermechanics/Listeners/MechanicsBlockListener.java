@@ -1,10 +1,7 @@
 package com.edoxile.bukkit.bettermechanics.Listeners;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.ChestNotFoundException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.NonCardinalDirectionException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfBoundsException;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Bridge;
+import com.edoxile.bukkit.bettermechanics.Mechanics.Door;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Gate;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
@@ -41,11 +38,11 @@ public class MechanicsBlockListener extends BlockListener {
         }
     }
 
-    public void onBlockPlace(BlockPlaceEvent event){
+    public void onBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlockAgainst();
-        if(SignUtil.isSign(block)){
+        if (SignUtil.isSign(block)) {
             Sign sign = SignUtil.getSign(block);
-            if(SignUtil.getMechanicsType(sign)!=null){
+            if (SignUtil.getMechanicsType(sign) != null) {
                 event.setCancelled(true);
             }
         }
@@ -121,20 +118,20 @@ public class MechanicsBlockListener extends BlockListener {
                 }
             }
             break;
-            /*case DOOR: {
+            case DOOR: {
                 Door door = new Door(config, sign, null);
                 try {
-                    door.map();
-                    if (event.getNewCurrent() > 0) {
-                        door.toggleClosed();
-                    } else {
+                    if (!door.map())
+                        return;
+                    if (door.isClosed()) {
                         door.toggleOpen();
+                    } else {
+                        door.toggleClosed();
                     }
                 } catch (Exception e) {
-
                 }
             }
-            break;*/
+            break;
             default:
                 return;
         }
