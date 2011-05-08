@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.BlockListener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
@@ -37,6 +38,16 @@ public class MechanicsBlockListener extends BlockListener {
             String name = type.name();
             name = name.replace("_", " ").toLowerCase();
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a " + name + "!");
+        }
+    }
+
+    public void onBlockPlace(BlockPlaceEvent event){
+        Block block = event.getBlockAgainst();
+        if(SignUtil.isSign(block)){
+            Sign sign = SignUtil.getSign(block);
+            if(SignUtil.getMechanicsType(sign)!=null){
+                event.setCancelled(true);
+            }
         }
     }
 
