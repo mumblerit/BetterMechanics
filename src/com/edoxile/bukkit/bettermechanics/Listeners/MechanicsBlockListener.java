@@ -109,7 +109,7 @@ public class MechanicsBlockListener extends BlockListener {
                 try {
                     if (!gate.map())
                         return;
-                    if (gate.isClosed()) {
+                    if (event.getNewCurrent() > 0) {
                         gate.toggleOpen();
                     } else {
                         gate.toggleClosed();
@@ -123,7 +123,7 @@ public class MechanicsBlockListener extends BlockListener {
                 try {
                     if (!door.map())
                         return;
-                    if (door.isClosed()) {
+                    if (event.getNewCurrent() > 0) {
                         door.toggleOpen();
                     } else {
                         door.toggleClosed();
