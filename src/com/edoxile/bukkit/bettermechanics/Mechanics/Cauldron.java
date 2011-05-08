@@ -47,13 +47,14 @@ public class Cauldron {
 
             //We don't want the lava in our recipe
             dy++;
-            HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
             HashSet<Block> blockSet = new HashSet<Block>();
             Block referencePoint = clickedBlock.getRelative(dx,dy,dz);
             for (int ndy = 0; ndy <= 3; ndy++) {
                 for (int ndx = 0; ndx <= 1; ndx++) {
                     for (int ndz = 0; ndz <= 1; ndz++) {
-                        blockSet.add(referencePoint.getRelative(ndx, ndy, ndz));
+                        if(referencePoint.getRelative(ndx, ndy, ndz).getType() != Material.AIR){
+                            blockSet.add(referencePoint.getRelative(ndx,ndy,ndz));
+                        }
                     }
                 }
             }

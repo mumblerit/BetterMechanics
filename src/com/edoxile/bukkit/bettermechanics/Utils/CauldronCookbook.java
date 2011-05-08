@@ -54,9 +54,9 @@ public class CauldronCookbook {
 
     public Recipe find(Map<Integer, Integer> ingredients) {
         for (Recipe recipe : recipes) {
-            if (recipe.hasAllIngredients(ingredients)) {
-                return recipe;
-            }
+                if (recipe.hasAllIngredients(ingredients)) {
+                    return recipe;
+                }
         }
         return null;
     }
@@ -138,6 +138,7 @@ public class CauldronCookbook {
         }
         return out;
     }
+
     public static final class Recipe {
         private final String name;
         private final Map<Integer, Integer> ingredientLookup = new HashMap<Integer, Integer>();
@@ -161,15 +162,7 @@ public class CauldronCookbook {
         }
 
         public boolean hasAllIngredients(Map<Integer, Integer> check) {
-            for (Map.Entry<Integer, Integer> entry : ingredientLookup.entrySet()) {
-                int id = entry.getKey();
-                if (!check.containsKey(id)) {
-                    return false;
-                } else if (check.get(id) < entry.getValue()) {
-                    return false;
-                }
-            }
-            return true;
+            return ingredientLookup.equals(check);
         }
 
         public List<Integer> getResults() {
