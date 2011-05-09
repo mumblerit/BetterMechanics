@@ -14,15 +14,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
-import java.util.logging.Logger;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Edoxile
  */
 
 public class MechanicsBlockListener extends BlockListener {
-    private static final Logger log = Logger.getLogger("Minecraft");
     private MechanicsConfig config;
 
     public MechanicsBlockListener(MechanicsConfig c) {
@@ -30,11 +27,42 @@ public class MechanicsBlockListener extends BlockListener {
     }
 
     public void onSignChange(SignChangeEvent event) {
-        MechanicsType type = SignUtil.getMechanicsType(event.getLine(1));
-        if (type != null) {
-            String name = type.name();
-            name = name.replace("_", " ").toLowerCase();
-            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a " + name + "!");
+        String str = event.getLine(1);
+        if (str.equalsIgnoreCase("[lift up]")){
+            event.setLine(1, "[Lift Up]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
+        } else if(str.equalsIgnoreCase("[Lift Down]")){
+            event.setLine(1, "[Lift Down]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
+        }  else if(str.equalsIgnoreCase("[Lift]")){
+            event.setLine(1, "[Lift]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
+        } else if (str.equalsIgnoreCase("[gate]")) {
+            event.setLine(1, "[Gate]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a gate!");
+        } else if (str.equalsIgnoreCase("[dgate]")) {
+            event.setLine(1, "[Dgate]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small gate!");
+        } else if (str.equalsIgnoreCase("[bridge]")) {
+            event.setLine(1, "[Bridge]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
+        } else if (str.equalsIgnoreCase("[bridge end]")) {
+            event.setLine(1, "[Bridge End]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
+        } else if (str.equalsIgnoreCase("[door up]")){
+            event.setLine(1, "[Door Up]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
+        } else if(str.equalsIgnoreCase("[door down]")){
+            event.setLine(1, "[Door Down]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
+        }  else if(str.equalsIgnoreCase("[door]")){
+            event.setLine(1, "[Door]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
+        } else if (str.equalsIgnoreCase("[x]")) {
+            event.setLine(1, "[X]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a hidden switch!");
+        } else {
+            return;
         }
     }
 
@@ -96,9 +124,9 @@ public class MechanicsBlockListener extends BlockListener {
                     if (!bridge.map())
                         return;
                     if (event.getNewCurrent() > 0) {
-                        bridge.toggleOpen();
-                    } else {
                         bridge.toggleClosed();
+                    } else {
+                        bridge.toggleOpen();
                     }
                 } catch (Exception e) {
                 }
@@ -110,9 +138,9 @@ public class MechanicsBlockListener extends BlockListener {
                     if (!gate.map())
                         return;
                     if (event.getNewCurrent() > 0) {
-                        gate.toggleOpen();
-                    } else {
                         gate.toggleClosed();
+                    } else {
+                        gate.toggleOpen();
                     }
                 } catch (Exception e) {
                 }
@@ -124,9 +152,9 @@ public class MechanicsBlockListener extends BlockListener {
                     if (!door.map())
                         return;
                     if (event.getNewCurrent() > 0) {
-                        door.toggleOpen();
-                    } else {
                         door.toggleClosed();
+                    } else {
+                        door.toggleOpen();
                     }
                 } catch (Exception e) {
                 }
