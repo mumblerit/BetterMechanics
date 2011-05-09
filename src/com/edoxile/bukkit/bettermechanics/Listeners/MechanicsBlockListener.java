@@ -15,9 +15,9 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Edoxile
- */
+* Created by IntelliJ IDEA.
+* User: Edoxile
+*/
 
 public class MechanicsBlockListener extends BlockListener {
     private MechanicsConfig config;
@@ -34,7 +34,7 @@ public class MechanicsBlockListener extends BlockListener {
         } else if(str.equalsIgnoreCase("[Lift Down]")){
             event.setLine(1, "[Lift Down]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
-        }  else if(str.equalsIgnoreCase("[Lift]")){
+        } else if(str.equalsIgnoreCase("[Lift]")){
             event.setLine(1, "[Lift]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
         } else if (str.equalsIgnoreCase("[gate]")) {
@@ -55,7 +55,7 @@ public class MechanicsBlockListener extends BlockListener {
         } else if(str.equalsIgnoreCase("[door down]")){
             event.setLine(1, "[Door Down]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
-        }  else if(str.equalsIgnoreCase("[door]")){
+        } else if(str.equalsIgnoreCase("[door]")){
             event.setLine(1, "[Door]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
         } else if (str.equalsIgnoreCase("[x]")) {
@@ -87,6 +87,8 @@ public class MechanicsBlockListener extends BlockListener {
                 if (sign != null) {
                     if (SignUtil.getActiveMechanicsType(sign) != null) {
                         break;
+                    } else {
+                        sign = null;
                     }
                 }
             }
@@ -98,6 +100,8 @@ public class MechanicsBlockListener extends BlockListener {
                     if (sign != null) {
                         if (SignUtil.getActiveMechanicsType(sign) != null) {
                             break;
+                        } else {
+                            sign = null;
                         }
                     }
                 }
@@ -109,6 +113,8 @@ public class MechanicsBlockListener extends BlockListener {
                         if (sign != null) {
                             if (SignUtil.getActiveMechanicsType(sign) != null) {
                                 break;
+                            } else {
+                                sign = null;
                             }
                         }
                     }
