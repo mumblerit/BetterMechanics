@@ -28,17 +28,17 @@ public class SignUtil {
     }
 
     public static MechanicsType getMechanicsType(String str) {
-        if (str.equals("[Lift Up]") || str.equals("[Lift Down]") || str.equals("[Lift]"))
+        if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]") || str.equalsIgnoreCase("[Lift]"))
             return MechanicsType.LIFT;
-        else if (str.equals("[Gate]"))
+        else if (str.equalsIgnoreCase("[Gate]"))
             return MechanicsType.GATE;
-        else if (str.equals("[Dgate]"))
+        else if (str.equalsIgnoreCase("[Dgate]"))
             return MechanicsType.SMALL_GATE;
-        else if (str.equals("[Bridge]") || str.equals("[Bridge End]"))
+        else if (str.equalsIgnoreCase("[Bridge]") || str.equalsIgnoreCase("[Bridge End]"))
             return MechanicsType.BRIDGE;
-        else if (str.equals("[Door]") || str.equals("[Door Down]") || str.equals("[Door Up]"))
+        else if (str.equalsIgnoreCase("[Door]") || str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
             return MechanicsType.DOOR;
-        else if (str.equals("[X]"))
+        else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
         else
             return null;
@@ -49,17 +49,17 @@ public class SignUtil {
         if (s.equals("") || s == null)
             return null;
 
-        if (str.equals("[Lift Up]") || str.equals("[Lift Down]") || str.equals("[Lift]"))
+        if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]") || str.equalsIgnoreCase("[Lift]"))
             return MechanicsType.LIFT;
-        else if (str.equals("[Gate]"))
+        else if (str.equalsIgnoreCase("[Gate]"))
             return MechanicsType.GATE;
-        else if (str.equals("[Dgate]"))
+        else if (str.equalsIgnoreCase("[Dgate]"))
             return MechanicsType.SMALL_GATE;
-        else if (str.equals("[Bridge]") || str.equals("[Bridge End]"))
+        else if (str.equalsIgnoreCase("[Bridge]") || str.equalsIgnoreCase("[Bridge End]"))
             return MechanicsType.BRIDGE;
-        else if (str.equals("[Door]") || str.equals("[Door Down]") || str.equals("[Door Up]"))
+        else if (str.equalsIgnoreCase("[Door]") || str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
             return MechanicsType.DOOR;
-        else if (str.equals("[X]"))
+        else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
         else
             return null;
@@ -70,17 +70,17 @@ public class SignUtil {
         if (s.equals("") || s == null)
             return null;
 
-        if (str.equals("[Lift Up]") || str.equals("[Lift Down]"))
+        if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]"))
             return MechanicsType.LIFT;
-        else if (str.equals("[Gate]"))
+        else if (str.equalsIgnoreCase("[Gate]"))
             return MechanicsType.GATE;
-        else if (str.equals("[Dgate]"))
+        else if (str.equalsIgnoreCase("[Dgate]"))
             return MechanicsType.SMALL_GATE;
-        else if (str.equals("[Bridge]"))
+        else if (str.equalsIgnoreCase("[Bridge]"))
             return MechanicsType.BRIDGE;
-        else if (str.equals("[Door Down]") || str.equals("[Door Up]"))
+        else if (str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
             return MechanicsType.DOOR;
-        else if (str.equals("[X]"))
+        else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
         else
             return null;
