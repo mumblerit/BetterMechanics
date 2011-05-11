@@ -42,7 +42,7 @@ public class Door {
             return false;
         BlockFace direction;
         BlockFace orientation = SignUtil.getBlockFace(sign);
-        if (sign.getLine(1).equals("[Door Down]")) {
+        if (sign.getLine(1).equalsIgnoreCase("[Door Down]")) {
             direction = BlockFace.DOWN;
         } else {
             direction = BlockFace.UP;

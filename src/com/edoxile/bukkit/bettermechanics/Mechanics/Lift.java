@@ -25,7 +25,7 @@ public class Lift {
     private Sign sign;
     private Player player;
     private MechanicsConfig.LiftConfig config;
-    private static List<Integer> nonSolidBlockList = Arrays.asList(0, 6, 8, 9, 10, 11, 27, 28, 30, 3, 38, 39, 40, 50, 51, 55, 59, 63, 65, 66, 68, 69, 70, 72, 75, 76, 78, 83, 90, 93, 94);
+    private static List<Integer> nonSolidBlockList = Arrays.asList(0, 6, 8, 9, 10, 11, 27, 28, 30, 37, 38, 39, 40, 50, 51, 55, 59, 63, 65, 66, 68, 69, 70, 72, 75, 76, 78, 83, 90, 93, 94);
     private Location destination;
     private String floorName;
     private BlockFace direction;
@@ -40,7 +40,7 @@ public class Lift {
         if (!config.enabled)
             return false;
         Sign endSign;
-        if (sign.getLine(1).equals("[Lift Down]")) {
+        if (sign.getLine(1).equalsIgnoreCase("[Lift Down]")) {
             direction = BlockFace.DOWN;
         } else {
             direction = BlockFace.UP;
