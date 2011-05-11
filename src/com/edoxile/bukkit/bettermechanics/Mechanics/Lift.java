@@ -40,7 +40,7 @@ public class Lift {
         if (!config.enabled)
             return false;
         Sign endSign;
-        if (sign.getLine(1).equals("[Lift Down]")) {
+        if (sign.getLine(1).equalsIgnoreCase("[Lift Down]")) {
             direction = BlockFace.DOWN;
         } else {
             direction = BlockFace.UP;

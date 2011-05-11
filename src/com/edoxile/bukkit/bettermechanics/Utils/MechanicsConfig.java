@@ -149,16 +149,20 @@ public class MechanicsConfig {
     public class PermissionConfig {
         public final boolean usePermissions;
         public final boolean useWorldGuard;
-        private WorldGuardPlugin worldGuard;
-        private PermissionHandler permissionHandler;
+        private WorldGuardPlugin worldGuard = null;
+        private PermissionHandler permissionHandler = null;
 
         public PermissionConfig() {
             usePermissions = config.getBoolean("use-permissions", true);
             useWorldGuard = config.getBoolean("use-worldguard", true);
-            if (usePermissions)
+            if (usePermissions) {
                 this.setupPermissions();
-            if (useWorldGuard)
+                log.info("[BetterMechanics] Using Permissions");
+            }
+            if (useWorldGuard) {
                 this.setupWorldGuard();
+                log.info("[BetterMechanics] Using WorldGuard");
+            }
         }
 
         private void setupWorldGuard() {
