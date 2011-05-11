@@ -5,6 +5,7 @@ import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -149,16 +150,20 @@ public class MechanicsConfig {
     public class PermissionConfig {
         public final boolean usePermissions;
         public final boolean useWorldGuard;
-        private WorldGuardPlugin worldGuard;
-        private PermissionHandler permissionHandler;
+        private WorldGuardPlugin worldGuard = null;
+        private PermissionHandler permissionHandler = null;
 
         public PermissionConfig() {
             usePermissions = config.getBoolean("use-permissions", true);
             useWorldGuard = config.getBoolean("use-worldguard", true);
-            if (usePermissions)
+            if (usePermissions) {
                 this.setupPermissions();
-            if (useWorldGuard)
+                log.info("[BetterMechanics] Using Permissions");
+            }
+            if (useWorldGuard){
                 this.setupWorldGuard();
+                log.info("[BetterMechanics] Using WorldGuard");
+            }
         }
 
         private void setupWorldGuard() {
@@ -203,7 +208,11 @@ public class MechanicsConfig {
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
                     allowed = true;
+                } else {
+                    player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
                 }
+            } else {
+                player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
             }
             return allowed;
         }

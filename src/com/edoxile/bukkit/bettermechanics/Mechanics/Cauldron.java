@@ -89,7 +89,7 @@ public class Cauldron {
 
         if (recipe != null) {
 
-            player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
+            player.sendMessage(ChatColor.GOLD + "In a proof of smoke, you've made " + recipe.getName() + ".");
 
             for (Block b : contents) {
                 b.setType(Material.AIR);

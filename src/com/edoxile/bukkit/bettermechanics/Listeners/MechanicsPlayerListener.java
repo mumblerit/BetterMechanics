@@ -33,7 +33,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                 Sign sign = SignUtil.getSign(event.getClickedBlock());
                 if (sign != null) {
                     if (SignUtil.getActiveMechanicsType(sign) != null) {
-                        if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().replace("_", "-").toLowerCase(), event.getClickedBlock())) {
+                        if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock())) {
                             return;
                         }
                         switch (SignUtil.getActiveMechanicsType(sign)) {
@@ -123,24 +123,25 @@ public class MechanicsPlayerListener extends PlayerListener {
                 ammeter.measure();
             } else {
                 //First check cauldron, then hidden switch;
-                if (permissions.check(event.getPlayer(), "cauldron", event.getClickedBlock())) {
-                    if (!event.getPlayer().getItemInHand().getType().isBlock() || event.getPlayer().getItemInHand().getType() == Material.AIR) {
-                        Cauldron cauldron = Cauldron.preCauldron(event.getClickedBlock(), config, event.getPlayer());
-                        if (cauldron != null) {
+                if (!event.getPlayer().getItemInHand().getType().isBlock() || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+                    Cauldron cauldron = Cauldron.preCauldron(event.getClickedBlock(), config, event.getPlayer());
+                    if (cauldron != null) {
+                        if (permissions.check(event.getPlayer(), "cauldron", event.getClickedBlock())) {
                             cauldron.performCauldron();
+                        } else {
                             return;
                         }
                     }
                 }
-                if (permissions.check(event.getPlayer(), "hidden-switch", event.getClickedBlock())) {
-                    if (isRedstoneBlock(event.getClickedBlock().getTypeId()))
-                        return;
+                if (isRedstoneBlock(event.getClickedBlock().getTypeId()))
+                    return;
 
-                    BlockFace[] toCheck = {BlockFace.WEST, BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.DOWN, BlockFace.UP};
-                    for (BlockFace b : toCheck) {
-                        if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
-                            Sign sign = SignUtil.getSign(event.getClickedBlock().getRelative(b));
-                            if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
+                BlockFace[] toCheck = {BlockFace.WEST, BlockFace.EAST, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.DOWN, BlockFace.UP};
+                for (BlockFace b : toCheck) {
+                    if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
+                        Sign sign = SignUtil.getSign(event.getClickedBlock().getRelative(b));
+                        if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
+                            if (permissions.check(event.getPlayer(), "hidden_switch", event.getClickedBlock())) {
                                 HiddenSwitch hiddenSwitch = new HiddenSwitch(config, sign, event.getPlayer());
                                 if (hiddenSwitch.map())
                                     hiddenSwitch.toggleLevers();

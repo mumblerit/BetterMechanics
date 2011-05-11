@@ -25,7 +25,7 @@ public class Lift {
     private Sign sign;
     private Player player;
     private MechanicsConfig.LiftConfig config;
-    private static List<Integer> nonSolidBlockList = Arrays.asList(0, 6, 8, 9, 10, 11, 27, 28, 30, 3, 38, 39, 40, 50, 51, 55, 59, 63, 65, 66, 68, 69, 70, 72, 75, 76, 78, 83, 90, 93, 94);
+    private static List<Integer> nonSolidBlockList = Arrays.asList(0, 6, 8, 9, 10, 11, 27, 28, 30, 37, 38, 39, 40, 50, 51, 55, 59, 63, 65, 66, 68, 69, 70, 72, 75, 76, 78, 83, 90, 93, 94);
     private Location destination;
     private String floorName;
     private BlockFace direction;
@@ -78,7 +78,7 @@ public class Lift {
     public boolean movePlayer() {
         if (player.teleport(destination)) {
             if (floorName.equals("")) {
-                player.sendMessage(ChatColor.GOLD + "You went a floor " + direction.name().toLowerCase() + "!");
+                player.sendMessage(ChatColor.GOLD + "You went " + direction.name().toLowerCase() + " a floor!");
             } else {
                 player.sendMessage(ChatColor.GOLD + "You went to floor: " + floorName);
             }
