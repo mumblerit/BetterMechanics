@@ -25,7 +25,16 @@ public class Ammeter {
         if(!config.enabled)
             return;
         if(wire.getType() == Material.REDSTONE_WIRE){
-            player.sendMessage(ChatColor.GOLD + "Power in redstone wire: " + Byte.toString(wire.getData()) + "/15.");
+            String msg = "Current is: [" + ChatColor.GREEN;
+            for(byte i = 0; i < wire.getData(); i++){
+                msg += "|";
+            }
+            msg += ChatColor.DARK_RED;
+            for(byte i = wire.getData(); i < 15; i++){
+                msg += "|";
+            }
+            msg += ChatColor.WHITE + "] " + ChatColor.RED + Byte.toString(wire.getData());
+            player.sendMessage(msg);
         }
     }
 }
