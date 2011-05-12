@@ -66,10 +66,10 @@ public class Door {
         try {
             blockSet = BlockMapper.mapVertical(direction, orientation, startBlock, endBlock);
             if (!blockSet.isEmpty()) {
-                Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 1, Material.CHEST);
+                Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 3, Material.CHEST);
                 if (chestBlock == null) {
                     //Check other sign
-                    chestBlock = BlockMapper.mapCuboidRegion(endSign.getBlock(), 1, Material.CHEST);
+                    chestBlock = BlockMapper.mapCuboidRegion(endSign.getBlock(), 3, Material.CHEST);
                     if (chestBlock == null) {
                         throw new ChestNotFoundException();
                     }
