@@ -138,6 +138,7 @@ public class MechanicsBlockListener extends BlockListener {
                 }
             }
             break;
+            case SMALL_GATE:
             case GATE: {
                 Gate gate = new Gate(config, sign, null);
                 try {
