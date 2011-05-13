@@ -128,7 +128,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 event.getPlayer().getServer().getPluginManager().callEvent(new SignChangeEvent(event.getClickedBlock(), event.getPlayer(), text));
                             } else {
                                 text = sign.getLines();
-                                Pen.setLines(event.getPlayer(), text);
+                                Pen.setText(event.getPlayer(), text);
                                 event.getPlayer().sendMessage(ChatColor.GOLD + "Loaded sign text in memory.");
                             }
                         }

@@ -57,6 +57,10 @@ public class Pen {
         }
     }
 
+    public static void setText(Player player, String[] args){
+        dataMap.put(player, args);
+    }
+
     public static String[] getLines(Player player){
         return dataMap.get(player);
     }
