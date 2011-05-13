@@ -65,17 +65,20 @@ public class BetterMechanics extends JavaPlugin {
                 } else {
                     Pen pen = new Pen();
                     if (args[0].equalsIgnoreCase("set")) {
-                        if(args.length < 2){
+                        if (args.length < 2) {
                             player.sendMessage(ChatColor.DARK_RED + "Too few arguments.");
+                        } else {
+                            pen.setLines(player, args);
                         }
-                        pen.setLines(player, args);
                     } else if (args[0].equalsIgnoreCase("clear")) {
                         pen.clear(player);
+                        player.sendMessage(ChatColor.GOLD + "Pen data cleared.");
                     } else if (args[0].equalsIgnoreCase("setline")) {
-                        if(args.length < 3){
+                        if (args.length < 3) {
                             player.sendMessage(ChatColor.DARK_RED + "Too few arguments.");
+                        } else {
+                            pen.setLine(player, args);
                         }
-                        pen.setLine(player, args);
                     } else if (args[0].equalsIgnoreCase("help")) {
                         player.sendMessage("Pen help. The char '^' is a linebreak. Commands:");
                         player.sendMessage("/pen set <text> | set the sign text");

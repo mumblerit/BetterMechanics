@@ -34,7 +34,9 @@ public class Pen {
                 player.sendMessage(ChatColor.GOLD + "[" + s + "]");
             }
         } catch (NumberFormatException ex) {
-            player.sendMessage("Invalid number format for line number.");
+            player.sendMessage(ChatColor.RED + "Invalid number format for line number.");
+        } catch (IndexOutOfBoundsException ex) {
+            player.sendMessage(ChatColor.RED + "Invalid line number. Line numbers start at 0 and end at 3.");
         }
     }
 
@@ -57,11 +59,15 @@ public class Pen {
         }
     }
 
-    public static void setText(Player player, String[] args){
+    public static void setText(Player player, String[] args) {
         dataMap.put(player, args);
+        player.sendMessage(ChatColor.GOLD + "New pen text:");
+        for (String s : args) {
+            player.sendMessage(ChatColor.GOLD + "[" + s + "]");
+        }
     }
 
-    public static String[] getLines(Player player){
+    public static String[] getLines(Player player) {
         return dataMap.get(player);
     }
 
