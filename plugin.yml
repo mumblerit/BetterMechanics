@@ -1,3 +1,7 @@
 name: BetterMechanics
 main: com.edoxile.bukkit.bettermechanics.BetterMechanics
-version: 0.1
+version: 2.0
+commands:
+  pen:
+    description: Change the text of signs
+    usage: /<command> <clear|set|setline|help>

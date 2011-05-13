@@ -1,14 +1,14 @@
 bridge:
     enabled: true
     max-length: 32
-    allowed-materials: [4, 5, 22, 24, 35, 41, 42, 44, 45, 48, 49, 57, 80, 87, 88, 89, 91]
+    allowed-materials: [4, 5, 22, 24, 35, 41, 42, 44, 45, 48, 57, 80]
 gate:
     enabled: true
     max-length: 32
 door:
     enabled: true
     max-height: 32
-    allowed-materials: [4, 5, 22, 24, 35, 41, 42, 44, 45, 48, 49, 57, 80, 87, 88, 89, 91]
+    allowed-materials: [4, 5, 22, 24, 35, 41, 42, 45, 47, 48, 49, 57, 80]
 hidden-switch:
     enabled: true
 lift:
@@ -18,6 +18,10 @@ ammeter:
     enabled: true
 cauldron:
     enabled: true
+pen:
+    enabled: true
+    material: 280
 
-use-permissions: true
+use-permissions: false
 use-worldguard: false
+use-zones: false

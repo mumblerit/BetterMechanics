@@ -5,6 +5,8 @@ import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.zones.Zones;
+import com.zones.model.ZoneBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,14 +31,15 @@ public class MechanicsConfig {
     private static BetterMechanics plugin;
     private static Configuration config;
 
-    public final BridgeConfig bridgeConfig;
-    public final GateConfig gateConfig;
-    public final DoorConfig doorConfig;
-    public final LiftConfig liftConfig;
-    public final HiddenSwitchConfig hiddenSwitchConfig;
-    public final AmmeterConfig ammeterConfig;
-    public final CauldronConfig cauldronConfig;
-    public final PermissionConfig permissionConfig;
+    public BridgeConfig bridgeConfig;
+    public GateConfig gateConfig;
+    public DoorConfig doorConfig;
+    public LiftConfig liftConfig;
+    public HiddenSwitchConfig hiddenSwitchConfig;
+    public AmmeterConfig ammeterConfig;
+    public CauldronConfig cauldronConfig;
+    public PermissionConfig permissionConfig;
+    public PenConfig penConfig;
 
     public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
         plugin = p;
@@ -55,6 +58,7 @@ public class MechanicsConfig {
         ammeterConfig = new AmmeterConfig();
         cauldronConfig = new CauldronConfig();
         permissionConfig = new PermissionConfig();
+        penConfig = new PenConfig();
     }
 
     public static class BridgeConfig {
@@ -88,6 +92,16 @@ public class MechanicsConfig {
             maxHeight = config.getInt("door.max-height", 32);
             maxLength = config.getInt("door.max-length", 32);
             maxWidth = config.getInt("door.max-width", 3);
+        }
+    }
+
+    public class PenConfig {
+        public final boolean enabled;
+        public final Material penMaterial;
+
+        public PenConfig() {
+            enabled = config.getBoolean("pen.enabled", true);
+            penMaterial = Material.getMaterial(config.getInt("pen.material", 280));
         }
     }
 
@@ -150,26 +164,33 @@ public class MechanicsConfig {
     public class PermissionConfig {
         public final boolean usePermissions;
         public final boolean useWorldGuard;
+        public final boolean useZones;
         private WorldGuardPlugin worldGuard = null;
         private PermissionHandler permissionHandler = null;
+        private Zones zones = null;
 
         public PermissionConfig() {
             usePermissions = config.getBoolean("use-permissions", true);
             useWorldGuard = config.getBoolean("use-worldguard", true);
+            useZones = config.getBoolean("use-zones", true);
             if (usePermissions) {
                 this.setupPermissions();
                 log.info("[BetterMechanics] Using Permissions");
             }
-            if (useWorldGuard){
+            if (useWorldGuard) {
                 this.setupWorldGuard();
                 log.info("[BetterMechanics] Using WorldGuard");
+            }
+            if (useZones) {
+                this.setupZones();
+                log.info("[BetterMechanics] Using Zones");
             }
         }
 
         private void setupWorldGuard() {
             Plugin wg = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
             if (worldGuard == null) {
-                if (plugin != null) {
+                if (wg != null) {
                     worldGuard = (WorldGuardPlugin) wg;
                 }
             }
@@ -184,6 +205,28 @@ public class MechanicsConfig {
                 } else {
                     log.info("[BetterMechanics] Permission system not detected, defaulting to OP");
                 }
+            }
+        }
+
+        private void setupZones() {
+            Plugin z = plugin.getServer().getPluginManager().getPlugin("Zones");
+            if (zones == null) {
+                if (z != null) {
+                    zones = (Zones) z;
+                }
+            }
+        }
+
+        public boolean checkZones(Player player, Block clickedBlock) {
+            if (zones == null) {
+                return true;
+            } else {
+                boolean canbuild = true;
+                ZoneBase zb = zones.getWorldManager(clickedBlock.getWorld()).getActiveZone(clickedBlock);
+                if (zb != null) {
+                    canbuild = player.isOp() || zb.allowBlockCreate(player, clickedBlock);
+                }
+                return canbuild;
             }
         }
 
@@ -248,6 +291,10 @@ public class MechanicsConfig {
 
     public CauldronConfig getCauldronConfig() {
         return this.cauldronConfig;
+    }
+
+    public PenConfig getPenConfig() {
+        return this.penConfig;
     }
 
     private void createConfig() throws ConfigWriteException {

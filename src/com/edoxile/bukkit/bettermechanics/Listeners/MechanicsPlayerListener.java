@@ -10,8 +10,11 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
+
+import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,6 +22,7 @@ import org.bukkit.event.player.PlayerListener;
  */
 
 public class MechanicsPlayerListener extends PlayerListener {
+    private static final Logger log = Logger.getLogger("Minecraft");
     private MechanicsConfig config;
     private MechanicsConfig.PermissionConfig permissions;
 
@@ -113,6 +117,19 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 }
                             }
                         }
+                    } else if (event.getPlayer().getItemInHand().getType() == config.getPenConfig().penMaterial) {
+                        if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock()) && permissions.checkZones(event.getPlayer(), event.getClickedBlock())) {
+                            String[] text = Pen.getLines(event.getPlayer());
+                            if (text != null) {
+                                for (int i = 0; i < text.length; i++) {
+                                    sign.setLine(i, text[i]);
+                                }
+                                event.getPlayer().sendMessage(ChatColor.GOLD + "You edited the sign! Place a torch near it to see the changes.");
+                                event.getPlayer().getServer().getPluginManager().callEvent(new SignChangeEvent(event.getClickedBlock(), event.getPlayer(), text));
+                            } else {
+                                event.getPlayer().sendMessage(ChatColor.DARK_RED + "You have to set a text with /pen first.");
+                            }
+                        }
                     }
                 }
             } else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE && event.getPlayer().getItemInHand().getType() == Material.COAL) {
@@ -122,7 +139,6 @@ public class MechanicsPlayerListener extends PlayerListener {
                 Ammeter ammeter = new Ammeter(config, event.getClickedBlock(), event.getPlayer());
                 ammeter.measure();
             } else {
-                //First check cauldron, then hidden switch;
                 if (!event.getPlayer().getItemInHand().getType().isBlock() || event.getPlayer().getItemInHand().getType() == Material.AIR) {
                     Cauldron cauldron = Cauldron.preCauldron(event.getClickedBlock(), config, event.getPlayer());
                     if (cauldron != null) {
