@@ -22,67 +22,70 @@ public class BlockbagUtil {
     private static Logger log = Logger.getLogger("Minecraft");
 
     public static boolean safeRemoveItems(Chest chest, ItemStack itemStack) throws OutOfMaterialException {
+        boolean checkData = true;
         if (itemStack.getData() != null) {
-            ItemStack[] stacks = chest.getInventory().getContents();
-            ItemStack tempStack;
-            for (int i = 0; i < stacks.length; i++) {
-                tempStack = stacks[i];
-                if (tempStack == null)
+            checkData = false;
+        }
+        ItemStack[] stacks = chest.getInventory().getContents();
+        ItemStack tempStack;
+        for (int i = 0; i < stacks.length; i++) {
+            tempStack = stacks[i];
+            if (tempStack == null)
+                continue;
+            if (checkData) {
+                if (tempStack.getType() != itemStack.getType() || tempStack.getData().getData() != itemStack.getData().getData()) {
                     continue;
-                if (tempStack.getType() == itemStack.getType() && tempStack.getData().getData() == itemStack.getData().getData()) {
-                    if (tempStack.getAmount() > itemStack.getAmount()) {
-                        tempStack.setAmount(tempStack.getAmount() - itemStack.getAmount());
-                        itemStack.setAmount(0);
-                        stacks[i] = tempStack;
-                        break;
-                    } else if (tempStack.getAmount() < itemStack.getAmount()) {
-                        stacks[i] = null;
-                        itemStack.setAmount(itemStack.getAmount() - tempStack.getAmount());
-                        continue;
-                    } else {
-                        stacks[i] = null;
-                        itemStack.setAmount(0);
-                        break;
-                    }
+                }
+            } else {
+                if (tempStack.getType() != itemStack.getType()) {
+                    continue;
                 }
             }
-            if (itemStack.getAmount() > 0) {
-                throw new OutOfMaterialException(itemStack.getAmount());
+            if (tempStack.getAmount() > itemStack.getAmount()) {
+                tempStack.setAmount(tempStack.getAmount() - itemStack.getAmount());
+                itemStack.setAmount(0);
+                stacks[i] = tempStack;
+                break;
+            } else if (tempStack.getAmount() < itemStack.getAmount()) {
+                stacks[i] = null;
+                itemStack.setAmount(itemStack.getAmount() - tempStack.getAmount());
+                continue;
             } else {
-                chest.getInventory().setContents(stacks);
-                return true;
+                stacks[i] = null;
+                itemStack.setAmount(0);
+                break;
             }
+        }
+        if (itemStack.getAmount() > 0) {
+            throw new OutOfMaterialException(itemStack.getAmount());
         } else {
-            int a = itemStack.getAmount();
-            HashMap<Integer, ItemStack> hashMap = chest.getInventory().removeItem(itemStack);
-            if (!hashMap.isEmpty()) {
-                int amount = 0;
-                for (ItemStack i : hashMap.values()) {
-                    amount += i.getAmount();
-                }
-                if ((a - amount) > 0) {
-                    itemStack.setAmount(a - amount);
-                    hashMap = chest.getInventory().addItem(itemStack);
-                }
-                throw new OutOfMaterialException(amount);
-            } else {
-                return true;
-            }
+            chest.getInventory().setContents(stacks);
+            return true;
         }
     }
 
     public static boolean safeAddItems(Chest chest, ItemStack itemStack) throws OutOfSpaceException {
-        HashMap<Integer, ItemStack> hashMap = chest.getInventory().addItem(itemStack);
-        if (!hashMap.isEmpty()) {
-            for (ItemStack i : hashMap.values()) {
-                try {
-                    i.setAmount(itemStack.getAmount() - i.getAmount());
-                    safeRemoveItems(chest, i);
-                } catch (OutOfMaterialException ex) {
-                }
+        int maxStackSize = itemStack.getMaxStackSize();
+        ItemStack[] stacks = chest.getInventory().getContents();
+        ItemStack tempStack;
+        for (int i = 0; i < stacks.length; i++) {
+            tempStack = stacks[i];
+            if (tempStack != null)
+                continue;
+            if (itemStack.getAmount() > maxStackSize) {
+                stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                itemStack.setAmount(itemStack.getAmount() - maxStackSize);
+                continue;
+            } else {
+                stacks[i] = itemStack;
+                itemStack.setAmount(0);
+                break;
             }
+        }
+        if (itemStack.getAmount() > 0) {
             throw new OutOfSpaceException();
         } else {
+            chest.getInventory().setContents(stacks);
             return true;
         }
     }
