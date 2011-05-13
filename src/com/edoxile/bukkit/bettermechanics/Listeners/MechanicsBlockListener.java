@@ -3,7 +3,6 @@ package com.edoxile.bukkit.bettermechanics.Listeners;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Bridge;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Door;
 import com.edoxile.bukkit.bettermechanics.Mechanics.Gate;
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
 import com.edoxile.bukkit.bettermechanics.Utils.SignUtil;
 import org.bukkit.ChatColor;
