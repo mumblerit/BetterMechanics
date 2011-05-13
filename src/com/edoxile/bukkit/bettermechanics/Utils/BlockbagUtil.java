@@ -19,8 +19,6 @@ import java.util.logging.Logger;
  * User: Edoxile
  */
 public class BlockbagUtil {
-    private static Logger log = Logger.getLogger("Minecraft");
-
     public static boolean safeRemoveItems(Chest chest, ItemStack itemStack) throws OutOfMaterialException {
         boolean checkData = true;
         if (itemStack.getData() != null) {
