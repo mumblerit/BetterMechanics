@@ -22,6 +22,6 @@ pen:
     enabled: true
     material: 280
 
-use-permissions: false
+use-permissions: true
 use-worldguard: false
-use-zones: false
+use-zones: true

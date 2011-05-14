@@ -121,11 +121,15 @@ public class MechanicsPlayerListener extends PlayerListener {
                         if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock()) && permissions.checkZones(event.getPlayer(), event.getClickedBlock())) {
                             String[] text = Pen.getLines(event.getPlayer());
                             if (text != null) {
-                                for (int i = 0; i < text.length; i++) {
-                                    sign.setLine(i, text[i]);
+                                SignChangeEvent evt = new SignChangeEvent(sign.getBlock(), event.getPlayer(), text);
+                                event.getPlayer().getServer().getPluginManager().callEvent(evt);
+                                if (!evt.isCancelled()) {
+                                    for (int i = 0; i < text.length; i++) {
+                                        sign.setLine(i, text[i]);
+                                    }
+                                    sign.update(true);
+                                    event.getPlayer().sendMessage(ChatColor.GOLD + "You edited the sign! Place a torch near it to see the changes.");
                                 }
-                                event.getPlayer().sendMessage(ChatColor.GOLD + "You edited the sign! Place a torch near it to see the changes.");
-                                event.getPlayer().getServer().getPluginManager().callEvent(new SignChangeEvent(event.getClickedBlock(), event.getPlayer(), text));
                             } else {
                                 text = sign.getLines();
                                 Pen.setText(event.getPlayer(), text);
