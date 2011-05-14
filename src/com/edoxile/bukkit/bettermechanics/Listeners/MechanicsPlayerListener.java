@@ -128,7 +128,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                                         sign.setLine(i, text[i]);
                                     }
                                     sign.update(true);
-                                    event.getPlayer().sendMessage(ChatColor.GOLD + "You edited the sign! Place a torch near it to see the changes.");
+                                    event.getPlayer().sendMessage(ChatColor.GOLD + "You edited the sign! If you don't see the changes, place a torch near it.");
                                 }
                             } else {
                                 text = sign.getLines();
