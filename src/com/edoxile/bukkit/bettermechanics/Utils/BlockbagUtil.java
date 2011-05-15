@@ -60,7 +60,7 @@ public class BlockbagUtil {
             }
         }
         if (itemStack.getAmount() > 0) {
-            log.warning("[BetterMechanics] Not enough space in chest, no changes were made.");
+            log.warning("[BetterMechanics] Not enough items in chest, no changes were made.");
             log.warning("[BetterMechanics] Chest location: " + chest.getBlock().getLocation().toString() + ".");
             throw new OutOfMaterialException(itemStack.getAmount());
         } else {
@@ -71,25 +71,27 @@ public class BlockbagUtil {
 
     public static boolean safeAddItems(Chest chest, ItemStack itemStack) throws OutOfSpaceException {
         int maxStackSize = itemStack.getMaxStackSize();
+        int amount = itemStack.getAmount();
         ItemStack[] stacks = chest.getInventory().getContents();
         for (int i = 0; i < stacks.length; i++) {
             if (stacks[i] != null)
                 continue;
-            if (itemStack.getAmount() > maxStackSize) {
+            if (amount > maxStackSize) {
                 stacks[i] = new ItemStack(itemStack.getType());
                 if (itemStack.getData() != null) {
                     stacks[i].setData(itemStack.getData());
                 }
-                itemStack.setAmount(itemStack.getAmount() - maxStackSize);
+                stacks[i].setAmount(maxStackSize);
+                amount -= maxStackSize;
                 continue;
             } else {
                 stacks[i] = itemStack;
-                itemStack.setAmount(0);
+                amount = 0;
                 break;
             }
         }
-        if (itemStack.getAmount() > 0) {
-            log.warning("[BetterMechanics] Not enough material in chest, no changes were made.");
+        if (amount > 0) {
+            log.warning("[BetterMechanics] Not enough space in chest, no changes were made.");
             log.warning("[BetterMechanics] Chest location: " + chest.getBlock().getLocation().toString() + ".");
             throw new OutOfSpaceException();
         } else {
