@@ -54,6 +54,7 @@ public class BetterMechanics extends JavaPlugin {
         pm.registerEvent(Event.Type.REDSTONE_CHANGE, blockListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.BLOCK_PLACE, blockListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN,  playerListener, Event.Priority.Normal, this);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -73,6 +74,8 @@ public class BetterMechanics extends JavaPlugin {
                     } else if (args[0].equalsIgnoreCase("clear")) {
                         pen.clear(player);
                         player.sendMessage(ChatColor.GOLD + "Pen data cleared.");
+                    } else if (args[0].equalsIgnoreCase("dump")) {
+                        pen.dump(player);
                     } else if (args[0].equalsIgnoreCase("setline")) {
                         if (args.length < 3) {
                             player.sendMessage(ChatColor.DARK_RED + "Too few arguments.");
@@ -84,6 +87,7 @@ public class BetterMechanics extends JavaPlugin {
                         player.sendMessage("/pen set <text> | set the sign text");
                         player.sendMessage("/pen setline <line> <text> | set one line of the text");
                         player.sendMessage("/pen clear | clears the current text");
+                        player.sendMessage("/pen dump | dumps the current text");
                     } else {
                         player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /pen <set|clear>|setline|help>");
                     }

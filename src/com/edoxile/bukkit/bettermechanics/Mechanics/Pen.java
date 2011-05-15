@@ -94,4 +94,16 @@ public class Pen {
         }
         return str;
     }
+
+    public static void dump(Player player) {
+        if (dataMap.get(player) == null) {
+            player.sendMessage(ChatColor.GOLD + "Your pen is empty.");
+        } else {
+            String[] lines = dataMap.get(player);
+            player.sendMessage(ChatColor.GOLD + "Pen dump:");
+            for (String s : lines) {
+                player.sendMessage(ChatColor.GOLD + "[" + s + "]");
+            }
+        }
+    }
 }

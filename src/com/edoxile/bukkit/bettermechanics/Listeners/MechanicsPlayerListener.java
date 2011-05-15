@@ -12,6 +12,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 
 import java.util.logging.Logger;
@@ -29,6 +30,10 @@ public class MechanicsPlayerListener extends PlayerListener {
     public MechanicsPlayerListener(MechanicsConfig c) {
         config = c;
         permissions = c.getPermissionConfig();
+    }
+
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Pen.clear(event.getPlayer());
     }
 
     public void onPlayerInteract(PlayerInteractEvent event) {
