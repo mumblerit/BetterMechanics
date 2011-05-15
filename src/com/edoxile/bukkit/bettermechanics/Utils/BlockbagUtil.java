@@ -19,6 +19,8 @@ import java.util.logging.Logger;
  * User: Edoxile
  */
 public class BlockbagUtil {
+    private static final Logger log = Logger.getLogger("Minecraft");
+
     public static boolean safeRemoveItems(Chest chest, ItemStack itemStack) throws OutOfMaterialException {
         boolean checkData = true;
         if (itemStack.getData() != null) {
@@ -55,6 +57,8 @@ public class BlockbagUtil {
             }
         }
         if (itemStack.getAmount() > 0) {
+            log.warning("[BetterMechanics] Not enough space in chest, no changes were made.");
+            log.warning("[BetterMechanics] Chest location: " + chest.getBlock().getLocation().toString() + ".");
             throw new OutOfMaterialException(itemStack.getAmount());
         } else {
             chest.getInventory().setContents(stacks);
@@ -81,6 +85,8 @@ public class BlockbagUtil {
             }
         }
         if (itemStack.getAmount() > 0) {
+            log.warning("[BetterMechanics] Not enough material in chest, no changes were made.");
+            log.warning("[BetterMechanics] Chest location: " + chest.getBlock().getLocation().toString() + ".");
             throw new OutOfSpaceException();
         } else {
             chest.getInventory().setContents(stacks);

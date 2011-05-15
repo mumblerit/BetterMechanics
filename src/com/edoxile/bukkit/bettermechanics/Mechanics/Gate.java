@@ -54,7 +54,6 @@ public class Gate {
             throw new BlockNotFoundException();
         }
         blockSet = BlockMapper.mapFlatRegion(tempBlock, Material.FENCE, config.maxWidth, config.maxLength);
-        //blockSet = BlockMapper.getRecursiveSet();
         if (blockSet.isEmpty()) {
             log.info("blockset empty?");
             return false;
@@ -82,10 +81,13 @@ public class Gate {
         } catch (OutOfSpaceException ex) {
             for (Block b : blockSet) {
                 tempBlock = b.getRelative(BlockFace.DOWN);
-                while (tempBlock.getType() == Material.AIR) {
+                while (tempBlock.getType() == Material.AIR && amount > 0) {
                     tempBlock.setType(Material.FENCE);
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
+                    amount--;
                 }
+                if(amount == 0)
+                    break;
             }
             if (player != null) {
                 player.sendMessage(ChatColor.RED + "Not enough space in chest!");
@@ -115,7 +117,10 @@ public class Gate {
                 while (tempBlock.getType() == Material.FENCE && amount > 0) {
                     tempBlock.setType(Material.AIR);
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
+                    amount--;
                 }
+                if(amount == 0)
+                    break;
             }
             if (player != null) {
                 player.sendMessage(ChatColor.RED + "Not enough items in chest! Still need: " + Integer.toString(ex.getAmount()) + " of type: fence");
