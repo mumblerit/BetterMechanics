@@ -85,7 +85,7 @@ public class BetterMechanics extends JavaPlugin {
                         player.sendMessage("/pen setline <line> <text> | set one line of the text");
                         player.sendMessage("/pen clear | clears the current text");
                     } else {
-                        player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /sign <set|clear>|setline|help>");
+                        player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /pen <set|clear>|setline|help>");
                     }
                 }
                 return true;
