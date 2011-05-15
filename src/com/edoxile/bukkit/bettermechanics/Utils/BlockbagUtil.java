@@ -74,20 +74,48 @@ public class BlockbagUtil {
         int amount = itemStack.getAmount();
         ItemStack[] stacks = chest.getInventory().getContents();
         for (int i = 0; i < stacks.length; i++) {
-            if (stacks[i] != null)
-                continue;
-            if (amount > maxStackSize) {
-                stacks[i] = new ItemStack(itemStack.getType());
-                if (itemStack.getData() != null) {
-                    stacks[i].setData(itemStack.getData());
+            if (stacks[i] == null) {
+                if (amount > maxStackSize) {
+                    if (itemStack.getData() == null) {
+                        stacks[i] = new ItemStack(itemStack.getType(), maxStackSize);
+                    } else {
+                        stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                    }
+                    amount -= maxStackSize;
+                } else {
+                    if (itemStack.getData() == null) {
+                        stacks[i] = new ItemStack(itemStack.getType(), amount);
+                    } else {
+                        stacks[i] = itemStack.getData().toItemStack(amount);
+                    }
+                    amount = 0;
                 }
-                stacks[i].setAmount(maxStackSize);
-                amount -= maxStackSize;
-                continue;
             } else {
-                stacks[i] = itemStack;
-                amount = 0;
-                break;
+                if (!stacks[i].equals(itemStack)) {
+                    continue;
+                } else {
+                    if (amount > maxStackSize) {
+                        if (itemStack.getData() == null && stacks[i].getData() == null) {
+                            stacks[i].setAmount(maxStackSize);
+                        } else {
+                            if (itemStack.getDurability() != stacks[i].getDurability()) {
+                                continue;
+                            }
+                            stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                        }
+                        amount -= maxStackSize;
+                    } else {
+                        if (itemStack.getData() == null && stacks[i].getData() == null) {
+                            stacks[i].setAmount(stacks[i].getAmount() + amount);
+                        } else {
+                            if (itemStack.getDurability() != stacks[i].getDurability()) {
+                                continue;
+                            }
+                            stacks[i].setAmount(stacks[i].getAmount() + amount);
+                        }
+                        amount = 0;
+                    }
+                }
             }
         }
         if (amount > 0) {
