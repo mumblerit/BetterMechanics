@@ -61,7 +61,7 @@ public class BetterMechanics extends JavaPlugin {
             if (configManager.getPenConfig().enabled) {
                 Player player = (Player) sender;
                 if (args.length == 0) {
-                    player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /sign <set|clear>|setline|help>");
+                    player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /pen <set|clear|setline|help>");
                 } else {
                     Pen pen = new Pen();
                     if (args[0].equalsIgnoreCase("set")) {
