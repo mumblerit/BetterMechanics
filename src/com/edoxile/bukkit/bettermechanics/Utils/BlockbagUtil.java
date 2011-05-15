@@ -70,18 +70,17 @@ public class BlockbagUtil {
     }
 
     public static boolean safeAddItems(Chest chest, ItemStack itemStack) throws OutOfSpaceException {
-        int maxStackSize = itemStack.getMaxStackSize();
         int amount = itemStack.getAmount();
         ItemStack[] stacks = chest.getInventory().getContents();
         for (int i = 0; i < stacks.length; i++) {
             if (stacks[i] == null) {
-                if (amount > maxStackSize) {
+                if (amount > 64) {
                     if (itemStack.getData() == null) {
-                        stacks[i] = new ItemStack(itemStack.getType(), maxStackSize);
+                        stacks[i] = new ItemStack(itemStack.getType(), 64);
                     } else {
-                        stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                        stacks[i] = itemStack.getData().toItemStack(64);
                     }
-                    amount -= maxStackSize;
+                    amount -= 64;
                 } else {
                     if (itemStack.getData() == null) {
                         stacks[i] = new ItemStack(itemStack.getType(), amount);
@@ -89,21 +88,22 @@ public class BlockbagUtil {
                         stacks[i] = itemStack.getData().toItemStack(amount);
                     }
                     amount = 0;
+                    break;
                 }
             } else {
-                if (!stacks[i].equals(itemStack)) {
+                if (stacks[i].getType() != itemStack.getType() || stacks[i].getAmount() == stacks[i].getMaxStackSize()) {
                     continue;
                 } else {
-                    if (amount > maxStackSize) {
+                    if (stacks[i].getAmount() + amount > 64) {
                         if (itemStack.getData() == null && stacks[i].getData() == null) {
-                            stacks[i].setAmount(maxStackSize);
+                            stacks[i].setAmount(64);
                         } else {
                             if (itemStack.getDurability() != stacks[i].getDurability()) {
                                 continue;
                             }
-                            stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                            stacks[i] = itemStack.getData().toItemStack(64);
                         }
-                        amount -= maxStackSize;
+                        amount -= 64;
                     } else {
                         if (itemStack.getData() == null && stacks[i].getData() == null) {
                             stacks[i].setAmount(stacks[i].getAmount() + amount);
@@ -114,8 +114,12 @@ public class BlockbagUtil {
                             stacks[i].setAmount(stacks[i].getAmount() + amount);
                         }
                         amount = 0;
+                        break;
                     }
                 }
+            }
+            if (amount == 0) {
+                break;
             }
         }
         if (amount > 0) {
