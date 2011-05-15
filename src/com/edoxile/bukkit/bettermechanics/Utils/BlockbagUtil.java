@@ -23,7 +23,7 @@ public class BlockbagUtil {
 
     public static boolean safeRemoveItems(Chest chest, ItemStack itemStack) throws OutOfMaterialException {
         boolean checkData = true;
-        if (itemStack.getData() != null) {
+        if (itemStack.getData() == null) {
             checkData = false;
         }
         ItemStack[] stacks = chest.getInventory().getContents();
@@ -33,6 +33,9 @@ public class BlockbagUtil {
             if (tempStack == null)
                 continue;
             if (checkData) {
+                if (tempStack.getData() == null) {
+                    continue;
+                }
                 if (tempStack.getType() != itemStack.getType() || tempStack.getData().getData() != itemStack.getData().getData()) {
                     continue;
                 }
@@ -69,13 +72,14 @@ public class BlockbagUtil {
     public static boolean safeAddItems(Chest chest, ItemStack itemStack) throws OutOfSpaceException {
         int maxStackSize = itemStack.getMaxStackSize();
         ItemStack[] stacks = chest.getInventory().getContents();
-        ItemStack tempStack;
         for (int i = 0; i < stacks.length; i++) {
-            tempStack = stacks[i];
-            if (tempStack != null)
+            if (stacks[i] != null)
                 continue;
             if (itemStack.getAmount() > maxStackSize) {
-                stacks[i] = itemStack.getData().toItemStack(maxStackSize);
+                stacks[i] = new ItemStack(itemStack.getType());
+                if (itemStack.getData() != null) {
+                    stacks[i].setData(itemStack.getData());
+                }
                 itemStack.setAmount(itemStack.getAmount() - maxStackSize);
                 continue;
             } else {
