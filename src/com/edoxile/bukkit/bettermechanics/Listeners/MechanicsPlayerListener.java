@@ -42,7 +42,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                 Sign sign = SignUtil.getSign(event.getClickedBlock());
                 if (sign != null) {
                     if (SignUtil.getActiveMechanicsType(sign) != null) {
-                        if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock())) {
+                        if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), true)) {
                             return;
                         }
                         switch (SignUtil.getActiveMechanicsType(sign)) {
@@ -123,7 +123,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                             }
                         }
                     } else if (event.getPlayer().getItemInHand().getType() == config.getPenConfig().penMaterial) {
-                        if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock())) {
+                        if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock(), false)) {
                             String[] text = Pen.getLines(event.getPlayer());
                             if (text != null) {
                                 SignChangeEvent evt = new SignChangeEvent(sign.getBlock(), event.getPlayer(), text);
@@ -144,7 +144,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                     }
                 }
             } else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE && event.getPlayer().getItemInHand().getType() == Material.COAL) {
-                if (!permissions.check(event.getPlayer(), "ammeter", event.getClickedBlock())) {
+                if (!permissions.check(event.getPlayer(), "ammeter", event.getClickedBlock(), false)) {
                     return;
                 }
                 Ammeter ammeter = new Ammeter(config, event.getClickedBlock(), event.getPlayer());
@@ -153,7 +153,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                 if (!event.getPlayer().getItemInHand().getType().isBlock() || event.getPlayer().getItemInHand().getType() == Material.AIR) {
                     Cauldron cauldron = Cauldron.preCauldron(event.getClickedBlock(), config, event.getPlayer());
                     if (cauldron != null) {
-                        if (permissions.check(event.getPlayer(), "cauldron", event.getClickedBlock())) {
+                        if (permissions.check(event.getPlayer(), "cauldron", event.getClickedBlock(), false)) {
                             cauldron.performCauldron();
                         } else {
                             return;
@@ -168,7 +168,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                     if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
                         Sign sign = SignUtil.getSign(event.getClickedBlock().getRelative(b));
                         if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
-                            if (permissions.check(event.getPlayer(), "hidden_switch", event.getClickedBlock())) {
+                            if (permissions.check(event.getPlayer(), "hidden_switch", event.getClickedBlock(), true)) {
                                 HiddenSwitch hiddenSwitch = new HiddenSwitch(config, sign, event.getPlayer());
                                 if (hiddenSwitch.map())
                                     hiddenSwitch.toggleLevers();
