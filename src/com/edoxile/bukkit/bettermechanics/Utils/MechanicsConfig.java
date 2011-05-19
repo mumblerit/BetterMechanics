@@ -250,13 +250,15 @@ public class MechanicsConfig {
             boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
-                    allowed = true;
-                } else {
-                    player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
+                    if(checkZones(player, clickedBlock))
+                        allowed = true;
                 }
-            } else {
+            }
+            
+            if(!allowed) {
                 player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
             }
+            
             return allowed;
         }
     }

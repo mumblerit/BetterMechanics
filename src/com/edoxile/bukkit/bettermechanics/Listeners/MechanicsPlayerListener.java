@@ -123,7 +123,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                             }
                         }
                     } else if (event.getPlayer().getItemInHand().getType() == config.getPenConfig().penMaterial) {
-                        if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock()) && permissions.checkZones(event.getPlayer(), event.getClickedBlock())) {
+                        if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock())) {
                             String[] text = Pen.getLines(event.getPlayer());
                             if (text != null) {
                                 SignChangeEvent evt = new SignChangeEvent(sign.getBlock(), event.getPlayer(), text);
