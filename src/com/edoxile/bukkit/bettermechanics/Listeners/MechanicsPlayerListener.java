@@ -144,7 +144,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                     }
                 }
             } else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE && event.getPlayer().getItemInHand().getType() == Material.COAL) {
-                if (!permissions.check(event.getPlayer(), "ammeter", event.getClickedBlock(), false)) {
+                if (!permissions.check(event.getPlayer(), "ammeter", event.getClickedBlock(), true)) {
                     return;
                 }
                 Ammeter ammeter = new Ammeter(config, event.getClickedBlock(), event.getPlayer());
