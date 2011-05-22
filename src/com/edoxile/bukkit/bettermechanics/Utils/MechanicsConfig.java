@@ -246,17 +246,18 @@ public class MechanicsConfig {
             }
         }
 
-        public boolean check(Player player, String type, Block clickedBlock) {
+        public boolean check(Player player, String type, Block clickedBlock, boolean skipZones) {
             boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
-                    allowed = true;
-                } else {
-                    player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
+                    allowed = !skipZones||checkZones(player, clickedBlock);
                 }
-            } else {
+            }
+            
+            if(!allowed) {
                 player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
             }
+            
             return allowed;
         }
     }
