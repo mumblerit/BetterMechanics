@@ -42,11 +42,9 @@ public class MechanicsPlayerListener extends PlayerListener {
                 Sign sign = SignUtil.getSign(event.getClickedBlock());
                 if (sign != null) {
                     if (SignUtil.getActiveMechanicsType(sign) != null) {
-                        if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), true)) {
-                            return;
-                        }
                         switch (SignUtil.getActiveMechanicsType(sign)) {
-                            case BRIDGE: {
+                            case BRIDGE:
+                            	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), false)) return;
                                 Bridge bridge = new Bridge(config, sign, event.getPlayer());
                                 try {
                                     if (!bridge.map())
@@ -65,10 +63,11 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 } catch (NonCardinalDirectionException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Sign is not in a cardinal direction!");
                                 }
-                            }
-                            break;
+                            
+                                break;
                             case GATE:
-                            case SMALL_GATE: {
+                            case SMALL_GATE:
+                            	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), false)) return;
                                 Gate gate = new Gate(config, sign, event.getPlayer());
                                 try {
                                     if (!gate.map())
@@ -87,9 +86,10 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 } catch (BlockNotFoundException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "No fences were found close to bridge!");
                                 }
-                            }
-                            break;
-                            case DOOR: {
+                            
+                                break;
+                            case DOOR:
+                            	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), false)) return;
                                 Door door = new Door(config, sign, event.getPlayer());
                                 try {
                                     if (!door.map())
@@ -108,9 +108,9 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 } catch (NonCardinalDirectionException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Sign is not in a cardinal direction!");
                                 }
-                            }
-                            break;
-                            case LIFT: {
+                                break;
+                            case LIFT: 
+                            	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), true, false)) return;
                                 Lift lift = new Lift(config, sign, event.getPlayer());
                                 try {
                                     if (!lift.map()) {
@@ -120,7 +120,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 } catch (BlockNotFoundException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Lift is too high or signs are not aligned!");
                                 }
-                            }
+                            
                         }
                     } else if (event.getPlayer().getItemInHand().getType() == config.getPenConfig().penMaterial) {
                         if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock(), false)) {
@@ -168,7 +168,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                     if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
                         Sign sign = SignUtil.getSign(event.getClickedBlock().getRelative(b));
                         if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
-                            if (permissions.check(event.getPlayer(), "hidden_switch", event.getClickedBlock(), true)) {
+                            if (permissions.check(event.getPlayer(), "hidden_switch", event.getClickedBlock(), true, false)) {
                                 HiddenSwitch hiddenSwitch = new HiddenSwitch(config, sign, event.getPlayer());
                                 if (hiddenSwitch.map())
                                     hiddenSwitch.toggleLevers();
