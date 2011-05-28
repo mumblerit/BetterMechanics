@@ -217,14 +217,27 @@ public class MechanicsConfig {
             }
         }
 
-        public boolean checkZones(Player player, Block clickedBlock) {
+        public boolean checkZonesCreate(Player player, Block clickedBlock) {
             if (zones == null) {
                 return true;
             } else {
                 boolean canbuild = true;
                 ZoneBase zb = zones.getWorldManager(clickedBlock.getWorld()).getActiveZone(clickedBlock);
                 if (zb != null) {
-                    canbuild = player.isOp() || zb.allowBlockCreate(player, clickedBlock);
+                    canbuild = zb.allowBlockCreate(player, clickedBlock);
+                }
+                return canbuild;
+            }
+        }
+        
+        public boolean checkZonesHit(Player player, Block clickedBlock) {
+            if (zones == null) {
+                return true;
+            } else {
+                boolean canbuild = true;
+                ZoneBase zb = zones.getWorldManager(clickedBlock.getWorld()).getActiveZone(clickedBlock);
+                if (zb != null) {
+                    canbuild = zb.allowBlockHit(player, clickedBlock);
                 }
                 return canbuild;
             }
@@ -246,11 +259,12 @@ public class MechanicsConfig {
             }
         }
 
-        public boolean check(Player player, String type, Block clickedBlock, boolean skipZones) {
-            boolean allowed = false;
+        public boolean check(Player player, String type, Block clickedBlock, boolean skipCreateZones, boolean skipHitZones) {
+        	boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
-                    allowed = !skipZones||checkZones(player, clickedBlock);
+                    if(!skipCreateZones || checkZonesCreate(player, clickedBlock));
+                    	allowed = !skipHitZones || checkZonesHit(player, clickedBlock);
                 }
             }
             
@@ -259,6 +273,10 @@ public class MechanicsConfig {
             }
             
             return allowed;
+        }
+        
+        public boolean check(Player player, String type, Block clickedBlock, boolean skipZones) {
+            return check(player, type, clickedBlock, skipZones, true);
         }
     }
 
