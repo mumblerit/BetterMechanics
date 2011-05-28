@@ -263,8 +263,8 @@ public class MechanicsConfig {
         	boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
-                    if(!skipCreateZones || checkZonesCreate(player, clickedBlock));
-                    	allowed = !skipHitZones || checkZonesHit(player, clickedBlock);
+                    if(skipCreateZones || checkZonesCreate(player, clickedBlock));
+                    	allowed = skipHitZones || checkZonesHit(player, clickedBlock);
                 }
             }
             
