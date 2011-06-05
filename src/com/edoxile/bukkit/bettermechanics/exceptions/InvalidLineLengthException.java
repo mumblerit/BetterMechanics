@@ -1,4 +1,4 @@
-package com.edoxile.bukkit.bettermechanics.Exceptions;
+package com.edoxile.bukkit.bettermechanics.exceptions;
 
 /**
  * Created by IntelliJ IDEA.

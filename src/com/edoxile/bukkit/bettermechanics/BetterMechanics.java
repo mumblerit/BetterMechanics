@@ -1,9 +1,9 @@
 package com.edoxile.bukkit.bettermechanics;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
-import com.edoxile.bukkit.bettermechanics.Listeners.*;
-import com.edoxile.bukkit.bettermechanics.Mechanics.Pen;
-import com.edoxile.bukkit.bettermechanics.Utils.*;
+import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
+import com.edoxile.bukkit.bettermechanics.listeners.*;
+import com.edoxile.bukkit.bettermechanics.mechanics.Pen;
+import com.edoxile.bukkit.bettermechanics.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -1,8 +1,8 @@
-package com.edoxile.bukkit.bettermechanics.Mechanics;
+package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.*;
+import com.edoxile.bukkit.bettermechanics.exceptions.*;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.Utils.*;
+import com.edoxile.bukkit.bettermechanics.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

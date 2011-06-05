@@ -1,7 +1,7 @@
-package com.edoxile.bukkit.bettermechanics.Utils;
+package com.edoxile.bukkit.bettermechanics.utils;
 
 import com.edoxile.bukkit.bettermechanics.BetterMechanics;
-import com.edoxile.bukkit.bettermechanics.Exceptions.ConfigWriteException;
+import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

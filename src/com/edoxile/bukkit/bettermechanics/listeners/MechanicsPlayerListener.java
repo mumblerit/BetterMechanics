@@ -1,10 +1,10 @@
-package com.edoxile.bukkit.bettermechanics.Listeners;
+package com.edoxile.bukkit.bettermechanics.listeners;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.*;
-import com.edoxile.bukkit.bettermechanics.Mechanics.*;
+import com.edoxile.bukkit.bettermechanics.exceptions.*;
+import com.edoxile.bukkit.bettermechanics.mechanics.*;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.Utils.SignUtil;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;

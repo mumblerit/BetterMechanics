@@ -1,10 +1,10 @@
-package com.edoxile.bukkit.bettermechanics.Listeners;
+package com.edoxile.bukkit.bettermechanics.listeners;
 
-import com.edoxile.bukkit.bettermechanics.Mechanics.Bridge;
-import com.edoxile.bukkit.bettermechanics.Mechanics.Door;
-import com.edoxile.bukkit.bettermechanics.Mechanics.Gate;
-import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.Utils.SignUtil;
+import com.edoxile.bukkit.bettermechanics.mechanics.Bridge;
+import com.edoxile.bukkit.bettermechanics.mechanics.Door;
+import com.edoxile.bukkit.bettermechanics.mechanics.Gate;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;

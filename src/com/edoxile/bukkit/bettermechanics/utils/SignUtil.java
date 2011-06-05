@@ -1,6 +1,6 @@
-package com.edoxile.bukkit.bettermechanics.Utils;
+package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.NonCardinalDirectionException;
+import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

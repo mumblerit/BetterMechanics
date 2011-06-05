@@ -1,7 +1,7 @@
-package com.edoxile.bukkit.bettermechanics.Mechanics;
+package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.Utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;

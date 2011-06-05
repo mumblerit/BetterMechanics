@@ -1,7 +1,7 @@
-package com.edoxile.bukkit.bettermechanics.Mechanics;
+package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.InvalidLineLengthException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfBoundsException;
+import com.edoxile.bukkit.bettermechanics.exceptions.InvalidLineLengthException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

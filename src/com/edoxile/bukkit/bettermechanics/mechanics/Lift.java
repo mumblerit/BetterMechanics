@@ -1,9 +1,9 @@
-package com.edoxile.bukkit.bettermechanics.Mechanics;
+package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.Utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.Utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

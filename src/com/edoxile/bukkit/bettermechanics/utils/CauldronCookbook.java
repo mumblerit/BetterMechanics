@@ -1,4 +1,4 @@
-package com.edoxile.bukkit.bettermechanics.Utils;
+package com.edoxile.bukkit.bettermechanics.utils;
 
 /**
  * Created by IntelliJ IDEA.

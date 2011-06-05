@@ -1,17 +1,13 @@
-package com.edoxile.bukkit.bettermechanics.Utils;
+package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfMaterialException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfSpaceException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfMaterialException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfSpaceException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**

@@ -1,8 +1,8 @@
-package com.edoxile.bukkit.bettermechanics.Utils;
+package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.Exceptions.BlockNotFoundException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.InvalidDirectionException;
-import com.edoxile.bukkit.bettermechanics.Exceptions.OutOfBoundsException;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.InvalidDirectionException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
 import org.bukkit.Location;
 import org.bukkit.Material;
