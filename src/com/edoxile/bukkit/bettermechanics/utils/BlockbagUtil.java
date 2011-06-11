@@ -32,7 +32,7 @@ public class BlockbagUtil {
                 if (tempStack.getData() == null) {
                     continue;
                 }
-                if (tempStack.getType() != itemStack.getType() || tempStack.getData().getData() != itemStack.getData().getData()) {
+                if (!tempStack.getData().equals(itemStack.getData())) {
                     continue;
                 }
             } else {
@@ -104,7 +104,7 @@ public class BlockbagUtil {
                         if (itemStack.getData() == null && stacks[i].getData() == null) {
                             stacks[i].setAmount(stacks[i].getAmount() + amount);
                         } else {
-                            if (itemStack.getDurability() != stacks[i].getDurability()) {
+                            if (!itemStack.getData().equals(stacks[i].getData())) {
                                 continue;
                             }
                             stacks[i].setAmount(stacks[i].getAmount() + amount);
