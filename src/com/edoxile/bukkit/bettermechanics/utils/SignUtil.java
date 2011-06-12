@@ -69,6 +69,8 @@ public class SignUtil {
         else if (str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
             return MechanicsType.DOOR;
         else if (str.equalsIgnoreCase("[sDoor Down]") || str.equalsIgnoreCase("[sDoor Up]"))
+            return MechanicsType.SMALL_DOOR;
+        else if (str.equalsIgnoreCase("[sDoor Down]") || str.equalsIgnoreCase("[sDoor Up]"))
             return MechanicsType.DOOR;
         else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
