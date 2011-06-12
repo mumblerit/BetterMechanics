@@ -19,9 +19,9 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
-* Created by IntelliJ IDEA.
-* User: Edoxile
-*/
+ * Created by IntelliJ IDEA.
+ * User: Edoxile
+ */
 public class Door {
     private static final Logger log = Logger.getLogger("Minecraft");
     private Sign sign;
@@ -38,11 +38,14 @@ public class Door {
     }
 
     public boolean map() throws InvalidMaterialException, BlockNotFoundException, NonCardinalDirectionException, ChestNotFoundException {
-        if(!config.enabled)
+        if (!config.enabled)
             return false;
         BlockFace direction;
         BlockFace orientation = SignUtil.getBlockFace(sign);
-        if (sign.getLine(1).equalsIgnoreCase("[Door Down]")) {
+
+        MechanicsType doorType = SignUtil.getMechanicsType(sign);
+
+        if (sign.getLine(1).equalsIgnoreCase("[Door Down]") || sign.getLine(1).equalsIgnoreCase("[sDoor Down]")) {
             direction = BlockFace.DOWN;
         } else {
             direction = BlockFace.UP;
@@ -52,7 +55,7 @@ public class Door {
         } else {
             throw new InvalidMaterialException();
         }
-        Sign endSign = BlockMapper.findMechanicsSign(sign.getBlock(), direction, MechanicsType.DOOR, config.maxHeight);
+        Sign endSign = BlockMapper.findMechanicsSign(sign.getBlock(), direction, doorType, config.maxHeight);
         Block startBlock = sign.getBlock().getRelative(direction).getRelative(direction);
         Block endBlock = null;
         switch (direction) {
@@ -64,7 +67,7 @@ public class Door {
                 break;
         }
         try {
-            blockSet = BlockMapper.mapVertical(direction, orientation, startBlock, endBlock);
+            blockSet = BlockMapper.mapVertical(direction, orientation, startBlock, endBlock, (doorType == MechanicsType.SMALL_DOOR));
             if (!blockSet.isEmpty()) {
                 Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 3, Material.CHEST);
                 if (chestBlock == null) {
@@ -165,7 +168,7 @@ public class Door {
 
     public boolean isClosed() {
         for (Block b : blockSet) {
-            if(b.getType() == doorMaterial.getItemType() || canPassThrough(b.getType())){
+            if (b.getType() == doorMaterial.getItemType() || canPassThrough(b.getType())) {
                 return (!canPassThrough(b.getType()));
             }
         }

@@ -57,6 +57,15 @@ public class MechanicsBlockListener extends BlockListener {
         } else if(str.equalsIgnoreCase("[door]")){
             event.setLine(1, "[Door]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
+        }  else if(str.equalsIgnoreCase("[sdoor]")){
+            event.setLine(1, "[sDoor]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
+        }  else if(str.equalsIgnoreCase("[sdoor up]")){
+            event.setLine(1, "[sDoor Up]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
+        }  else if(str.equalsIgnoreCase("[sdoor down]")){
+            event.setLine(1, "[sDoor Down]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
         } else if (str.equalsIgnoreCase("[x]")) {
             event.setLine(1, "[X]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a hidden switch!");
@@ -152,6 +161,7 @@ public class MechanicsBlockListener extends BlockListener {
                 }
             }
             break;
+            case SMALL_DOOR:
             case DOOR: {
                 Door door = new Door(config, sign, null);
                 try {

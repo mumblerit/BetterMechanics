@@ -95,7 +95,7 @@ public class BlockMapper {
         return blockSet;
     }
 
-    public static HashSet<Block> mapVertical(BlockFace direction, BlockFace orientation, Block start, Block end) throws InvalidDirectionException {
+    public static HashSet<Block> mapVertical(BlockFace direction, BlockFace orientation, Block start, Block end, boolean small) throws InvalidDirectionException {
         HashSet<Block> blockSet = new HashSet<Block>();
         switch (direction) {
             case UP: {
@@ -107,19 +107,21 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        switch (orientation) {
-                            case NORTH:
-                            case SOUTH: {
-                                blockSet.add(tempBlock.getRelative(BlockFace.WEST));
-                                blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        if (!small) {
+                            switch (orientation) {
+                                case NORTH:
+                                case SOUTH: {
+                                    blockSet.add(tempBlock.getRelative(BlockFace.WEST));
+                                    blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                                }
+                                break;
+                                case EAST:
+                                case WEST: {
+                                    blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
+                                    blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                                }
+                                break;
                             }
-                            break;
-                            case EAST:
-                            case WEST: {
-                                blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
-                                blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
-                            }
-                            break;
                         }
                         tempBlock = tempBlock.getRelative(direction);
                     }

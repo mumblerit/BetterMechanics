@@ -5,5 +5,5 @@ package com.edoxile.bukkit.bettermechanics;
  * User: Edoxile
  */
 public enum MechanicsType {
-    GATE,SMALL_GATE,BRIDGE,LIFT,DOOR,HIDDEN_SWITCH
+    GATE,SMALL_GATE,BRIDGE,LIFT,DOOR,SMALL_DOOR,HIDDEN_SWITCH
 }

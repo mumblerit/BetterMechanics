@@ -38,6 +38,8 @@ public class SignUtil {
             return MechanicsType.BRIDGE;
         else if (str.equalsIgnoreCase("[Door]") || str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
             return MechanicsType.DOOR;
+        else if (str.equalsIgnoreCase("[sDoor]") || str.equalsIgnoreCase("[sDoor Down]") || str.equalsIgnoreCase("[sDoor Up]"))
+            return MechanicsType.SMALL_DOOR;
         else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;
         else
@@ -46,23 +48,9 @@ public class SignUtil {
 
     public static MechanicsType getMechanicsType(Sign s) {
         String str = s.getLine(1);
-        if (s.equals("") || s == null)
+        if (str.equals("") || str == null)
             return null;
-
-        if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]") || str.equalsIgnoreCase("[Lift]"))
-            return MechanicsType.LIFT;
-        else if (str.equalsIgnoreCase("[Gate]"))
-            return MechanicsType.GATE;
-        else if (str.equalsIgnoreCase("[Dgate]"))
-            return MechanicsType.SMALL_GATE;
-        else if (str.equalsIgnoreCase("[Bridge]") || str.equalsIgnoreCase("[Bridge End]"))
-            return MechanicsType.BRIDGE;
-        else if (str.equalsIgnoreCase("[Door]") || str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
-            return MechanicsType.DOOR;
-        else if (str.equalsIgnoreCase("[X]"))
-            return MechanicsType.HIDDEN_SWITCH;
-        else
-            return null;
+        return getMechanicsType(str);
     }
 
     public static MechanicsType getActiveMechanicsType(Sign s) {
@@ -79,6 +67,8 @@ public class SignUtil {
         else if (str.equalsIgnoreCase("[Bridge]"))
             return MechanicsType.BRIDGE;
         else if (str.equalsIgnoreCase("[Door Down]") || str.equalsIgnoreCase("[Door Up]"))
+            return MechanicsType.DOOR;
+        else if (str.equalsIgnoreCase("[sDoor Down]") || str.equalsIgnoreCase("[sDoor Up]"))
             return MechanicsType.DOOR;
         else if (str.equalsIgnoreCase("[X]"))
             return MechanicsType.HIDDEN_SWITCH;

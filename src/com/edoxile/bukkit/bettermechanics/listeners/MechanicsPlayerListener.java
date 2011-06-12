@@ -89,6 +89,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                             
                                 break;
                             case DOOR:
+                            case SMALL_DOOR:
                             	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), false)) return;
                                 Door door = new Door(config, sign, event.getPlayer());
                                 try {
