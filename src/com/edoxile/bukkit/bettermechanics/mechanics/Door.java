@@ -2,10 +2,7 @@ package com.edoxile.bukkit.bettermechanics.mechanics;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.*;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.utils.BlockbagUtil;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
+import com.edoxile.bukkit.bettermechanics.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -96,14 +93,14 @@ public class Door {
         int amount = 0;
         try {
             for (Block b : blockSet) {
-                if (b.getType() == doorMaterial.getItemType()) {
+                if (b.getType() == doorMaterial.getItemType() && b.getData() == doorMaterial.getData()) {
                     b.setType(Material.AIR);
                     amount++;
                 }
             }
             BlockbagUtil.safeAddItems(chest, doorMaterial.toItemStack(amount));
             if (player != null) {
-                player.sendMessage(ChatColor.GOLD + "Bridge opened!");
+                player.sendMessage(ChatColor.GOLD + "Door opened!");
             }
         } catch (OutOfSpaceException ex) {
             for (Block b : blockSet) {
@@ -134,7 +131,7 @@ public class Door {
             }
             BlockbagUtil.safeRemoveItems(chest, doorMaterial.toItemStack(amount));
             if (player != null) {
-                player.sendMessage(ChatColor.GOLD + "Bridge closed!");
+                player.sendMessage(ChatColor.GOLD + "Door closed!");
             }
         } catch (OutOfMaterialException ex) {
             for (Block b : blockSet) {
