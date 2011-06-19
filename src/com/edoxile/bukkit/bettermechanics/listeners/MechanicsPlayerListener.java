@@ -44,6 +44,7 @@ public class MechanicsPlayerListener extends PlayerListener {
                     if (SignUtil.getActiveMechanicsType(sign) != null) {
                         switch (SignUtil.getActiveMechanicsType(sign)) {
                             case BRIDGE:
+                            case SMALL_BRIDGE:
                             	if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase(), event.getClickedBlock(), false)) return;
                                 Bridge bridge = new Bridge(config, sign, event.getPlayer());
                                 try {

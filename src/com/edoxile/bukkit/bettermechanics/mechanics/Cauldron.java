@@ -126,7 +126,7 @@ public class Cauldron {
             recipe = recipes.find(noGlassMap);
             if (recipe != null) {
 
-                player.sendMessage(ChatColor.GOLD + "In a proof of smoke, you've made " + recipe.getName() + ".");
+                player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
 
                 for (Block b : contents) {
                     if (b.getTypeId() != Material.GLASS.getId() && isDependant(b.getTypeId())) {

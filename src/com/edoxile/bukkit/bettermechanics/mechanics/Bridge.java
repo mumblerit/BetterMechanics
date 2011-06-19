@@ -51,11 +51,13 @@ public class Bridge {
             throw new InvalidMaterialException();
         }
 
-        Sign endSign = BlockMapper.findMechanicsSign(sign.getBlock(), SignUtil.getBackBlockFace(sign), MechanicsType.BRIDGE, config.maxLength);
+        MechanicsType bridgeType = SignUtil.getMechanicsType(sign);
+
+        Sign endSign = BlockMapper.findMechanicsSign(sign.getBlock(), SignUtil.getBackBlockFace(sign), bridgeType, config.maxLength);
         Block startBlock = sign.getBlock().getRelative(SignUtil.getBackBlockFace(sign)).getRelative(bf);
         Block endBlock = endSign.getBlock().getRelative(bf);
         try {
-            blockSet = BlockMapper.mapHorizontal(SignUtil.getBackBlockFace(sign), startBlock, endBlock);
+            blockSet = BlockMapper.mapHorizontal(SignUtil.getBackBlockFace(sign), startBlock, endBlock, bridgeType == MechanicsType.SMALL_BRIDGE);
             if (!blockSet.isEmpty()) {
                 Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 3, Material.CHEST);
                 if (chestBlock == null) {

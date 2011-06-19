@@ -48,6 +48,12 @@ public class MechanicsBlockListener extends BlockListener {
         } else if (str.equalsIgnoreCase("[bridge end]")) {
             event.setLine(1, "[Bridge End]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
+        } else if (str.equalsIgnoreCase("[sbridge]")) {
+            event.setLine(1, "[sBridge]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
+        } else if (str.equalsIgnoreCase("[sbridge end]")) {
+            event.setLine(1, "[sBridge End]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
         } else if (str.equalsIgnoreCase("[door up]")){
             event.setLine(1, "[Door Up]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
@@ -132,6 +138,7 @@ public class MechanicsBlockListener extends BlockListener {
             }
         }
         switch (SignUtil.getActiveMechanicsType(sign)) {
+            case SMALL_BRIDGE:
             case BRIDGE: {
                 Bridge bridge = new Bridge(config, sign, null);
                 try {

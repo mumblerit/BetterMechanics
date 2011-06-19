@@ -21,7 +21,7 @@ public class BlockMapper {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static HashSet<Block> recursiveSet = new HashSet<Block>();
 
-    public static HashSet<Block> mapHorizontal(BlockFace direction, Block start, Block end) throws InvalidDirectionException {
+    public static HashSet<Block> mapHorizontal(BlockFace direction, Block start, Block end, boolean small) throws InvalidDirectionException {
         HashSet<Block> blockSet = new HashSet<Block>();
 
         switch (direction) {
@@ -34,8 +34,10 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
-                        blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                        if (!small) {
+                            blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
+                            blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
@@ -50,8 +52,10 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
-                        blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                        if (!small) {
+                            blockSet.add(tempBlock.getRelative(BlockFace.NORTH));
+                            blockSet.add(tempBlock.getRelative(BlockFace.SOUTH));
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
@@ -66,8 +70,10 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.WEST));
-                        blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        if (!small) {
+                            blockSet.add(tempBlock.getRelative(BlockFace.WEST));
+                            blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
@@ -82,8 +88,10 @@ public class BlockMapper {
                     Block tempBlock = start;
                     while (tempBlock != end) {
                         blockSet.add(tempBlock);
-                        blockSet.add(tempBlock.getRelative(BlockFace.WEST));
-                        blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        if (!small) {
+                            blockSet.add(tempBlock.getRelative(BlockFace.WEST));
+                            blockSet.add(tempBlock.getRelative(BlockFace.EAST));
+                        }
                         tempBlock = tempBlock.getRelative(direction);
                     }
                 }
