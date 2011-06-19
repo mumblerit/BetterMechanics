@@ -6,6 +6,7 @@ package com.edoxile.bukkit.bettermechanics.utils;
  */
 
 import com.edoxile.bukkit.bettermechanics.BetterMechanics;
+import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 import org.bukkit.util.config.Configuration;
 
 import java.util.logging.Logger;
@@ -80,11 +81,28 @@ public class CauldronCookbook {
         }
 
         public boolean hasAllIngredients(IntIntMap check) {
-            return ingredients.equals(check);
+            IntIntMapIterator iterator = check.iterator();
+            while (iterator.hasNext()) {
+                iterator.next();
+                try {
+                    if (ingredients.get(iterator.key()) <= iterator.value()){
+                        check.remove(iterator.key());
+                    } else {
+                        return false;
+                    }
+                } catch (KeyNotFoundException e){
+                    continue;
+                }
+            }
+            return true;
         }
 
         public IntIntMap getResults() {
             return results;
+        }
+
+        public IntIntMap getIngredients() {
+            return ingredients;
         }
     }
 }

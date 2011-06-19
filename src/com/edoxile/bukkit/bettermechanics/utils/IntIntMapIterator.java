@@ -17,7 +17,7 @@ public class IntIntMapIterator {
     }
 
     public boolean hasNext() {
-        return ((pointer + 1) != _keys.length);
+        return ((pointer + 1) < _keys.length);
     }
 
     public boolean hasPrevious() {
@@ -45,6 +45,6 @@ public class IntIntMapIterator {
     }
 
     public void end() {
-        pointer = _keys.length - 1;
+        pointer = size - 1;
     }
 }

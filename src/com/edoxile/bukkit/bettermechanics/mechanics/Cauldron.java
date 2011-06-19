@@ -1,5 +1,6 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
+import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 import com.edoxile.bukkit.bettermechanics.utils.CauldronCookbook;
 import com.edoxile.bukkit.bettermechanics.utils.IntIntMap;
 import com.edoxile.bukkit.bettermechanics.utils.IntIntMapIterator;
@@ -78,31 +79,39 @@ public class Cauldron {
 
     public boolean performCauldron() {
         IntIntMap map = new IntIntMap();
-        IntIntMap noGlassMap = new IntIntMap();
 
         for (Block b : contents) {
-            if (b.getTypeId() == Material.GLASS.getId()) {
-                map.add(b.getTypeId(), 1);
-            } else {
-                noGlassMap.add(b.getTypeId(), 1);
-                map.add(b.getTypeId(), 1);
-            }
+            map.add(b.getTypeId(), 1);
         }
 
         // Find the recipe
         CauldronCookbook.Recipe recipe = recipes.find(map);
 
         if (recipe != null) {
-
             player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
+            IntIntMap ingredients = recipe.getIngredients().clone();
 
             for (Block b : contents) {
                 if (isDependant(b.getTypeId())) {
-                    b.setType(Material.AIR);
+                    try {
+                        if (ingredients.get(b.getTypeId()) > 0) {
+                            ingredients.add(b.getTypeId(), -1);
+                            b.setType(Material.AIR);
+                        }
+                    } catch (KeyNotFoundException e) {
+                        //Block not in recipe or allready removed;
+                    }
                 }
             }
             for (Block b : contents) {
-                b.setType(Material.AIR);
+                try {
+                    if (ingredients.get(b.getTypeId()) > 0) {
+                        ingredients.add(b.getTypeId(), -1);
+                        b.setType(Material.AIR);
+                    }
+                } catch (KeyNotFoundException e) {
+                    //Block not in recipe or allready removed;
+                }
             }
 
             // Give results
@@ -117,37 +126,8 @@ public class Cauldron {
             player.updateInventory();
             return true;
         } else {
-            //Check if glassless recipe exists:
-            recipe = recipes.find(noGlassMap);
-            if (recipe != null) {
-
-                player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
-
-                for (Block b : contents) {
-                    if (b.getTypeId() != Material.GLASS.getId() && isDependant(b.getTypeId())) {
-                        b.setType(Material.AIR);
-                    }
-                }
-                for (Block b : contents) {
-                    if (b.getTypeId() != Material.GLASS.getId())
-                        b.setType(Material.AIR);
-                }
-
-                // Give results
-                IntIntMapIterator iterator = recipe.getResults().iterator();
-                while (iterator.hasNext()) {
-                    iterator.next();
-                    HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(iterator.key(), iterator.value()));
-                    for (Map.Entry<Integer, ItemStack> i : inventoryMap.entrySet()) {
-                        player.getLocation().getWorld().dropItem(player.getLocation(), i.getValue());
-                    }
-                }
-                player.updateInventory();
-                return true;
-            } else {
-                player.sendMessage(ChatColor.RED + "Hmm, this doesn't make anything...");
-                return false;
-            }
+            player.sendMessage(ChatColor.RED + "Hmm, this doesn't make anything...");
+            return false;
         }
     }
 

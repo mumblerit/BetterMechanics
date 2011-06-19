@@ -66,7 +66,9 @@ public class IntIntMap {
         }
     }
 
-    public void remove(int key) throws IndexOutOfBoundsException {
+    public void remove(int key) throws IndexOutOfBoundsException,KeyNotFoundException {
+        int keyIndex = getIndex(key);
+
         size--;
 
         int[] keys = new int[size];
@@ -74,7 +76,7 @@ public class IntIntMap {
 
         int index = 0;
         for (int k = 0; k < size + 1; k++) {
-            if (_keys[k] == key)
+            if (index == keyIndex)
                 continue;
             values[index] = _values[k];
             keys[index] = _keys[k];
@@ -87,6 +89,7 @@ public class IntIntMap {
     }
 
     public IntIntMapIterator iterator() {
+        iterator.rewind();
         return iterator;
     }
 
@@ -113,25 +116,17 @@ public class IntIntMap {
 
     @Override
     public IntIntMap clone() {
-        return new IntIntMap(_keys, _values, size);
+        IntIntMap clone = new IntIntMap();
+        iterator.rewind();
+        while(iterator.hasNext()){
+            iterator.next();
+            clone.put(iterator.key(), iterator.value());
+        }
+        return clone;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other != null && other instanceof IntIntMap) {
-            IntIntMapIterator otherIterator = ((IntIntMap) other).iterator();
-            IntIntMapIterator thisIterator = iterator();
-            while (otherIterator.hasNext() && thisIterator.hasNext()) {
-                otherIterator.next();
-                thisIterator.next();
-                if (otherIterator.key() != thisIterator.key() || otherIterator.value() != thisIterator.value()) {
-                    return false;
-                }
-            }
-            return !(otherIterator.hasNext() || thisIterator.hasNext());
-        } else {
-            return false;
-        }
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
 
