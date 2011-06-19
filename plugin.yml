@@ -1,6 +1,6 @@
 name: BetterMechanics
 main: com.edoxile.bukkit.bettermechanics.BetterMechanics
-version: 1.6.1
+version: 1.7
 commands:
   pen:
     description: Change the text of signs

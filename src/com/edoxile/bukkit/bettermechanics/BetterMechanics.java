@@ -48,6 +48,10 @@ public class BetterMechanics extends JavaPlugin {
         return configFile;
     }
 
+    public String getName(){
+        return getDescription().getName();
+    }
+
     public void registerEvents() {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvent(Event.Type.SIGN_CHANGE, blockListener, Event.Priority.Normal, this);

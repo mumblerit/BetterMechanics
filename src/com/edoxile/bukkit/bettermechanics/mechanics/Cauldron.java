@@ -1,6 +1,8 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
 import com.edoxile.bukkit.bettermechanics.utils.CauldronCookbook;
+import com.edoxile.bukkit.bettermechanics.utils.IntIntMap;
+import com.edoxile.bukkit.bettermechanics.utils.IntIntMapIterator;
 import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -75,24 +77,15 @@ public class Cauldron {
     }
 
     public boolean performCauldron() {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        HashMap<Integer, Integer> noGlassMap = new HashMap<Integer, Integer>();
+        IntIntMap map = new IntIntMap();
+        IntIntMap noGlassMap = new IntIntMap();
 
         for (Block b : contents) {
             if (b.getTypeId() == Material.GLASS.getId()) {
-                if (!map.containsKey(b.getTypeId())) {
-                    map.put(b.getTypeId(), 1);
-                } else {
-                    map.put(b.getTypeId(), map.get(b.getTypeId()) + 1);
-                }
+                map.add(b.getTypeId(), 1);
             } else {
-                if (!map.containsKey(b.getTypeId())) {
-                    noGlassMap.put(b.getTypeId(), 1);
-                    map.put(b.getTypeId(), 1);
-                } else {
-                    noGlassMap.put(b.getTypeId(), noGlassMap.get(b.getTypeId()) + 1);
-                    map.put(b.getTypeId(), map.get(b.getTypeId()) + 1);
-                }
+                noGlassMap.add(b.getTypeId(), 1);
+                map.add(b.getTypeId(), 1);
             }
         }
 
@@ -101,7 +94,7 @@ public class Cauldron {
 
         if (recipe != null) {
 
-            player.sendMessage(ChatColor.GOLD + "In a proof of smoke, you've made " + recipe.getName() + ".");
+            player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
 
             for (Block b : contents) {
                 if (isDependant(b.getTypeId())) {
@@ -113,8 +106,10 @@ public class Cauldron {
             }
 
             // Give results
-            for (Integer id : recipe.getResults()) {
-                HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(id, 1));
+            IntIntMapIterator iterator = recipe.getResults().iterator();
+            while (iterator.hasNext()) {
+                iterator.next();
+                HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(iterator.key(), iterator.value()));
                 for (Map.Entry<Integer, ItemStack> i : inventoryMap.entrySet()) {
                     player.getLocation().getWorld().dropItem(player.getLocation(), i.getValue());
                 }
@@ -139,8 +134,10 @@ public class Cauldron {
                 }
 
                 // Give results
-                for (Integer id : recipe.getResults()) {
-                    HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(id, 1));
+                IntIntMapIterator iterator = recipe.getResults().iterator();
+                while (iterator.hasNext()) {
+                    iterator.next();
+                    HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(iterator.key(), iterator.value()));
                     for (Map.Entry<Integer, ItemStack> i : inventoryMap.entrySet()) {
                         player.getLocation().getWorld().dropItem(player.getLocation(), i.getValue());
                     }

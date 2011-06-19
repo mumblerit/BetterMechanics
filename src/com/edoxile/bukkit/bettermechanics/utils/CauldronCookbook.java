@@ -5,58 +5,57 @@ package com.edoxile.bukkit.bettermechanics.utils;
  * User: Edoxile
  */
 
+import com.edoxile.bukkit.bettermechanics.BetterMechanics;
+import org.bukkit.util.config.Configuration;
+
 import java.util.logging.Logger;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  * Store of recipes.
  *
- * @author sk89q
+ * @author sk89q, Edoxile
  */
 public class CauldronCookbook {
-    public CauldronCookbook() {
-
-        try {
-            CauldronCookbook recipes = readCauldronRecipes("cauldron-recipes.txt");
-            if (recipes.size() != 0) {
-                log.info(recipes.size() + " cauldron recipe(s) loaded");
-            } else {
-                log.warning("cauldron-recipes.txt had no recipes");
-            }
-        } catch (FileNotFoundException e) {
-            log.info("cauldron-recipes.txt not found: " + e.getMessage());
-            try {
-                log.info("Looked in: " + (new File(".")).getCanonicalPath() + "/plugins/CraftBookMechanisms");
-            } catch (IOException ioe) {
-            }
-        } catch (IOException e) {
-            log.warning("cauldron-recipes.txt not loaded: " + e.getMessage());
-        }
-    }
-
     private List<Recipe> recipes = new ArrayList<Recipe>();
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private BetterMechanics instance;
+    private Configuration config;
 
-    static Logger log = Logger.getLogger("Minecraft");
+    public CauldronCookbook(BetterMechanics plugin) {
+        instance = plugin;
+        config = instance.getConfiguration();
+        List<String> recipeNames = config.getKeys("cauldron.recipes");
+        for (String name : recipeNames) {
+            IntIntMap ingredients = new IntIntMap();
+            IntIntMap results = new IntIntMap();
+
+            List<List<Integer>> list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".ingredients");
+            for (List<Integer> l : list) {
+                ingredients.put(l.get(0), l.get(1));
+            }
+            list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".results");
+            for (List<Integer> l : list) {
+                results.put(l.get(0), l.get(1));
+            }
+
+            add(new Recipe(name, ingredients, results));
+        }
+        log.info("[BetterMechanics] Cauldron loaded " + size() + " recipes.");
+    }
 
     public void add(Recipe recipe) {
         recipes.add(recipe);
     }
 
-    public Recipe find(Map<Integer, Integer> ingredients) {
+    public Recipe find(IntIntMap ingredients) {
         for (Recipe recipe : recipes) {
-                if (recipe.hasAllIngredients(ingredients)) {
-                    return recipe;
-                }
+            if (recipe.hasAllIngredients(ingredients)) {
+                return recipe;
+            }
         }
         return null;
     }
@@ -65,107 +64,26 @@ public class CauldronCookbook {
         return recipes.size();
     }
 
-    private CauldronCookbook readCauldronRecipes(String path)
-            throws IOException {
-        File file = new File("plugins/BetterMechanics", path);
-        FileReader input = null;
-        try {
-            input = new FileReader(file);
-            BufferedReader buff = new BufferedReader(input);
-            String line;
-            while ((line = buff.readLine()) != null) {
-                line = line.trim();
-                if (line.length() == 0) {
-                    continue;
-                }
-                if (line.charAt(0) == ';' || line.charAt(0) == '#' || line.equals("")) {
-                    continue;
-                }
-                String[] parts = line.split(":");
-                if (parts.length < 3) {
-                    log.warning("Invalid cauldron recipe line in "
-                            + file.getName() + ": '" + line + "'");
-                } else {
-                    String name = parts[0];
-                    List<Integer> ingredients = parseCauldronItems(parts[1]);
-                    List<Integer> results = parseCauldronItems(parts[2]);
-                    String[] groups = null;
-                    if (parts.length >= 4 && parts[3].trim().length() > 0) {
-                        groups = parts[3].split(",");
-                    }
-                    CauldronCookbook.Recipe recipe =
-                            new CauldronCookbook.Recipe(name, ingredients, results, groups);
-                    add(recipe);
-                }
-            }
-            return this;
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException e) {
-            }
-        }
-    }
-
-    private List<Integer> parseCauldronItems(String list) {
-        String[] parts = list.split(",");
-
-        List<Integer> out = new ArrayList<Integer>();
-
-        for (String part : parts) {
-            int multiplier = 1;
-
-            try {
-                if (part.matches("^.*\\*([0-9]+)$")) {
-                    int at = part.lastIndexOf("*");
-                    multiplier = Integer.parseInt(
-                            part.substring(at + 1, part.length()));
-                    part = part.substring(0, at);
-                }
-
-                try {
-                    for (int i = 0; i < multiplier; i++) {
-                        out.add(Integer.valueOf(part));
-                    }
-                } catch (NumberFormatException e) {
-                    log.warning("Cauldron: Unknown item " + part);
-                }
-            } catch (NumberFormatException e) { // Bad multiplier
-                log.warning("Cauldron: Bad multiplier in '" + part + "'");
-            }
-        }
-        return out;
-    }
-
     public static final class Recipe {
         private final String name;
-        private final Map<Integer, Integer> ingredientLookup = new HashMap<Integer, Integer>();
-        private final List<Integer> results;
+        private final IntIntMap ingredients;
+        private final IntIntMap results;
 
-        public Recipe(String name, List<Integer> ingredients,
-                      List<Integer> results, String[] groups) {
+        public Recipe(String name, IntIntMap ingredients, IntIntMap results) {
             this.name = name;
-            this.results = Collections.unmodifiableList(results);
-            for (Integer id : ingredients) {
-                if (ingredientLookup.containsKey(id)) {
-                    ingredientLookup.put(id, ingredientLookup.get(id) + 1);
-                } else {
-                    ingredientLookup.put(id, 1);
-                }
-            }
+            this.ingredients = ingredients;
+            this.results = results;
         }
 
         public String getName() {
             return name;
         }
 
-        public boolean hasAllIngredients(Map<Integer, Integer> check) {
-            return ingredientLookup.equals(check);
+        public boolean hasAllIngredients(IntIntMap check) {
+            return ingredients.equals(check);
         }
 
-        public List<Integer> getResults() {
+        public IntIntMap getResults() {
             return results;
         }
     }

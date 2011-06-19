@@ -149,7 +149,7 @@ public class MechanicsConfig {
 
         public CauldronConfig() {
             enabled = config.getBoolean("cauldron.enabled", true);
-            cauldronCookbook = new CauldronCookbook();
+            cauldronCookbook = new CauldronCookbook(plugin);
         }
     }
 

@@ -19,6 +19,22 @@ ammeter:
     enabled: true
 cauldron:
     enabled: true
+    recipes:
+        Glowstone:
+            ingredients: [ [3,4], [50,4] ]
+            results: [ [89,8] ]
+        Hellstone:
+            ingredients: [ [4,4], [50,4] ]
+            results: [ [87,8] ]
+        Soulsand:
+            ingredients: [ [4,4], [12,4] ]
+            results: [ [88,8] ]
+        Sponge:
+            ingredients: [ [41,4] ]
+            results: [ [19,8] ]
+        Pumpkin:
+            ingredients: [ [87,4], [60,4] ]
+            results: [ [86,1] ]
 pen:
     enabled: true
     material: 263
