@@ -5,7 +5,7 @@ import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionExceptio
 
 public class IntIntMapIterator {
     private int[] _keys, _values;
-    private int pointer = -1;
+    private int pointer = 0;
     private int size;
 
     public IntIntMapIterator(int[] keys, int[] values) throws InvalidConstructionException {
@@ -41,10 +41,21 @@ public class IntIntMapIterator {
     }
 
     public void rewind() {
-        pointer = -1;
+        pointer = 0;
     }
 
     public void end() {
         pointer = size - 1;
+    }
+
+    @Override
+    public String toString() {
+        if (size == 0)
+            return "{}";
+        String msg = "[" + size + " items] :: { ";
+        for (int index = 0; index < size; index++) {
+            msg += "[" + _keys[index] + ", " + _values[index] + "], ";
+        }
+        return msg.substring(0, msg.length() - 2) + " } @ " + pointer;
     }
 }

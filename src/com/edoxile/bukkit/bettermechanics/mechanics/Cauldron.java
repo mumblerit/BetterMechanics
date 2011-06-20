@@ -12,8 +12,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.swing.plaf.TreeUI;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -89,28 +90,17 @@ public class Cauldron {
 
         if (recipe != null) {
             player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
+
             IntIntMap ingredients = recipe.getIngredients().clone();
 
             for (Block b : contents) {
-                if (isDependant(b.getTypeId())) {
-                    try {
-                        if (ingredients.get(b.getTypeId()) > 0) {
-                            ingredients.add(b.getTypeId(), -1);
-                            b.setType(Material.AIR);
-                        }
-                    } catch (KeyNotFoundException e) {
-                        //Block not in recipe or allready removed;
-                    }
-                }
-            }
-            for (Block b : contents) {
                 try {
                     if (ingredients.get(b.getTypeId()) > 0) {
-                        ingredients.add(b.getTypeId(), -1);
+                        ingredients.remove(b.getTypeId(), 1);
                         b.setType(Material.AIR);
                     }
                 } catch (KeyNotFoundException e) {
-                    //Block not in recipe or allready removed;
+                    continue;
                 }
             }
 
@@ -128,37 +118,6 @@ public class Cauldron {
         } else {
             player.sendMessage(ChatColor.RED + "Hmm, this doesn't make anything...");
             return false;
-        }
-    }
-
-    private boolean isDependant(int itemId) {
-        switch (itemId) {
-            case 6:
-            case 31:
-            case 32:
-            case 37:
-            case 38:
-            case 39:
-            case 40:
-            case 50:
-            case 51:
-            case 55:
-            case 59:
-            case 69:
-            case 70:
-            case 71:
-            case 72:
-            case 75:
-            case 76:
-            case 78:
-            case 81:
-            case 83:
-            case 93:
-            case 94:
-            case 96:
-                return true;
-            default:
-                return false;
         }
     }
 }

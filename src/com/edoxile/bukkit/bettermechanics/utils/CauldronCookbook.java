@@ -11,7 +11,6 @@ import org.bukkit.util.config.Configuration;
 
 import java.util.logging.Logger;
 
-import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -81,17 +80,15 @@ public class CauldronCookbook {
         }
 
         public boolean hasAllIngredients(IntIntMap check) {
-            IntIntMapIterator iterator = check.iterator();
+            IntIntMapIterator iterator = ingredients.iterator();
             while (iterator.hasNext()) {
                 iterator.next();
                 try {
-                    if (ingredients.get(iterator.key()) <= iterator.value()){
-                        check.remove(iterator.key());
-                    } else {
+                    if (check.get(iterator.key()) < iterator.value()) {
                         return false;
                     }
-                } catch (KeyNotFoundException e){
-                    continue;
+                } catch (KeyNotFoundException e) {
+                    return false;
                 }
             }
             return true;

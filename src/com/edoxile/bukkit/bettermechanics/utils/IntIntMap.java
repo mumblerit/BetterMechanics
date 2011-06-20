@@ -12,27 +12,16 @@ public class IntIntMap {
 
     private transient int[] _keys;
     private transient int[] _values;
-    private IntIntMapIterator iterator;
 
     public IntIntMap() {
         _keys = new int[size];
         _values = new int[size];
-        try {
-            iterator = new IntIntMapIterator(_keys, _values);
-        } catch (InvalidConstructionException e) {
-            System.out.println("Weird shit is happening!");
-        }
     }
 
     private IntIntMap(int[] k, int[] v, int s) {
         _keys = k;
         _values = v;
         size = s;
-        try {
-            iterator = new IntIntMapIterator(_keys, _values);
-        } catch (InvalidConstructionException e) {
-            System.out.println("Weird shit is happening!");
-        }
     }
 
     public void put(int key, int value) {
@@ -66,7 +55,16 @@ public class IntIntMap {
         }
     }
 
-    public void remove(int key) throws IndexOutOfBoundsException,KeyNotFoundException {
+    public void remove(int key, int amount) {
+        try {
+            int index = getIndex(key);
+            _values[index] -= amount;
+        } catch (KeyNotFoundException e) {
+            put(key, amount);
+        }
+    }
+
+    public void remove(int key) throws IndexOutOfBoundsException, KeyNotFoundException {
         int keyIndex = getIndex(key);
 
         size--;
@@ -89,8 +87,11 @@ public class IntIntMap {
     }
 
     public IntIntMapIterator iterator() {
-        iterator.rewind();
-        return iterator;
+        try {
+            return new IntIntMapIterator(_keys, _values);
+        } catch (InvalidConstructionException e) {
+            return null;
+        }
     }
 
     private int getIndex(int key) throws KeyNotFoundException {
@@ -107,6 +108,8 @@ public class IntIntMap {
 
     @Override
     public String toString() {
+        if (size == 0)
+            return "{}";
         String msg = "{ ";
         for (int index = 0; index < size; index++) {
             msg += "[" + _keys[index] + ", " + _values[index] + "], ";
@@ -117,8 +120,8 @@ public class IntIntMap {
     @Override
     public IntIntMap clone() {
         IntIntMap clone = new IntIntMap();
-        iterator.rewind();
-        while(iterator.hasNext()){
+        IntIntMapIterator iterator = iterator();
+        while (iterator.hasNext()) {
             iterator.next();
             clone.put(iterator.key(), iterator.value());
         }
