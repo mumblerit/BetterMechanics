@@ -2,27 +2,52 @@ package com.edoxile.bukkit.bettermechanics.utils;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionException;
 import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
+import org.bukkit.material.MaterialData;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Edoxile
  */
-public class IntIntMap {
+public class MaterialMap {
     private int size = 0;
 
     private transient int[] _keys;
     private transient int[] _values;
 
-    public IntIntMap() {
+    public MaterialMap() {
         _keys = new int[size];
         _values = new int[size];
     }
 
-    private IntIntMap(int[] k, int[] v, int s) {
+    private MaterialMap(int[] k, int[] v, int s) {
         _keys = k;
         _values = v;
         size = s;
     }
+
+    /**
+     * This block is commented because it is not needed.
+     *
+    private int getKey(MaterialData md) throws NullPointerException {
+        return getKey(md.getItemTypeId(), md.getData());
+    }
+
+    private int getKey(int id, byte data) {
+        return ((id << 8) | data);
+    }
+
+    private int getData(int key) {
+        return (short) (key & 0xffff);
+    }
+
+    private int getId(int key) {
+        return ((key >> 8) & 0xffff);
+    }
+
+    private MaterialData getMaterialData(int key) {
+        return new MaterialData(getId(key), (byte) getData(key));
+    }
+     */
 
     public void put(int key, int value) {
         try {
@@ -42,7 +67,7 @@ public class IntIntMap {
             _values = values;
             _keys = keys;
 
-            size++;
+            size = _values.length;
         }
     }
 
@@ -55,13 +80,9 @@ public class IntIntMap {
         }
     }
 
-    public void remove(int key, int amount) {
-        try {
-            int index = getIndex(key);
-            _values[index] -= amount;
-        } catch (KeyNotFoundException e) {
-            put(key, amount);
-        }
+    public void remove(int key, int amount) throws KeyNotFoundException {
+        int index = getIndex(key);
+        _values[index] -= amount;
     }
 
     public void remove(int key) throws IndexOutOfBoundsException, KeyNotFoundException {
@@ -80,15 +101,17 @@ public class IntIntMap {
             keys[index] = _keys[k];
             index++;
         }
+
+        size = _values.length;
     }
 
     public int get(int key) throws KeyNotFoundException {
         return _values[getIndex(key)];
     }
 
-    public IntIntMapIterator iterator() {
+    public MaterialMapIterator iterator() {
         try {
-            return new IntIntMapIterator(_keys, _values);
+            return new MaterialMapIterator(_keys, _values);
         } catch (InvalidConstructionException e) {
             return null;
         }
@@ -118,9 +141,9 @@ public class IntIntMap {
     }
 
     @Override
-    public IntIntMap clone() {
-        IntIntMap clone = new IntIntMap();
-        IntIntMapIterator iterator = iterator();
+    public MaterialMap clone() {
+        MaterialMap clone = new MaterialMap();
+        MaterialMapIterator iterator = iterator();
         while (iterator.hasNext()) {
             iterator.next();
             clone.put(iterator.key(), iterator.value());

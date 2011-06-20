@@ -29,17 +29,26 @@ public class CauldronCookbook {
         instance = plugin;
         config = instance.getConfiguration();
         List<String> recipeNames = config.getKeys("cauldron.recipes");
+        if(recipeNames == null){
+            log.warning("[BetterMechanics] Error loading cauldron recipes: no recipes found! (you probably messed up the yml format somewhere)");
+            return;
+        }
         for (String name : recipeNames) {
-            IntIntMap ingredients = new IntIntMap();
-            IntIntMap results = new IntIntMap();
-
-            List<List<Integer>> list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".ingredients");
-            for (List<Integer> l : list) {
-                ingredients.put(l.get(0), l.get(1));
-            }
-            list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".results");
-            for (List<Integer> l : list) {
-                results.put(l.get(0), l.get(1));
+            MaterialMap ingredients = new MaterialMap();
+            MaterialMap results = new MaterialMap();
+            try {
+                List<List<Integer>> list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".ingredients");
+                for (List<Integer> l : list) {
+                    ingredients.put(l.get(0), l.get(1));
+                }
+                list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".results");
+                for (List<Integer> l : list) {
+                    results.put(l.get(0), l.get(1));
+                }
+            }catch(Throwable e){
+                recipes.clear();
+                log.warning("[BetterMechanics] Error loading cauldron recipes: " + e.getCause()  + " (you probably messed up the yml format somewhere)");
+                return;
             }
 
             add(new Recipe(name, ingredients, results));
@@ -51,7 +60,7 @@ public class CauldronCookbook {
         recipes.add(recipe);
     }
 
-    public Recipe find(IntIntMap ingredients) {
+    public Recipe find(MaterialMap ingredients) {
         for (Recipe recipe : recipes) {
             if (recipe.hasAllIngredients(ingredients)) {
                 return recipe;
@@ -66,10 +75,10 @@ public class CauldronCookbook {
 
     public static final class Recipe {
         private final String name;
-        private final IntIntMap ingredients;
-        private final IntIntMap results;
+        private final MaterialMap ingredients;
+        private final MaterialMap results;
 
-        public Recipe(String name, IntIntMap ingredients, IntIntMap results) {
+        public Recipe(String name, MaterialMap ingredients, MaterialMap results) {
             this.name = name;
             this.ingredients = ingredients;
             this.results = results;
@@ -79,9 +88,9 @@ public class CauldronCookbook {
             return name;
         }
 
-        public boolean hasAllIngredients(IntIntMap check) {
-            IntIntMapIterator iterator = ingredients.iterator();
-            while (iterator.hasNext()) {
+        public boolean hasAllIngredients(MaterialMap check) {
+            MaterialMapIterator iterator = ingredients.iterator();
+            do {
                 iterator.next();
                 try {
                     if (check.get(iterator.key()) < iterator.value()) {
@@ -90,15 +99,15 @@ public class CauldronCookbook {
                 } catch (KeyNotFoundException e) {
                     return false;
                 }
-            }
+            } while (iterator.hasNext());
             return true;
         }
 
-        public IntIntMap getResults() {
+        public MaterialMap getResults() {
             return results;
         }
 
-        public IntIntMap getIngredients() {
+        public MaterialMap getIngredients() {
             return ingredients;
         }
     }

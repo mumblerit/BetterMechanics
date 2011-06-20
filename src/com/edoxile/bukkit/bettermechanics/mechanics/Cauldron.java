@@ -2,8 +2,8 @@ package com.edoxile.bukkit.bettermechanics.mechanics;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 import com.edoxile.bukkit.bettermechanics.utils.CauldronCookbook;
-import com.edoxile.bukkit.bettermechanics.utils.IntIntMap;
-import com.edoxile.bukkit.bettermechanics.utils.IntIntMapIterator;
+import com.edoxile.bukkit.bettermechanics.utils.MaterialMap;
+import com.edoxile.bukkit.bettermechanics.utils.MaterialMapIterator;
 import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -79,7 +79,7 @@ public class Cauldron {
     }
 
     public boolean performCauldron() {
-        IntIntMap map = new IntIntMap();
+        MaterialMap map = new MaterialMap();
 
         for (Block b : contents) {
             map.add(b.getTypeId(), 1);
@@ -91,33 +91,80 @@ public class Cauldron {
         if (recipe != null) {
             player.sendMessage(ChatColor.GOLD + "In a poof of smoke, you've made " + recipe.getName() + ".");
 
-            IntIntMap ingredients = recipe.getIngredients().clone();
+            MaterialMap ingredients = recipe.getIngredients().clone();
 
             for (Block b : contents) {
-                try {
-                    if (ingredients.get(b.getTypeId()) > 0) {
-                        ingredients.remove(b.getTypeId(), 1);
-                        b.setType(Material.AIR);
+                if (isDependant(b.getTypeId())) {
+                    try {
+                        if (ingredients.get(b.getTypeId()) > 0) {
+                            ingredients.remove(b.getTypeId(), 1);
+                            b.setType(Material.AIR);
+                        } else {
+                        }
+                    } catch (KeyNotFoundException e) {
+                        continue;
                     }
-                } catch (KeyNotFoundException e) {
-                    continue;
+                }
+            }
+            for (Block b : contents) {
+                if (!isDependant(b.getTypeId())) {
+                    try {
+                        if (ingredients.get(b.getTypeId()) > 0) {
+                            ingredients.remove(b.getTypeId(), 1);
+                            b.setType(Material.AIR);
+                        } else {
+                        }
+                    } catch (KeyNotFoundException e) {
+                        continue;
+                    }
                 }
             }
 
             // Give results
-            IntIntMapIterator iterator = recipe.getResults().iterator();
-            while (iterator.hasNext()) {
+            MaterialMapIterator iterator = recipe.getResults().iterator();
+            do {
                 iterator.next();
                 HashMap<Integer, ItemStack> inventoryMap = player.getInventory().addItem(new ItemStack(iterator.key(), iterator.value()));
                 for (Map.Entry<Integer, ItemStack> i : inventoryMap.entrySet()) {
                     player.getLocation().getWorld().dropItem(player.getLocation(), i.getValue());
                 }
-            }
+            } while (iterator.hasNext());
             player.updateInventory();
             return true;
         } else {
             player.sendMessage(ChatColor.RED + "Hmm, this doesn't make anything...");
             return false;
+        }
+    }
+
+    private boolean isDependant(int itemId) {
+        switch (itemId) {
+            case 6:
+            case 31:
+            case 32:
+            case 37:
+            case 38:
+            case 39:
+            case 40:
+            case 50:
+            case 51:
+            case 55:
+            case 59:
+            case 69:
+            case 70:
+            case 71:
+            case 72:
+            case 75:
+            case 76:
+            case 78:
+            case 81:
+            case 83:
+            case 93:
+            case 94:
+            case 96:
+                return true;
+            default:
+                return false;
         }
     }
 }

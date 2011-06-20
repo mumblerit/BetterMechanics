@@ -3,12 +3,14 @@ package com.edoxile.bukkit.bettermechanics.utils;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionException;
 
-public class IntIntMapIterator {
-    private int[] _keys, _values;
-    private int pointer = 0;
-    private int size;
+import java.util.Iterator;
 
-    public IntIntMapIterator(int[] keys, int[] values) throws InvalidConstructionException {
+public class MaterialMapIterator implements Iterator<Integer> {
+    private transient int[] _keys, _values;
+    private int pointer = -1;
+    private int size = 0;
+
+    public MaterialMapIterator(int[] keys, int[] values) throws InvalidConstructionException {
         if (keys.length != values.length)
             throw new InvalidConstructionException();
         _keys = keys;
@@ -17,15 +19,32 @@ public class IntIntMapIterator {
     }
 
     public boolean hasNext() {
-        return ((pointer + 1) < _keys.length);
+        return pointer < (size - 1);
     }
 
     public boolean hasPrevious() {
-        return ((pointer - 1) > 0);
+        return pointer > 1;
     }
 
-    public void next() {
+    public Integer next() {
         pointer++;
+        return 0;
+    }
+
+    public void remove() {
+        int[] keys = new int[size - 1];
+        int[] values = new int[size - 1];
+
+        int index = 0;
+        for (int k = 0; k < size; k++) {
+            if (index == pointer)
+                continue;
+            values[index] = _values[k];
+            keys[index] = _keys[k];
+            index++;
+        }
+
+        size = _keys.length;
     }
 
     public void previous() {
@@ -41,7 +60,7 @@ public class IntIntMapIterator {
     }
 
     public void rewind() {
-        pointer = 0;
+        pointer = -1;
     }
 
     public void end() {
@@ -51,7 +70,7 @@ public class IntIntMapIterator {
     @Override
     public String toString() {
         if (size == 0)
-            return "{}";
+            return "[0 items] {} @ 0";
         String msg = "[" + size + " items] :: { ";
         for (int index = 0; index < size; index++) {
             msg += "[" + _keys[index] + ", " + _values[index] + "], ";

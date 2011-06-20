@@ -148,8 +148,18 @@ public class MechanicsConfig {
         public final CauldronCookbook cauldronCookbook;
 
         public CauldronConfig() {
-            enabled = config.getBoolean("cauldron.enabled", true);
-            cauldronCookbook = new CauldronCookbook(plugin);
+            if (config.getBoolean("cauldron.enabled", true)) {
+                cauldronCookbook = new CauldronCookbook(plugin);
+                if (cauldronCookbook.size() > 0) {
+                    enabled = true;
+                } else {
+                    log.warning("[BetterMechanics] Disabled cauldron because there were no recipes found in the config.");
+                    enabled = false;
+                }
+            } else {
+                cauldronCookbook = null;
+                enabled = false;
+            }
         }
     }
 
@@ -229,7 +239,7 @@ public class MechanicsConfig {
                 return canbuild;
             }
         }
-        
+
         public boolean checkZonesHit(Player player, Block clickedBlock) {
             if (zones == null) {
                 return true;
@@ -260,21 +270,21 @@ public class MechanicsConfig {
         }
 
         public boolean check(Player player, String type, Block clickedBlock, boolean skipCreateZones, boolean skipHitZones) {
-        	boolean allowed = false;
+            boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
-                    if(skipCreateZones || checkZonesCreate(player, clickedBlock));
-                    	allowed = skipHitZones || checkZonesHit(player, clickedBlock);
+                    if (skipCreateZones || checkZonesCreate(player, clickedBlock)) ;
+                    allowed = skipHitZones || checkZonesHit(player, clickedBlock);
                 }
             }
-            
-            if(!allowed) {
+
+            if (!allowed) {
                 player.sendMessage(ChatColor.RED + "O oh! Seems like you don't have permissions for this!");
             }
-            
+
             return allowed;
         }
-        
+
         public boolean check(Player player, String type, Block clickedBlock, boolean skipZones) {
             return check(player, type, clickedBlock, skipZones, true);
         }
