@@ -5,7 +5,7 @@ import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionExceptio
 
 import java.util.Iterator;
 
-public class MaterialMapIterator implements Iterator<Integer> {
+public class MaterialMapIterator{
     private transient int[] _keys, _values;
     private int pointer = -1;
     private int size = 0;
@@ -26,9 +26,8 @@ public class MaterialMapIterator implements Iterator<Integer> {
         return pointer > 1;
     }
 
-    public Integer next() {
+    public void next() {
         pointer++;
-        return 0;
     }
 
     public void remove() {

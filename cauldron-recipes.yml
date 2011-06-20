@@ -1,0 +1,27 @@
+# Add your recipes here. The index is the name of the recipe. Ingredients and results are noted as [id, amount].
+recipes:
+    Glowstone:
+        # 4 dirt, 4 torches
+        ingredients: [ [3,4], [50,4] ]
+        # 8 glowstone
+        results: [ [89,8] ]
+    Hellstone:
+        # 4 cobble, 4 torches
+        ingredients: [ [4,4], [50,4] ]
+        # 8 hellstone
+        results: [ [87,8] ]
+    Soulsand:
+        # 4 cobble, 4 sand
+        ingredients: [ [4,4], [12,4] ]
+        # 8 soulsand
+        results: [ [88,8] ]
+    Sponge:
+        # 4 gold blocks
+        ingredients: [ [41,4] ]
+        # 8 sponge
+        results: [ [19,8] ]
+    Pumpkin:
+        # 4 hellstone, 4 farmland
+        ingredients: [ [87,4], [60,4] ]
+        # 1 pumpkin
+        results: [ [86,1] ]

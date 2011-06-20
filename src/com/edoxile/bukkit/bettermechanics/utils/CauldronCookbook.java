@@ -9,6 +9,7 @@ import com.edoxile.bukkit.bettermechanics.BetterMechanics;
 import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 import org.bukkit.util.config.Configuration;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import java.util.List;
@@ -28,7 +29,16 @@ public class CauldronCookbook {
     public CauldronCookbook(BetterMechanics plugin) {
         instance = plugin;
         config = instance.getConfiguration();
-        List<String> recipeNames = config.getKeys("cauldron.recipes");
+        try{
+            File configFile = new File("plugins/BetterMechanics/cauldron-recipes.yml");
+            log.info("[BetterMechanics] Loading cauldron recipes from " + configFile.getAbsolutePath());
+            config = new Configuration(configFile);
+            config.load();
+        }catch(Exception e){
+            log.warning("[BetterMechanics] Something went wrong loading the config file.");
+            return;
+        }
+        List<String> recipeNames = config.getKeys("recipes");
         if(recipeNames == null){
             log.warning("[BetterMechanics] Error loading cauldron recipes: no recipes found! (you probably messed up the yml format somewhere)");
             return;
@@ -37,17 +47,17 @@ public class CauldronCookbook {
             MaterialMap ingredients = new MaterialMap();
             MaterialMap results = new MaterialMap();
             try {
-                List<List<Integer>> list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".ingredients");
+                List<List<Integer>> list = (List<List<Integer>>) config.getProperty("recipes." + name + ".ingredients");
                 for (List<Integer> l : list) {
                     ingredients.put(l.get(0), l.get(1));
                 }
-                list = (List<List<Integer>>) config.getProperty("cauldron.recipes." + name + ".results");
+                list = (List<List<Integer>>) config.getProperty("recipes." + name + ".results");
                 for (List<Integer> l : list) {
                     results.put(l.get(0), l.get(1));
                 }
-            }catch(Throwable e){
+            }catch(Exception e){
                 recipes.clear();
-                log.warning("[BetterMechanics] Error loading cauldron recipes: " + e.getCause()  + " (you probably messed up the yml format somewhere)");
+                log.warning("[BetterMechanics] Error loading cauldron recipes: " + e.getMessage()  + "(" + e.getClass().getName() + ") (you probably messed up the yml format somewhere)");
                 return;
             }
 
