@@ -47,9 +47,9 @@ public class Gate {
             }
         }
         smallGate = (SignUtil.getMechanicsType(sign) == MechanicsType.SMALL_GATE);
-        int sw = (smallGate ? 1 : (3 + 1));
+        int sw = (smallGate ? 1 : 4);
         Block tempBlock = sign.getBlock().getRelative(SignUtil.getBackBlockFace(sign));
-        tempBlock = BlockMapper.mapColumn(tempBlock, sw, 32, Material.FENCE);
+        tempBlock = BlockMapper.mapColumn(tempBlock, sw, sw, Material.FENCE);
         if (tempBlock == null) {
             throw new BlockNotFoundException();
         }
