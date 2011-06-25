@@ -2,11 +2,10 @@ package com.edoxile.bukkit.bettermechanics.utils;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionException;
 import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
-import org.bukkit.material.MaterialData;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Edoxile
+ * @author Edoxile
  */
 public class MaterialMap {
     private int size = 0;
