@@ -21,16 +21,16 @@ public class Ammeter {
         config = c.getAmmeterConfig();
     }
 
-    public void measure(){
-        if(!config.enabled)
+    public void measure() {
+        if (!config.enabled)
             return;
-        if(wire.getType() == Material.REDSTONE_WIRE){
+        if (wire.getType() == Material.REDSTONE_WIRE) {
             String msg = "Current is: [" + ChatColor.GREEN;
-            for(byte i = 0; i < wire.getData(); i++){
+            for (byte i = 0; i < wire.getData(); i++) {
                 msg += "|";
             }
             msg += ChatColor.DARK_RED;
-            for(byte i = wire.getData(); i < 15; i++){
+            for (byte i = wire.getData(); i < 15; i++) {
                 msg += "|";
             }
             msg += ChatColor.WHITE + "] " + ChatColor.RED + Byte.toString(wire.getData());

@@ -5,6 +5,7 @@ import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 
 /**
  * Created by IntelliJ IDEA.
+ *
  * @author Edoxile
  */
 public class MaterialMap {
@@ -26,26 +27,26 @@ public class MaterialMap {
 
     /**
      * This block is commented because it is not needed.
-     *
-    private int getKey(MaterialData md) throws NullPointerException {
-        return getKey(md.getItemTypeId(), md.getData());
-    }
-
-    private int getKey(int id, byte data) {
-        return ((id << 8) | data);
-    }
-
-    private int getData(int key) {
-        return (short) (key & 0xffff);
-    }
-
-    private int getId(int key) {
-        return ((key >> 8) & 0xffff);
-    }
-
-    private MaterialData getMaterialData(int key) {
-        return new MaterialData(getId(key), (byte) getData(key));
-    }
+     * <p/>
+     * private int getKey(MaterialData md) throws NullPointerException {
+     * return getKey(md.getItemTypeId(), md.getData());
+     * }
+     * <p/>
+     * private int getKey(int id, byte data) {
+     * return ((id << 8) | data);
+     * }
+     * <p/>
+     * private int getData(int key) {
+     * return (short) (key & 0xffff);
+     * }
+     * <p/>
+     * private int getId(int key) {
+     * return ((key >> 8) & 0xffff);
+     * }
+     * <p/>
+     * private MaterialData getMaterialData(int key) {
+     * return new MaterialData(getId(key), (byte) getData(key));
+     * }
      */
 
     public void put(int key, int value) {

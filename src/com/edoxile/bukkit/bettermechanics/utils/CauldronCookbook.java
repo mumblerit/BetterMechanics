@@ -10,10 +10,9 @@ import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
-import java.util.logging.Logger;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Store of recipes.
@@ -29,17 +28,17 @@ public class CauldronCookbook {
     public CauldronCookbook(BetterMechanics plugin) {
         instance = plugin;
         config = instance.getConfiguration();
-        try{
+        try {
             File configFile = new File("plugins/BetterMechanics/cauldron-recipes.yml");
             log.info("[BetterMechanics] Loading cauldron recipes from " + configFile.getAbsolutePath());
             config = new Configuration(configFile);
             config.load();
-        }catch(Exception e){
+        } catch (Exception e) {
             log.warning("[BetterMechanics] Something went wrong loading the config file.");
             return;
         }
         List<String> recipeNames = config.getKeys("recipes");
-        if(recipeNames == null){
+        if (recipeNames == null) {
             log.warning("[BetterMechanics] Error loading cauldron recipes: no recipes found! (you probably messed up the yml format somewhere)");
             return;
         }
@@ -55,9 +54,9 @@ public class CauldronCookbook {
                 for (List<Integer> l : list) {
                     results.put(l.get(0), l.get(1));
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 recipes.clear();
-                log.warning("[BetterMechanics] Error loading cauldron recipes: " + e.getMessage()  + "(" + e.getClass().getName() + ") (you probably messed up the yml format somewhere)");
+                log.warning("[BetterMechanics] Error loading cauldron recipes: " + e.getMessage() + "(" + e.getClass().getName() + ") (you probably messed up the yml format somewhere)");
                 return;
             }
 

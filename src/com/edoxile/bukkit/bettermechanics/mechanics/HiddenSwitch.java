@@ -25,16 +25,16 @@ public class HiddenSwitch {
         config = c.getHiddenSwitchConfig();
     }
 
-    public boolean map(){
-        if(!config.enabled)
+    public boolean map() {
+        if (!config.enabled)
             return false;
-        levers = BlockMapper.mapAllInCuboidRegion(sign.getBlock(),1, Material.LEVER);
+        levers = BlockMapper.mapAllInCuboidRegion(sign.getBlock(), 1, Material.LEVER);
         return (!levers.isEmpty());
     }
 
-    public void toggleLevers(){
-        for(Block b : levers){
-            b.setData((byte)(b.getData() ^ 0x8));
+    public void toggleLevers() {
+        for (Block b : levers) {
+            b.setData((byte) (b.getData() ^ 0x8));
         }
     }
 }

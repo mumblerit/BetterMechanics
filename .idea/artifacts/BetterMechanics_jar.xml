@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="BetterMechanics:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/BetterMechanics_jar</output-path>
-    <root id="archive" name="BetterMechanics.jar">
-      <element id="module-output" name="BetterMechanics" />
-      <element id="file-copy" path="$PROJECT_DIR$/config.yml" />
-      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
-    </root>
-  </artifact>
+    <artifact type="jar" build-on-make="true" name="BetterMechanics:jar">
+        <output-path>$PROJECT_DIR$/out/artifacts/BetterMechanics_jar</output-path>
+        <root id="archive" name="BetterMechanics.jar">
+            <element id="module-output" name="BetterMechanics"/>
+            <element id="file-copy" path="$PROJECT_DIR$/config.yml"/>
+            <element id="file-copy" path="$PROJECT_DIR$/plugin.yml"/>
+        </root>
+    </artifact>
 </component>

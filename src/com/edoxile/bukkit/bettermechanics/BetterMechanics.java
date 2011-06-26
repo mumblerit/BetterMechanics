@@ -1,9 +1,10 @@
 package com.edoxile.bukkit.bettermechanics;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
-import com.edoxile.bukkit.bettermechanics.listeners.*;
+import com.edoxile.bukkit.bettermechanics.listeners.MechanicsBlockListener;
+import com.edoxile.bukkit.bettermechanics.listeners.MechanicsPlayerListener;
 import com.edoxile.bukkit.bettermechanics.mechanics.Pen;
-import com.edoxile.bukkit.bettermechanics.utils.*;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -48,7 +49,7 @@ public class BetterMechanics extends JavaPlugin {
         return configFile;
     }
 
-    public String getName(){
+    public String getName() {
         return getDescription().getName();
     }
 
@@ -58,13 +59,13 @@ public class BetterMechanics extends JavaPlugin {
         pm.registerEvent(Event.Type.REDSTONE_CHANGE, blockListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.BLOCK_PLACE, blockListener, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_JOIN,  playerListener, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Event.Priority.Normal, this);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("pen")) {
             if (configManager.getPenConfig().enabled) {
-                if(sender instanceof Player) {
+                if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (args.length == 0) {
                         player.sendMessage(ChatColor.DARK_RED + "Incorrect usage. Usage: /pen <set|clear|setline|help>");
@@ -87,7 +88,7 @@ public class BetterMechanics extends JavaPlugin {
                             } else {
                                 pen.setLine(player, args);
                             }
-                        }  else if (args[0].equalsIgnoreCase("setline")) {
+                        } else if (args[0].equalsIgnoreCase("setline")) {
                             if (args.length < 2) {
                                 player.sendMessage(ChatColor.DARK_RED + "Too few arguments.");
                             } else {
@@ -106,7 +107,7 @@ public class BetterMechanics extends JavaPlugin {
                     }
                     return true;
                 } else {
-                    sender.sendMessage(ChatColor.RED+"Consoles aren't allowed in this pen party club!");
+                    sender.sendMessage(ChatColor.RED + "Consoles aren't allowed in this pen party club!");
                 }
             }
             sender.sendMessage(ChatColor.DARK_RED + "The pen is not enabled.");

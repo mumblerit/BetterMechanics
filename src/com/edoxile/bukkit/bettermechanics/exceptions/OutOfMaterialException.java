@@ -6,11 +6,12 @@ package com.edoxile.bukkit.bettermechanics.exceptions;
  */
 public class OutOfMaterialException extends Exception {
     private int amount;
-    public OutOfMaterialException(int a){
+
+    public OutOfMaterialException(int a) {
         amount = a;
     }
 
-    public int getAmount(){
+    public int getAmount() {
         return amount;
     }
 }

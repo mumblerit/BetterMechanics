@@ -1,7 +1,7 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.*;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.*;
 import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
 import com.edoxile.bukkit.bettermechanics.utils.BlockbagUtil;
 import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
@@ -38,7 +38,7 @@ public class Bridge {
     }
 
     public boolean map() throws NonCardinalDirectionException, BlockNotFoundException, InvalidMaterialException, ChestNotFoundException {
-        if(!config.enabled)
+        if (!config.enabled)
             return false;
         BlockFace bf;
         if (config.canUseBlock(sign.getBlock().getRelative(BlockFace.UP).getType())) {
@@ -68,7 +68,7 @@ public class Bridge {
                     }
                 }
                 chest = BlockbagUtil.getChest(chestBlock);
-                if(chest == null){
+                if (chest == null) {
                     throw new ChestNotFoundException();
                 }
                 return true;
@@ -158,7 +158,7 @@ public class Bridge {
 
     public boolean isClosed() {
         for (Block b : blockSet) {
-            if(b.getType() == bridgeMaterial.getItemType() || canPassThrough(b.getType())){
+            if (b.getType() == bridgeMaterial.getItemType() || canPassThrough(b.getType())) {
                 return (!canPassThrough(b.getType()));
             }
         }

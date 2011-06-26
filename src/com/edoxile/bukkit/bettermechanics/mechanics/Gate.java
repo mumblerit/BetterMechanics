@@ -1,8 +1,11 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.*;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.utils.*;
+import com.edoxile.bukkit.bettermechanics.exceptions.*;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.BlockbagUtil;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,7 +38,7 @@ public class Gate {
     }
 
     public boolean map() throws NonCardinalDirectionException, ChestNotFoundException, OutOfBoundsException, BlockNotFoundException {
-        if(!config.enabled)
+        if (!config.enabled)
             return false;
         Block chestBlock = BlockMapper.mapCuboidRegion(sign.getBlock(), 3, Material.CHEST);
         if (chestBlock == null) {
@@ -86,7 +89,7 @@ public class Gate {
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount--;
                 }
-                if(amount == 0)
+                if (amount == 0)
                     break;
             }
             if (player != null) {
@@ -119,7 +122,7 @@ public class Gate {
                     tempBlock = tempBlock.getRelative(BlockFace.DOWN);
                     amount--;
                 }
-                if(amount == 0)
+                if (amount == 0)
                     break;
             }
             if (player != null) {

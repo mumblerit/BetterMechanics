@@ -3,9 +3,7 @@ package com.edoxile.bukkit.bettermechanics.utils;
 
 import com.edoxile.bukkit.bettermechanics.exceptions.InvalidConstructionException;
 
-import java.util.Iterator;
-
-public class MaterialMapIterator{
+public class MaterialMapIterator {
     private transient int[] _keys, _values;
     private int pointer = -1;
     private int size = 0;

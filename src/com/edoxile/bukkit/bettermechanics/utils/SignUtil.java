@@ -1,7 +1,7 @@
 package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -61,7 +61,7 @@ public class SignUtil {
             return getActiveMechanicsType(str);
     }
 
-    public static MechanicsType getActiveMechanicsType(String str){
+    public static MechanicsType getActiveMechanicsType(String str) {
         if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]"))
             return MechanicsType.LIFT;
         else if (str.equalsIgnoreCase("[Gate]"))

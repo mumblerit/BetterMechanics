@@ -1,7 +1,7 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
 import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
 import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
