@@ -34,10 +34,8 @@ public class MechanicsBlockListener extends BlockListener {
         } else {
             if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(str).name().toLowerCase() + ".create", event.getBlock(), false)) {
                 event.setCancelled(true);
-                System.out.println("No permissions!");
                 return;
             } else {
-                System.out.println("You have permissions to do this!");
             }
         }
 

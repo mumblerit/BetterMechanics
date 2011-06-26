@@ -270,7 +270,6 @@ public class MechanicsConfig {
         }
 
         public boolean check(Player player, String type, Block clickedBlock, boolean skipCreateZones, boolean skipHitZones) {
-            log.info("Checking permissions: " + type);
             boolean allowed = false;
             if (checkPermissions(player, type)) {
                 if (checkWorldGuard(player, clickedBlock)) {
