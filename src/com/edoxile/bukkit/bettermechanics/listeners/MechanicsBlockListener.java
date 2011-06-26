@@ -14,26 +14,40 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 /**
-* Created by IntelliJ IDEA.
-* User: Edoxile
-*/
+ * Created by IntelliJ IDEA.
+ * User: Edoxile
+ */
 
 public class MechanicsBlockListener extends BlockListener {
     private MechanicsConfig config;
+    private MechanicsConfig.PermissionConfig permissions;
 
     public MechanicsBlockListener(MechanicsConfig c) {
         config = c;
+        permissions = c.getPermissionConfig();
     }
 
     public void onSignChange(SignChangeEvent event) {
         String str = event.getLine(1);
-        if (str.equalsIgnoreCase("[lift up]")){
+        if (SignUtil.getMechanicsType(str) == null) {
+            return;
+        } else {
+            if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(str).name().toLowerCase() + ".create", event.getBlock(), false)){
+                event.setCancelled(true);
+                System.out.println("No permissions!");
+                return;
+            } else {
+                System.out.println("You have permissions to do this!");
+            }
+        }
+
+        if (str.equalsIgnoreCase("[lift up]")) {
             event.setLine(1, "[Lift Up]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
-        } else if(str.equalsIgnoreCase("[Lift Down]")){
+        } else if (str.equalsIgnoreCase("[Lift Down]")) {
             event.setLine(1, "[Lift Down]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
-        } else if(str.equalsIgnoreCase("[Lift]")){
+        } else if (str.equalsIgnoreCase("[Lift]")) {
             event.setLine(1, "[Lift]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
         } else if (str.equalsIgnoreCase("[gate]")) {
@@ -54,22 +68,22 @@ public class MechanicsBlockListener extends BlockListener {
         } else if (str.equalsIgnoreCase("[sbridge end]")) {
             event.setLine(1, "[sBridge End]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a bridge!");
-        } else if (str.equalsIgnoreCase("[door up]")){
+        } else if (str.equalsIgnoreCase("[door up]")) {
             event.setLine(1, "[Door Up]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
-        } else if(str.equalsIgnoreCase("[door down]")){
+        } else if (str.equalsIgnoreCase("[door down]")) {
             event.setLine(1, "[Door Down]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
-        } else if(str.equalsIgnoreCase("[door]")){
+        } else if (str.equalsIgnoreCase("[door]")) {
             event.setLine(1, "[Door]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a door!");
-        }  else if(str.equalsIgnoreCase("[sdoor]")){
+        } else if (str.equalsIgnoreCase("[sdoor]")) {
             event.setLine(1, "[sDoor]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
-        }  else if(str.equalsIgnoreCase("[sdoor up]")){
+        } else if (str.equalsIgnoreCase("[sdoor up]")) {
             event.setLine(1, "[sDoor Up]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
-        }  else if(str.equalsIgnoreCase("[sdoor down]")){
+        } else if (str.equalsIgnoreCase("[sdoor down]")) {
             event.setLine(1, "[sDoor Down]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a small door!");
         } else if (str.equalsIgnoreCase("[x]")) {

@@ -44,6 +44,23 @@ public class Pen {
         dataMap.put(player, null);
     }
 
+    public static void clearLine(Player player, String[] args) {
+        try {
+            int line = Integer.parseInt(args[1]);
+            String[] data = dataMap.get(player);
+            data[line] = "";
+            dataMap.put(player, data);
+            player.sendMessage(ChatColor.GOLD + "New pen text:");
+            for (String s : data) {
+                player.sendMessage(ChatColor.GOLD + "[" + s + "]");
+            }
+        } catch (NumberFormatException ex) {
+            player.sendMessage(ChatColor.RED + "Invalid number format for line number.");
+        } catch (IndexOutOfBoundsException ex) {
+            player.sendMessage(ChatColor.RED + "Invalid line number. Line numbers start at 0 and end at 3.");
+        }
+    }
+
     public static void setLines(Player player, String[] args) {
         try {
             String[] data = parseText(args);

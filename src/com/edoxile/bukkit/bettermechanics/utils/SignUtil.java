@@ -57,7 +57,11 @@ public class SignUtil {
         String str = s.getLine(1);
         if (s.equals("") || s == null)
             return null;
+        else
+            return getActiveMechanicsType(str);
+    }
 
+    public static MechanicsType getActiveMechanicsType(String str){
         if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]"))
             return MechanicsType.LIFT;
         else if (str.equalsIgnoreCase("[Gate]"))
