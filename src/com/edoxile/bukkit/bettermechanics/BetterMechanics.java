@@ -112,7 +112,38 @@ public class BetterMechanics extends JavaPlugin {
             }
             sender.sendMessage(ChatColor.DARK_RED + "The pen is not enabled.");
             return true;
+        } else if (command.getName().equalsIgnoreCase("bettermechanics")) {
+            if (args.length == 0) {
+                sender.sendMessage(ChatColor.RED + "I need to know what to do!");
+            } else if (args[0].equalsIgnoreCase("reload")) {
+                if (args.length == 1) {
+                    try {
+                        configManager = new MechanicsConfig(this);
+                        playerListener.setConfig(configManager);
+                        blockListener.setConfig(configManager);
+                        if (sender instanceof Player)
+                            sender.sendMessage(ChatColor.GOLD + "Reloaded config.");
+                        log.info("[BetterMechanics] Reloaded config.");
+                    } catch (ConfigWriteException e) {
+                        log.severe("[BetterMechanics] Couldn't create config file.");
+                        this.setEnabled(false);
+                    }
+                } else if (args[1].equalsIgnoreCase("cauldron")) {
+                    configManager.reloadCauldronConfig();
+                    playerListener.setConfig(configManager);
+                    blockListener.setConfig(configManager);
+                    if (sender instanceof Player)
+                        sender.sendMessage(ChatColor.GOLD + "Reloaded cauldron recipes.");
+                    log.info("[BetterMechanics] Reloaded cauldron recipes.");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Wrong usage. Usage: /bm reload <cauldron>");
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "Wrong usage. Usage: /bm reload <cauldron>");
+            }
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/plugins/WorldGuard.jar!/" />
+          <root url="jar://D:/Bukkit dependencies/WorldGuard.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -44,6 +44,7 @@ public class MechanicsConfig {
     public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
         plugin = p;
         config = plugin.getConfiguration();
+        config.load();
         if (config == null) {
             createConfig();
         } else {
@@ -59,6 +60,10 @@ public class MechanicsConfig {
         cauldronConfig = new CauldronConfig();
         permissionConfig = new PermissionConfig();
         penConfig = new PenConfig();
+    }
+
+    public void reloadCauldronConfig() {
+        cauldronConfig = new CauldronConfig();
     }
 
     public static class BridgeConfig {

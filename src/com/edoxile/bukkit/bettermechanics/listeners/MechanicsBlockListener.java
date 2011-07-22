@@ -27,6 +27,10 @@ public class MechanicsBlockListener extends BlockListener {
         permissions = c.getPermissionConfig();
     }
 
+    public void setConfig(MechanicsConfig c) {
+        config = c;
+    }
+
     public void onSignChange(SignChangeEvent event) {
         String str = event.getLine(1);
         if (SignUtil.getMechanicsType(str) == null) {

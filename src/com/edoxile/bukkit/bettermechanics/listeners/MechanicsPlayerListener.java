@@ -32,6 +32,10 @@ public class MechanicsPlayerListener extends PlayerListener {
         permissions = c.getPermissionConfig();
     }
 
+    public void setConfig(MechanicsConfig c) {
+        config = c;
+    }
+
     public void onPlayerJoin(PlayerJoinEvent event) {
         Pen.clear(event.getPlayer());
     }
