@@ -6,8 +6,8 @@ website: https://github.com/Edoxile/BetterMechanics
 commands:
     pen:
         description: Change the text of signs
-        usage: /pen <clear|set|setline|help>
+        usage: /pen [clear|set|setline|help]
     bettermechanics:
         description: Change the text of signs
-        usage: /bettermechanics <cauldron|config>
+        usage: /bettermechanics <cauldron>
         aliases: bm
