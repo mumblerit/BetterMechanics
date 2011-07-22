@@ -113,6 +113,8 @@ public class BetterMechanics extends JavaPlugin {
             sender.sendMessage(ChatColor.DARK_RED + "The pen is not enabled.");
             return true;
         } else if (command.getName().equalsIgnoreCase("bettermechanics")) {
+            if (sender instanceof Player && !configManager.permissionConfig.checkPermissions((Player) sender, "bettermechanics.reloadconfig"))
+                return true;
             if (args.length == 0) {
                 sender.sendMessage(ChatColor.RED + "I need to know what to do!");
             } else if (args[0].equalsIgnoreCase("reload")) {
