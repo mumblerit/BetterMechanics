@@ -1,6 +1,6 @@
 name: BetterMechanics
 main: com.edoxile.bukkit.bettermechanics.BetterMechanics
-version: 1.9
+version: 1.10
 author: Edoxile
 website: https://github.com/Edoxile/BetterMechanics
 commands:

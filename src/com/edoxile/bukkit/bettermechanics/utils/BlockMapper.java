@@ -193,14 +193,22 @@ public class BlockMapper {
     }
 
     public static Block mapCuboidRegion(Block start, int sw, Material m) {
-        Block tempBlock;
-        int nsw = ~sw + 1;
-        for (int dx = nsw; dx <= sw; dx++) {
-            for (int dy = nsw; dy <= sw; dy++) {
-                for (int dz = nsw; dz <= sw; dz++) {
-                    tempBlock = start.getRelative(dx, dy, dz);
-                    if (tempBlock.getType() == m) {
-                        return tempBlock;
+        for (int dy = 0; dy <= sw; dy++) {
+            for (int dx = 0; dx <= sw; dx++) {
+                for (int dz = 0; dz <= sw; dz++) {
+                    HashSet<Block> blockSet = new HashSet<Block>();
+                    blockSet.add(start.getRelative(dx, dy, dz));
+                    blockSet.add(start.getRelative(-dx, dy, dz));
+                    blockSet.add(start.getRelative(dx, dy, -dz));
+                    blockSet.add(start.getRelative(-dx, dy, -dz));
+                    blockSet.add(start.getRelative(dx, -dy, dz));
+                    blockSet.add(start.getRelative(-dx, -dy, dz));
+                    blockSet.add(start.getRelative(dx, -dy, -dz));
+                    blockSet.add(start.getRelative(-dx, -dy, -dz));
+                    for (Block b : blockSet) {
+                        if (b.getType() == m) {
+                            return b;
+                        }
                     }
                 }
             }
