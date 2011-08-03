@@ -239,7 +239,7 @@ public class MechanicsConfig {
                 boolean canbuild = true;
                 ZoneBase zb = zones.getWorldManager(clickedBlock.getWorld()).getActiveZone(clickedBlock);
                 if (zb != null) {
-                    canbuild = zb.allowBlockCreate(player, clickedBlock);
+                    canbuild = zb.getAccess(player).canBuild();
                 }
                 return canbuild;
             }
@@ -252,7 +252,7 @@ public class MechanicsConfig {
                 boolean canbuild = true;
                 ZoneBase zb = zones.getWorldManager(clickedBlock.getWorld()).getActiveZone(clickedBlock);
                 if (zb != null) {
-                    canbuild = zb.allowBlockHit(player, clickedBlock);
+                    canbuild = zb.getAccess(player).canHit();
                 }
                 return canbuild;
             }
