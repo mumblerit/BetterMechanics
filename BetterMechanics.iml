@@ -7,19 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/Bukkit dependencies/bukkit-0.0.1-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/Bukkit dependencies/Zones.jar!/" />
+          <root url="jar://C:/Bukkit deps/WorldGuard.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/Bukkit dependencies/Permission-3.1.jar!/" />
+          <root url="jar://C:/Bukkit deps/bukkit-0.0.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/Bukkit dependencies/WorldGuard.jar!/" />
+          <root url="jar://C:/Bukkit deps/Permissions.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -109,7 +109,7 @@ public class BlockMapper {
             case UP: {
                 Location startLoc = start.getLocation();
                 Location endLoc = end.getLocation();
-                if (startLoc.getBlockX() != endLoc.getBlockX() || startLoc.getBlockZ() != endLoc.getBlockZ() || endLoc.getBlockY() < startLoc.getBlockY()) {
+                if (startLoc.getBlockX() != endLoc.getBlockX() || startLoc.getBlockZ() != endLoc.getBlockZ()) {
                     throw new InvalidDirectionException();
                 } else {
                     Block tempBlock = start;
@@ -139,7 +139,7 @@ public class BlockMapper {
             case DOWN: {
                 Location startLoc = start.getLocation();
                 Location endLoc = end.getLocation();
-                if (startLoc.getBlockZ() != endLoc.getBlockZ() || startLoc.getBlockX() != endLoc.getBlockX() || startLoc.getBlockY() > endLoc.getBlockY()) {
+                if (startLoc.getBlockZ() != endLoc.getBlockZ() || startLoc.getBlockX() != endLoc.getBlockX()) {
                     throw new InvalidDirectionException();
                 } else {
                     Block tempBlock = start;
