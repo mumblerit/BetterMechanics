@@ -52,6 +52,9 @@ public class MechanicsBlockListener extends BlockListener {
         } else if (str.equalsIgnoreCase("[Lift]")) {
             event.setLine(1, "[Lift]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a lift!");
+        } else if (str.equalsIgnoreCase("[TeleLift]")) {
+            event.setLine(1, "[TeleLift]");
+            event.getPlayer().sendMessage(ChatColor.AQUA + "You created a tele-lift!");
         } else if (str.equalsIgnoreCase("[gate]")) {
             event.setLine(1, "[Gate]");
             event.getPlayer().sendMessage(ChatColor.AQUA + "You created a gate!");

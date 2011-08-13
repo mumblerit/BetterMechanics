@@ -35,6 +35,7 @@ public class MechanicsConfig {
     public GateConfig gateConfig;
     public DoorConfig doorConfig;
     public LiftConfig liftConfig;
+    public TeleLiftConfig teleLiftConfig;
     public HiddenSwitchConfig hiddenSwitchConfig;
     public AmmeterConfig ammeterConfig;
     public CauldronConfig cauldronConfig;
@@ -55,6 +56,7 @@ public class MechanicsConfig {
         gateConfig = new GateConfig();
         doorConfig = new DoorConfig();
         liftConfig = new LiftConfig();
+        teleLiftConfig = new TeleLiftConfig();
         hiddenSwitchConfig = new HiddenSwitchConfig();
         ammeterConfig = new AmmeterConfig();
         cauldronConfig = new CauldronConfig();
@@ -137,6 +139,14 @@ public class MechanicsConfig {
         public LiftConfig() {
             enabled = config.getBoolean("lift.enabled", true);
             maxSearchHeight = config.getInt("lift.max-search-height", 32);
+        }
+    }
+
+    public class TeleLiftConfig {
+        public final boolean enabled;
+
+        public TeleLiftConfig() {
+            enabled = config.getBoolean("telelift.enabled", true);
         }
     }
 
@@ -317,6 +327,10 @@ public class MechanicsConfig {
 
     public LiftConfig getLiftConfig() {
         return this.liftConfig;
+    }
+
+    public TeleLiftConfig getTeleLiftConfig() {
+        return this.teleLiftConfig;
     }
 
     public AmmeterConfig getAmmeterConfig() {

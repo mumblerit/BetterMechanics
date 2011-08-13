@@ -30,6 +30,8 @@ public class SignUtil {
     public static MechanicsType getMechanicsType(String str) {
         if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]") || str.equalsIgnoreCase("[Lift]"))
             return MechanicsType.LIFT;
+        else if (str.equalsIgnoreCase("[TeleLift]"))
+            return MechanicsType.TELELIFT;
         else if (str.equalsIgnoreCase("[Gate]"))
             return MechanicsType.GATE;
         else if (str.equalsIgnoreCase("[Dgate]"))
@@ -64,6 +66,8 @@ public class SignUtil {
     public static MechanicsType getActiveMechanicsType(String str) {
         if (str.equalsIgnoreCase("[Lift Up]") || str.equalsIgnoreCase("[Lift Down]"))
             return MechanicsType.LIFT;
+        else if (str.equalsIgnoreCase("[TeleLift]"))
+            return MechanicsType.TELELIFT;
         else if (str.equalsIgnoreCase("[Gate]"))
             return MechanicsType.GATE;
         else if (str.equalsIgnoreCase("[Dgate]"))

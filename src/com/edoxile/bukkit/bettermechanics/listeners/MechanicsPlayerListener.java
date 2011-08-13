@@ -130,7 +130,20 @@ public class MechanicsPlayerListener extends PlayerListener {
                                 } catch (BlockNotFoundException e) {
                                     event.getPlayer().sendMessage(ChatColor.RED + "Lift is too high or signs are not aligned!");
                                 }
-
+                                break;
+                            case TELELIFT:
+                                if (!permissions.check(event.getPlayer(), SignUtil.getActiveMechanicsType(sign).name().toLowerCase().concat(".use"), event.getClickedBlock(), true, false))
+                                    return;
+                                TeleLift tlift = new TeleLift(config, sign, event.getPlayer());
+                                try {
+                                    if (!tlift.map()) {
+                                        return;
+                                    }
+                                    tlift.movePlayer();
+                                } catch (NumberFormatException e) {
+                                    event.getPlayer().sendMessage(ChatColor.RED + "Non-numbers found as location!");
+                                }
+                                break;
                         }
                     } else if (event.getPlayer().getItemInHand().getType() == config.getPenConfig().penMaterial) {
                         if (permissions.check(event.getPlayer(), "pen", event.getClickedBlock(), false)) {
