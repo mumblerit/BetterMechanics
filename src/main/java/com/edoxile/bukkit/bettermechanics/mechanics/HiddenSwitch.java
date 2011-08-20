@@ -1,13 +1,14 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import java.util.HashSet;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

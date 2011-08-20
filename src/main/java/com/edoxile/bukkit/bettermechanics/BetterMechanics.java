@@ -1,9 +1,8 @@
 package com.edoxile.bukkit.bettermechanics;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
-import com.edoxile.bukkit.bettermechanics.listeners.MechanicsBlockListener;
-import com.edoxile.bukkit.bettermechanics.listeners.MechanicsPlayerListener;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import java.io.File;
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,8 +11,10 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
+import com.edoxile.bukkit.bettermechanics.listeners.MechanicsBlockListener;
+import com.edoxile.bukkit.bettermechanics.listeners.MechanicsPlayerListener;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile
@@ -65,12 +66,11 @@ public class BetterMechanics extends JavaPlugin {
 				Event.Priority.Normal, this);
 	}
 
+	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
 		if (command.getName().equalsIgnoreCase("bettermechanics")) {
-			if (sender instanceof Player
-					&& !configManager.permissionConfig.checkPermissions(
-							(Player) sender, "bettermechanics.reloadconfig"))
+			if (sender instanceof Player)
 				return true;
 			if (args.length == 0) {
 				sender.sendMessage(ChatColor.RED + "I need to know what to do!");

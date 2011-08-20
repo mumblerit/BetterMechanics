@@ -1,11 +1,8 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.exceptions.*;
-import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.utils.BlockbagUtil;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
+import java.util.Set;
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,8 +12,17 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Set;
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.ChestNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfMaterialException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfSpaceException;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.BlockbagUtil;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

@@ -1,9 +1,9 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
-import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,9 +12,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.utils.BlockMapper;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile
@@ -64,7 +65,7 @@ public class Lift {
 				return false;
 			}
 			destination = player.getLocation();
-			destination.setY(((double) dest1.getY()));
+			destination.setY(dest1.getY());
 			return true;
 		} else if (canPassThrough(dest1.getType())
 				&& canPassThrough(dest3.getType())) {
@@ -76,7 +77,7 @@ public class Lift {
 				return false;
 			}
 			destination = player.getLocation();
-			destination.setY(((double) dest3.getY()));
+			destination.setY(dest3.getY());
 			return true;
 		} else {
 			player.sendMessage(ChatColor.RED + "You would be obscured!");

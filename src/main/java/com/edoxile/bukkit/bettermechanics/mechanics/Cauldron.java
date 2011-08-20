@@ -1,10 +1,9 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
-import com.edoxile.bukkit.bettermechanics.utils.CauldronCookbook;
-import com.edoxile.bukkit.bettermechanics.utils.MaterialMap;
-import com.edoxile.bukkit.bettermechanics.utils.MaterialMapIterator;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,9 +11,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
+import com.edoxile.bukkit.bettermechanics.utils.CauldronCookbook;
+import com.edoxile.bukkit.bettermechanics.utils.MaterialMap;
+import com.edoxile.bukkit.bettermechanics.utils.MaterialMapIterator;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile Author: sk89q for the most part.

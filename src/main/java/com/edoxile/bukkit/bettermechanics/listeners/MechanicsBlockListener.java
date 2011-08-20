@@ -1,10 +1,5 @@
 package com.edoxile.bukkit.bettermechanics.listeners;
 
-import com.edoxile.bukkit.bettermechanics.mechanics.Bridge;
-import com.edoxile.bukkit.bettermechanics.mechanics.Door;
-import com.edoxile.bukkit.bettermechanics.mechanics.Gate;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,35 +8,37 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
+import com.edoxile.bukkit.bettermechanics.mechanics.Bridge;
+import com.edoxile.bukkit.bettermechanics.mechanics.Door;
+import com.edoxile.bukkit.bettermechanics.mechanics.Gate;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
+
 /**
  * Created by IntelliJ IDEA. User: Edoxile
  */
 
 public class MechanicsBlockListener extends BlockListener {
 	private MechanicsConfig config;
-	private MechanicsConfig.PermissionConfig permissions;
 
 	public MechanicsBlockListener(MechanicsConfig c) {
 		config = c;
-		permissions = c.getPermissionConfig();
+
 	}
 
 	public void setConfig(MechanicsConfig c) {
 		config = c;
 	}
 
+	@Override
 	public void onSignChange(SignChangeEvent event) {
 		String str = event.getLine(1);
 		if (SignUtil.getMechanicsType(str) == null) {
 			return;
-		} else {
-			if (!permissions.check(event.getPlayer(), SignUtil
-					.getActiveMechanicsType(str).name().toLowerCase()
-					+ ".create", event.getBlock(), false)) {
-				event.setCancelled(true);
-				return;
-			} else {
-			}
+		}
+
+		else {
+
 		}
 
 		if (str.equalsIgnoreCase("[lift up]")) {
@@ -117,6 +114,7 @@ public class MechanicsBlockListener extends BlockListener {
 		}
 	}
 
+	@Override
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Block block = event.getBlockAgainst();
 		if (SignUtil.isSign(block)) {
@@ -127,6 +125,7 @@ public class MechanicsBlockListener extends BlockListener {
 		}
 	}
 
+	@Override
 	public void onBlockRedstoneChange(BlockRedstoneEvent event) {
 		if ((event.getNewCurrent() == event.getOldCurrent())
 				|| (event.getNewCurrent() > 0 && event.getOldCurrent() > 0))

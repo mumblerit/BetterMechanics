@@ -1,14 +1,15 @@
 package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.exceptions.OutOfMaterialException;
-import com.edoxile.bukkit.bettermechanics.exceptions.OutOfSpaceException;
+import java.util.logging.Logger;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfMaterialException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfSpaceException;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

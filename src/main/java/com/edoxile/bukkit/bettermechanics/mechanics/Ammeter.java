@@ -1,10 +1,11 @@
 package com.edoxile.bukkit.bettermechanics.mechanics;
 
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

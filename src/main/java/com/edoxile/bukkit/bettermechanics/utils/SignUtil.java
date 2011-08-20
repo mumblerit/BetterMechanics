@@ -1,12 +1,13 @@
 package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile
@@ -31,8 +32,7 @@ public class SignUtil {
 				|| str.equalsIgnoreCase("[Lift Down]")
 				|| str.equalsIgnoreCase("[Lift]"))
 			return MechanicsType.LIFT;
-		else if (str.equalsIgnoreCase("[TeleLift]"))
-			return MechanicsType.TELELIFT;
+
 		else if (str.equalsIgnoreCase("[Gate]"))
 			return MechanicsType.GATE;
 		else if (str.equalsIgnoreCase("[Dgate]"))
@@ -74,8 +74,6 @@ public class SignUtil {
 		if (str.equalsIgnoreCase("[Lift Up]")
 				|| str.equalsIgnoreCase("[Lift Down]"))
 			return MechanicsType.LIFT;
-		else if (str.equalsIgnoreCase("[TeleLift]"))
-			return MechanicsType.TELELIFT;
 		else if (str.equalsIgnoreCase("[Gate]"))
 			return MechanicsType.GATE;
 		else if (str.equalsIgnoreCase("[Dgate]"))

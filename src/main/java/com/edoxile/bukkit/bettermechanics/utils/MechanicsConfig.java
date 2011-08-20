@@ -1,21 +1,22 @@
 package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.BetterMechanics;
-import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.util.config.Configuration;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Logger;
+
+import org.bukkit.Material;
+import org.bukkit.util.config.Configuration;
+
+import com.edoxile.bukkit.bettermechanics.BetterMechanics;
+import com.edoxile.bukkit.bettermechanics.exceptions.ConfigWriteException;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

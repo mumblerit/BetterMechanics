@@ -1,21 +1,30 @@
 package com.edoxile.bukkit.bettermechanics.listeners;
 
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.exceptions.*;
-import com.edoxile.bukkit.bettermechanics.mechanics.*;
-import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
-import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
+import java.util.logging.Logger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.ChestNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.InvalidMaterialException;
+import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
+import com.edoxile.bukkit.bettermechanics.mechanics.Ammeter;
+import com.edoxile.bukkit.bettermechanics.mechanics.Bridge;
+import com.edoxile.bukkit.bettermechanics.mechanics.Cauldron;
+import com.edoxile.bukkit.bettermechanics.mechanics.Door;
+import com.edoxile.bukkit.bettermechanics.mechanics.Gate;
+import com.edoxile.bukkit.bettermechanics.mechanics.HiddenSwitch;
+import com.edoxile.bukkit.bettermechanics.mechanics.Lift;
+import com.edoxile.bukkit.bettermechanics.utils.MechanicsConfig;
+import com.edoxile.bukkit.bettermechanics.utils.SignUtil;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile
@@ -33,6 +42,7 @@ public class MechanicsPlayerListener extends PlayerListener {
 		config = c;
 	}
 
+	@Override
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (SignUtil.isSign(event.getClickedBlock())) {
@@ -42,11 +52,7 @@ public class MechanicsPlayerListener extends PlayerListener {
 						switch (SignUtil.getActiveMechanicsType(sign)) {
 						case BRIDGE:
 						case SMALL_BRIDGE:
-							if (!permissions.check(event.getPlayer(), SignUtil
-									.getActiveMechanicsType(sign).name()
-									.toLowerCase().concat(".use"),
-									event.getClickedBlock(), false))
-								return;
+
 							Bridge bridge = new Bridge(config, sign,
 									event.getPlayer());
 							try {
@@ -81,11 +87,7 @@ public class MechanicsPlayerListener extends PlayerListener {
 							break;
 						case GATE:
 						case SMALL_GATE:
-							if (!permissions.check(event.getPlayer(), SignUtil
-									.getActiveMechanicsType(sign).name()
-									.toLowerCase().concat(".use"),
-									event.getClickedBlock(), false))
-								return;
+
 							Gate gate = new Gate(config, sign,
 									event.getPlayer());
 							try {
@@ -119,11 +121,7 @@ public class MechanicsPlayerListener extends PlayerListener {
 							break;
 						case DOOR:
 						case SMALL_DOOR:
-							if (!permissions.check(event.getPlayer(), SignUtil
-									.getActiveMechanicsType(sign).name()
-									.toLowerCase().concat(".use"),
-									event.getClickedBlock(), false))
-								return;
+
 							Door door = new Door(config, sign,
 									event.getPlayer());
 							try {
@@ -156,11 +154,7 @@ public class MechanicsPlayerListener extends PlayerListener {
 							}
 							break;
 						case LIFT:
-							if (!permissions.check(event.getPlayer(), SignUtil
-									.getActiveMechanicsType(sign).name()
-									.toLowerCase().concat(".use"),
-									event.getClickedBlock(), true, false))
-								return;
+
 							Lift lift = new Lift(config, sign,
 									event.getPlayer());
 							try {
@@ -175,35 +169,13 @@ public class MechanicsPlayerListener extends PlayerListener {
 														+ "Lift is too high or signs are not aligned!");
 							}
 							break;
-						case TELELIFT:
-							if (!permissions.check(event.getPlayer(), SignUtil
-									.getActiveMechanicsType(sign).name()
-									.toLowerCase().concat(".use"),
-									event.getClickedBlock(), true, false))
-								return;
-							TeleLift tlift = new TeleLift(config, sign,
-									event.getPlayer());
-							try {
-								if (!tlift.map()) {
-									return;
-								}
-								tlift.movePlayer();
-							} catch (NumberFormatException e) {
-								event.getPlayer()
-										.sendMessage(
-												ChatColor.RED
-														+ "Non-numbers found as location!");
-							}
-							break;
+
 						}
 					}
 				}
 			} else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE
 					&& event.getPlayer().getItemInHand().getType() == Material.COAL) {
-				if (!permissions.check(event.getPlayer(), "ammeter",
-						event.getClickedBlock(), true)) {
-					return;
-				}
+
 				Ammeter ammeter = new Ammeter(config, event.getClickedBlock(),
 						event.getPlayer());
 				ammeter.measure();
@@ -213,34 +185,30 @@ public class MechanicsPlayerListener extends PlayerListener {
 					Cauldron cauldron = Cauldron.preCauldron(
 							event.getClickedBlock(), config, event.getPlayer());
 					if (cauldron != null) {
-						if (permissions.check(event.getPlayer(), "cauldron",
-								event.getClickedBlock(), false)) {
-							cauldron.performCauldron();
-						} else {
-							return;
-						}
+
+						cauldron.performCauldron();
+					} else {
+						return;
 					}
 				}
-				if (isRedstoneBlock(event.getClickedBlock().getTypeId()))
-					return;
+			}
+			if (isRedstoneBlock(event.getClickedBlock().getTypeId()))
+				return;
 
-				BlockFace[] toCheck = { BlockFace.WEST, BlockFace.EAST,
-						BlockFace.SOUTH, BlockFace.NORTH, BlockFace.DOWN,
-						BlockFace.UP };
-				for (BlockFace b : toCheck) {
-					if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
-						Sign sign = SignUtil.getSign(event.getClickedBlock()
-								.getRelative(b));
-						if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
-							if (permissions.check(event.getPlayer(),
-									"hidden_switch.use",
-									event.getClickedBlock(), true, false)) {
-								HiddenSwitch hiddenSwitch = new HiddenSwitch(
-										config, sign, event.getPlayer());
-								if (hiddenSwitch.map())
-									hiddenSwitch.toggleLevers();
-							}
-						}
+			BlockFace[] toCheck = { BlockFace.WEST, BlockFace.EAST,
+					BlockFace.SOUTH, BlockFace.NORTH, BlockFace.DOWN,
+					BlockFace.UP };
+			for (BlockFace b : toCheck) {
+				if (SignUtil.isSign(event.getClickedBlock().getRelative(b))) {
+					Sign sign = SignUtil.getSign(event.getClickedBlock()
+							.getRelative(b));
+					if (SignUtil.getMechanicsType(sign) == MechanicsType.HIDDEN_SWITCH) {
+
+						HiddenSwitch hiddenSwitch = new HiddenSwitch(config,
+								sign, event.getPlayer());
+						if (hiddenSwitch.map())
+							hiddenSwitch.toggleLevers();
+
 					}
 				}
 			}

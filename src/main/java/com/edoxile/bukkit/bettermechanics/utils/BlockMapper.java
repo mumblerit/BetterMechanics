@@ -1,17 +1,18 @@
 package com.edoxile.bukkit.bettermechanics.utils;
 
-import com.edoxile.bukkit.bettermechanics.MechanicsType;
-import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
-import com.edoxile.bukkit.bettermechanics.exceptions.InvalidDirectionException;
-import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
+import java.util.HashSet;
+import java.util.logging.Logger;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 
-import java.util.HashSet;
-import java.util.logging.Logger;
+import com.edoxile.bukkit.bettermechanics.MechanicsType;
+import com.edoxile.bukkit.bettermechanics.exceptions.BlockNotFoundException;
+import com.edoxile.bukkit.bettermechanics.exceptions.InvalidDirectionException;
+import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
 
 /**
  * Created by IntelliJ IDEA. User: Edoxile

@@ -5,14 +5,15 @@ package com.edoxile.bukkit.bettermechanics.utils;
  * User: Edoxile
  */
 
-import com.edoxile.bukkit.bettermechanics.BetterMechanics;
-import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
-import org.bukkit.util.config.Configuration;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import org.bukkit.util.config.Configuration;
+
+import com.edoxile.bukkit.bettermechanics.BetterMechanics;
+import com.edoxile.bukkit.bettermechanics.exceptions.KeyNotFoundException;
 
 /**
  * Store of recipes.
