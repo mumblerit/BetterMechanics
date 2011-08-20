@@ -74,7 +74,7 @@ public class BlockbagUtil {
 		int amount = itemStack.getAmount();
 		ItemStack[] stacks = chest.getInventory().getContents();
 		for (int i = 0; i < stacks.length; i++) {
-			log.info("Amount left: " + amount);
+			
 			if (stacks[i] == null) {
 				if (amount > 64) {
 					if (itemStack.getData() == null) {
