@@ -15,8 +15,6 @@ hidden-switch:
 lift:
     enabled: true
     max-search-height: 32
-ammeter:
-    enabled: true
 cauldron:
     enabled: true
 pen:

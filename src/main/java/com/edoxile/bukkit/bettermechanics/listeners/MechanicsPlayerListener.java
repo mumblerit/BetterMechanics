@@ -16,7 +16,6 @@ import com.edoxile.bukkit.bettermechanics.exceptions.ChestNotFoundException;
 import com.edoxile.bukkit.bettermechanics.exceptions.InvalidMaterialException;
 import com.edoxile.bukkit.bettermechanics.exceptions.NonCardinalDirectionException;
 import com.edoxile.bukkit.bettermechanics.exceptions.OutOfBoundsException;
-import com.edoxile.bukkit.bettermechanics.mechanics.Ammeter;
 import com.edoxile.bukkit.bettermechanics.mechanics.Bridge;
 import com.edoxile.bukkit.bettermechanics.mechanics.Cauldron;
 import com.edoxile.bukkit.bettermechanics.mechanics.Door;
@@ -159,6 +158,11 @@ public class MechanicsPlayerListener extends PlayerListener {
 									event.getPlayer());
 							try {
 								if (!lift.map()) {
+									
+									event.getPlayer()
+									.sendMessage(
+											ChatColor.RED
+													+ "Somethings Wrong in lift.map()!--!");
 									return;
 								}
 								lift.movePlayer();
@@ -173,13 +177,8 @@ public class MechanicsPlayerListener extends PlayerListener {
 						}
 					}
 				}
-			} else if (event.getClickedBlock().getType() == Material.REDSTONE_WIRE
-					&& event.getPlayer().getItemInHand().getType() == Material.COAL) {
-
-				Ammeter ammeter = new Ammeter(config, event.getClickedBlock(),
-						event.getPlayer());
-				ammeter.measure();
-			} else {
+			} 
+			 else {
 				if (!event.getPlayer().getItemInHand().getType().isBlock()
 						|| event.getPlayer().getItemInHand().getType() == Material.AIR) {
 					Cauldron cauldron = Cauldron.preCauldron(

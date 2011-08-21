@@ -31,7 +31,6 @@ public class MechanicsConfig {
 	public DoorConfig doorConfig;
 	public LiftConfig liftConfig;
 	public HiddenSwitchConfig hiddenSwitchConfig;
-	public AmmeterConfig ammeterConfig;
 	public CauldronConfig cauldronConfig;
 
 	public MechanicsConfig(BetterMechanics p) throws ConfigWriteException {
@@ -48,8 +47,7 @@ public class MechanicsConfig {
 		gateConfig = new GateConfig();
 		doorConfig = new DoorConfig();
 		liftConfig = new LiftConfig();
-		hiddenSwitchConfig = new HiddenSwitchConfig();
-		ammeterConfig = new AmmeterConfig();
+		hiddenSwitchConfig = new HiddenSwitchConfig();	
 		cauldronConfig = new CauldronConfig();
 	}
 
@@ -153,13 +151,7 @@ public class MechanicsConfig {
 		}
 	}
 
-	public class AmmeterConfig {
-		public final boolean enabled;
-
-		public AmmeterConfig() {
-			enabled = config.getBoolean("ammeter.enabled", true);
-		}
-	}
+	
 
 	public BridgeConfig getBridgeConfig() {
 		return this.bridgeConfig;
@@ -181,9 +173,7 @@ public class MechanicsConfig {
 		return this.liftConfig;
 	}
 
-	public AmmeterConfig getAmmeterConfig() {
-		return this.ammeterConfig;
-	}
+	
 
 	public CauldronConfig getCauldronConfig() {
 		return this.cauldronConfig;
